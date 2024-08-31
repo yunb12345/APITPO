@@ -2,7 +2,7 @@ import image from "../imgs/landing_img.png"
 
 const LandingHero = () => {
     return(
-    <div className="flex justify-center items-center h-1/2 w-screen">
+    <div className="flex justify-center items-center h-dvh w-screen">
         <div className="h-full w-full flex justify-center items-center">
             <img src={image} alt="" className="h-auto w-auto"></img>
         </div>
