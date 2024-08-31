@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 
 const Navbar = () => {
     return(
-    <nav className="flex items-center justify-between bg-yellow-300 px-10">
+    <nav className="flex items-center justify-between bg-apiyellow px-10">
         <div className="my-4 w-12 h-12 items-center object-center justify-center content-center">
             <img src={logo} alt="" className="max-w-full"></img>
         </div>

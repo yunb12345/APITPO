@@ -4,8 +4,8 @@ module.exports = {
   theme: {
     extend: {
       colors:{
-
-      },
+        apiyellow: '#FAFF0F',
+      }
     },
   },
   plugins: [],
