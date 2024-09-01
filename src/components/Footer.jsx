@@ -7,7 +7,7 @@ import { AiOutlineLinkedin } from "react-icons/ai";
 
 const Footer = ()=>{
     return(
-        <footer className="bg-yellow-300">
+        <footer className="bg-apiyellow">
             <div className="flex flex-row justify-center py-10">
                 <div className="flex flex-row px-10 items-center text-xl">
                     <div className="px-1">
