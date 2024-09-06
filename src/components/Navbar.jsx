@@ -1,25 +1,42 @@
-import logo from "../assets/logo-placeholder-3.jpg"
-import Button from '@mui/material/Button';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import Button from 'react-bootstrap/Button';
+import Offcanvas from 'react-bootstrap/Offcanvas';
 
-const Navbar = () => {
-    return(
-    <nav className="flex items-center justify-between bg-apiyellow px-10">
-        <div className="my-4 w-12 h-12 items-center object-center justify-center content-center">
-            <img src={logo} alt="" className="max-w-full"></img>
-        </div>
-        <div className="flex items-center flex-row gap-4">
-            <div className="flex items-center justify-center gap-4 flex-row">
-                <h1>Inicio</h1>
-                <h1>Servicios</h1>
-                <h1>Beneficios</h1>
-                <h1>Contacto</h1>
-            </div>
-            <div className="flex gap-2">
-                <Button variant="outlined">Ingresar</Button>
-                <Button variant="contained">Registrar</Button>
-            </div>
-        </div>
-    </nav>
-    )
-};
-export default Navbar;
+function navbar() {
+  return (
+    <>
+        <Navbar key="lg" expand="lg" className="mb-3" style={{ backgroundColor: "#FAFF0F", borderColor: "#11077d",}}>
+          <Container fluid>
+            <Navbar.Brand href="#"style={{marginBottom: "10px"}}>Logo Placeholder</Navbar.Brand>
+            <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`} />
+            <Navbar.Offcanvas
+              id={`offcanvasNavbar-expand-lg`}
+              aria-labelledby={`offcanvasNavbarLabel-expand-lg`}
+              placement="start"
+              style={{ backgroundColor: "#FAFF0F", borderColor: "#11077d",}}
+            >
+              <Offcanvas.Header closeButton>
+                <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>
+                  Logo Placeholder
+                </Offcanvas.Title>
+              </Offcanvas.Header>
+              <Offcanvas.Body>
+                <Nav className="justify-content-end flex-grow-1 pe-3">
+                  <Nav.Link href="#home">Inicio</Nav.Link>  
+                  <Nav.Link href="#features">Servicios</Nav.Link>
+                  <Nav.Link href="#pricing">Beneficios</Nav.Link>
+                  <Nav.Link href="#pricing">Contacto</Nav.Link>
+                  <Button variant="outline-success" style={{ marginRight: "10px", marginBottom: "10px", backgroundColor: "black", borderColor: "black", color: "#FAFF0F"}}>Ingresar</Button>
+                  <Button variant="outline-success" style={{ marginRight: "10px", marginBottom: "10px", backgroundColor: "black", borderColor: "black", color: "#FAFF0F"}}>Registrarse</Button>
+                </Nav>
+              </Offcanvas.Body>
+            </Navbar.Offcanvas>
+          </Container>
+        </Navbar>
+    </>
+  );
+}
+
+export default navbar;
