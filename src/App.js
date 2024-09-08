@@ -1,19 +1,17 @@
 import './App.css';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import LandingHero from './components/LandingHero';
-import LandingHero2 from './components/LandingHero2';
-
+import Layout from "./layout/Layout"
+import Home from "./views/home";
+import { BrowserRouter as Router,Routes,Route } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="overflow-x-hidden mx-auto">
-      <Navbar/>
-      <LandingHero/>
-      <LandingHero2/>
-      <Footer/>
-    </div>
-    
+    <Router>
+      <Routes>
+        <Route path='/' element={<Layout/>}>
+          <Route path='/' element={<Home/>}/>
+        </Route>
+      </Routes>
+    </Router>
 
 
   );
