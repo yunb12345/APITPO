@@ -1,54 +1,138 @@
+import * as React from 'react';
 import { Outlet } from "react-router-dom";
-import logo from "../assets/logo-placeholder-3.jpg";
 import { AiOutlineX } from "react-icons/ai";
 import { AiOutlineInstagram } from "react-icons/ai";
 import { AiOutlineYoutube } from "react-icons/ai";
 import { AiOutlineLinkedin } from "react-icons/ai";
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import Button from 'react-bootstrap/Button';
-import Offcanvas from 'react-bootstrap/Offcanvas';
+import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
+import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import imguser from "../imgs/default-user-icon-8.jpg";
+import logo from "../imgs/A.png";
+
+const navigation = [
+    { name: 'Entrar', href: '#', current: true },
+    { name: 'Login', href: '#', current: false },
+  ]
+  
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(' ')
+}
 
 const Layout = ()=>{
     return(
         <div className="overflow-x-hidden mx-auto">
-            <Navbar key="lg" expand="lg" className="mb-3" style={{ backgroundColor: "#FAFF0F", borderColor: "#11077d",}}>
-                <Container fluid>
-                    <Navbar.Brand href="#"style={{marginBottom: "10px"}}>Logo Placeholder</Navbar.Brand>
-                    <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`} />
-                    <Navbar.Offcanvas
-                    id={`offcanvasNavbar-expand-lg`}
-                    aria-labelledby={`offcanvasNavbarLabel-expand-lg`}
-                    placement="start"
-                    style={{ backgroundColor: "#FAFF0F", borderColor: "#11077d",}}
-                    >
-                    <Offcanvas.Header closeButton>
-                        <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>
-                        Logo Placeholder
-                        </Offcanvas.Title>
-                    </Offcanvas.Header>
-                    <Offcanvas.Body>
-                        <Nav className="justify-content-end flex-grow-1 pe-3">
-                        <Nav.Link href="#home">Inicio</Nav.Link>  
-                        <Nav.Link href="#features">Servicios</Nav.Link>
-                        <Nav.Link href="#pricing">Beneficios</Nav.Link>
-                        <Nav.Link href="#pricing">Contacto</Nav.Link>
-                        <Button variant="outline-success" style={{ marginRight: "10px", marginBottom: "10px", backgroundColor: "black", borderColor: "black", color: "#FAFF0F"}}>Ingresar</Button>
-                        <Button variant="outline-success" style={{ marginRight: "10px", marginBottom: "10px", backgroundColor: "black", borderColor: "black", color: "#FAFF0F"}}>Registrarse</Button>
-                        </Nav>
-                    </Offcanvas.Body>
-                    </Navbar.Offcanvas>
-                </Container>
-            </Navbar>
+            <Disclosure as="nav" className="bg-apiyellow">
+                <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+                    <div className="relative flex h-16 items-center justify-between">
+                        <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+                            {/* Mobile menu button*/}
+                            <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                            <span className="absolute -inset-0.5" />
+                            <span className="sr-only">Open main menu</span>
+                            <Bars3Icon aria-hidden="true" className="block h-6 w-6 group-data-[open]:hidden" />
+                            <XMarkIcon aria-hidden="true" className="hidden h-6 w-6 group-data-[open]:block" />
+                            </DisclosureButton>
+                        </div>
+                        <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                            <div className="flex flex-shrink-0 items-center">
+                                <img
+                                    alt="Your Company"
+                                    src={logo}
+                                    className="h-12 w-auto"
+                                />
+                            </div>
+                            <div className="hidden sm:ml-6 sm:block sm:mt-2">
+                                <div className="flex space-x-4">
+                                    {navigation.map((item) => (
+                                    <a
+                                        key={item.name}
+                                        href={item.href}
+                                        aria-current={item.current ? 'page' : undefined}
+                                        className={classNames(
+                                        item.current ? 'bg-gray-900 text-white' : 'text-gray-700 hover:bg-gray-100 hover:text-black',
+                                        'rounded-md px-3 py-2 text-sm font-medium',
+                                        )}
+                                    >
+                                        {item.name}
+                                    </a>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                        <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                            <button
+                            type="button"
+                            className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                            >
+                            <span className="absolute -inset-1.5" />
+                            <span className="sr-only">View notifications</span>
+                            <BellIcon aria-hidden="true" className="h-6 w-6" />
+                            </button>
+
+                            {/* Profile dropdown */}
+                            <Menu as="div" className="relative ml-3">
+                                <div>
+                                    <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                                    <span className="absolute -inset-1.5" />
+                                    <span className="sr-only">Open user menu</span>
+                                    <img
+                                        alt=""
+                                        src={imguser}
+                                        className="h-8 w-8 rounded-full"
+                                    />
+                                    </MenuButton>
+                                </div>
+                                <MenuItems
+                                    transition
+                                    className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                                >
+                                <MenuItem>
+                                    <a href="#" className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
+                                        Mi perfil
+                                    </a>
+                                </MenuItem>
+                                <MenuItem>
+                                    <a href="#" className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
+                                        Configuracion
+                                    </a>
+                                </MenuItem>
+                                <MenuItem>
+                                    <a href="#" className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
+                                        Log out
+                                    </a>
+                                </MenuItem>
+                                </MenuItems>
+                            </Menu>
+                        </div>
+                    </div>
+                </div>
+                <DisclosurePanel className="sm:hidden">
+                    <div className="space-y-1 px-2 pb-3 pt-2">
+                    {navigation.map((item) => (
+                        <DisclosureButton
+                        key={item.name}
+                        as="a"
+                        href={item.href}
+                        aria-current={item.current ? 'page' : undefined}
+                        className={classNames(
+                            item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                            'block rounded-md px-3 py-2 text-base font-medium',
+                        )}
+                        >
+                        {item.name}
+                        </DisclosureButton>
+                    ))}
+                    </div>
+                </DisclosurePanel>
+            </Disclosure>
             <main>
                 <Outlet/>
             </main>
             <footer className="bg-apiyellow">
-                <div className="flex flex-row justify-center py-10">
-                    <div className="flex flex-row px-10 items-center text-xl">
+                <div className="flex flex-wrap items-center justify-center py-10">
+                    <div className="flex flex-row px-10 items-center text-2xl lg:text-3xl gap-4">
                         <div className="px-1">
-                            <AiOutlineX/>
+                            <AiOutlineX className=''/>
                         </div>
                         <div className="px-1">
                             <AiOutlineYoutube/>
@@ -58,36 +142,6 @@ const Layout = ()=>{
                         </div>
                         <div className="px-1">
                             <AiOutlineLinkedin/>
-                        </div>
-                
-                    </div>
-                    <div className="flex justify-start flex-col px-10">
-                        <div className="pb-5">
-                            <h2>Legal</h2>
-                        </div>
-                        <div className="flex flex-col gap-2">
-                            <h3>Terminos</h3>
-                            <h3>Privacidad</h3>
-                        </div>
-                    </div>
-                    <div className="flex justify-start flex-col px-10">
-                        <div className="pb-5">
-                            <h2>Servicios</h2>
-                        </div>
-                        <div className="flex flex-col gap-2">
-                            <h3>Diseño de proyectos</h3>
-                            <h3>Calcular costos</h3>
-                            <h3>Subida de tickets</h3>
-                        </div>
-                    </div>
-                    <div className="flex justify-start flex-col px-10">
-                        <div className="pb-5">
-                            <h2>Contacto</h2>
-                        </div>
-                        <div className="flex flex-col gap-2">
-                            <h3>Inicio</h3>
-                            <h3>Nosotros</h3>
-                            <h3>Contacto</h3>
                         </div>
                     </div>
                 </div>
