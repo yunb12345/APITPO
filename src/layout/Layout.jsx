@@ -20,7 +20,7 @@ const navigation = [
 
 const Layout = ()=>{
     return(
-        <div className="overflow-x-hidden mx-auto">
+        <div className="overflow-x-hidden mx-auto" style={{minHeight:"100vh", display:"flex", flexDirection:"column"}}>
             <Disclosure as="nav" className="bg-apiyellow">
                 <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
                     <div className="relative flex h-16 items-center justify-between">
@@ -128,7 +128,7 @@ const Layout = ()=>{
             <main>
                 <Outlet/>
             </main>
-            <footer className="bg-apiyellow">
+            <footer className="bg-apiyellow" style={{marginTop:"auto"}}>
                 <div className="flex flex-wrap items-center justify-center py-10">
                     <div className="flex flex-row px-10 items-center text-2xl lg:text-3xl gap-4">
                         <div className="px-1">
