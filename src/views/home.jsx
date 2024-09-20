@@ -2,7 +2,7 @@ import image from "../imgs/landing_img.png";
 import { FaCalculator } from "react-icons/fa";
 import { FaCalendar } from "react-icons/fa";
 import { FaRocket } from "react-icons/fa";
-
+import { Card } from "flowbite-react";
 
 
 const Home =()=>{
@@ -51,37 +51,37 @@ const Home =()=>{
                     <h1>¿Que puedo hacer en Splitify?</h1>
                 </div>
                 <div className="grid md:grid-cols-3 gap-10 py-10 lg:px-10 lg:text-2xl">
-                    <div>
-                        <div className="flex flex-row items-center gap-4">
-                            <FaCalculator className="text-xl lg:text-2xl"/>
-                            <div className="flex flex-col pl-10">
-                                <h2 className="text-xl lg:text-2xl">Calcular</h2>
-                                <p className="text-base lg:text-xl">Esta app calcula automaticamente todo.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div className="flex flex-row items-center gap-4">
-                            <FaCalendar className="text-xl lg:text-2xl"/>
-                            <div className="flex flex-col pl-10">
-                                <h2 className="text-xl lg:text-2xl">Planificar</h2>
-                                <p className="text-base lg:text-xl">Mira las distintas fechas de tus proyectos para ser proactivo.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div className="flex flex-row items-center gap-4">
-                            <FaRocket className="text-xl lg:text-2xl"/>
-                            <div className="flex flex-col pl-10">
-                                <h2 className="text-xl lg:text-2xl">Rapido</h2>
-                                <p className="text-base lg:text-xl">Aplicacion con una interfaz intuitiva para que no pierdas tiempo.</p>
-                            </div>
-                        </div>
-                    </div>
+                    <Card>
+                        <FaCalculator className="text-xl lg:text-2xl"/>
+                        <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            Calcular
+                        </h5>
+                        <p className="font-normal text-gray-700 dark:text-gray-400">
+                        Esta app calcula automaticamente todo.
+                        </p>
+                    </Card>
+                    <Card>
+                        <FaCalendar className="text-xl lg:text-2xl"/>
+                        <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            Planificar
+                        </h5>
+                        <p className="font-normal text-gray-700 dark:text-gray-400">
+                            Mira las distintas fechas de tus proyectos para ser proactivo.
+                        </p>
+                    </Card>
+                    <Card>
+                        <FaRocket className="text-xl lg:text-2xl"/>
+                        <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            Rapido
+                        </h5>
+                        <p className="font-normal text-gray-700 dark:text-gray-400">
+                            Aplicacion con una interfaz intuitiva para que no pierdas tiempo.
+                        </p>
+                    </Card>
                 </div>
             </div>
         </div>
 
     )
 }
-export default Home
+export default Home;
