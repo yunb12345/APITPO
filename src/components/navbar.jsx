@@ -5,7 +5,7 @@ import { Avatar, Dropdown, Navbar } from "flowbite-react";
 
 const navbar = () => {
     return (
-        <Navbar fluid rounded>
+        <Navbar fluid rounded className="bg-apiyellow">
             <Navbar.Brand href="">
                 <img src={logo} className="mr-3 h-6 sm:h-9" alt="Logo" />
                 <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Splitify</span>
@@ -21,8 +21,8 @@ const navbar = () => {
                 <Dropdown.Header>
                     <span className="block text-sm">Nombre de usuario</span>
                 </Dropdown.Header>
-                <Dropdown.Item><Link to="/board">Panel</Link></Dropdown.Item>
-                <Dropdown.Item><Link to="/profile">Perfil</Link></Dropdown.Item>
+                <Link to="/board"><Dropdown.Item>Panel</Dropdown.Item></Link>
+                <Link to="/profile"><Dropdown.Item>Perfil</Dropdown.Item></Link>
                 <Dropdown.Item>Configuracion</Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item>Sign out</Dropdown.Item>

@@ -3,23 +3,24 @@ import Button from '@mui/material/Button';
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { FaArrowUp } from "react-icons/fa";
 import { FaArrowDown } from "react-icons/fa";
+import { BsFillHandIndexFill } from 'react-icons/bs';
 
 
 const proyectos = [
     {
         nombre:'Proyecto 1',
         fecha:'Junio 10, 2018',
-        balance:'-180'
+        balance:-180
     },
     {
         nombre:'Proyecto 2',
         fecha:'Junio 7, 2018',
-        balance:'880'
+        balance:880
     },
     {
         nombre:'Proyecto 3',
         fecha:'Agosto 10, 2018',
-        balance:'10000'
+        balance:10000
     },
 
 ]
@@ -60,15 +61,15 @@ const Board = () => {
                 
 
                 <div className='flex flex-col gap-4'>
-                {proyectos.map(pro => 
+                {proyectos.map((pro,index) => 
                     (
-                        <div className='flex justify-between bg-white shadow-sm m-3 p-4 rounded-sm'>
+                        <div key={index} className='flex justify-between bg-white shadow-sm m-3 p-4 rounded-sm'>
                             <div className='flex flex-col'>
                                 <p>{pro.nombre}</p>
                                 <p>{pro.fecha}</p>
                             </div>
                             <div className=' content-center'>
-                                <p>{pro.balance}</p>
+                                <p className={pro.balance > 0 ? 'text-emerald-500' : 'text-rose-600'}>{pro.balance}</p>
                             </div>
                         </div>
                     )
