@@ -54,24 +54,24 @@ const Board = () => {
                 </div>
             </div>
             <div className='pb-14 relative'>
-                <div className='flex flex-col justify-between p-7 lg:flex-row'>
-                    <h1 className='text-3xl font-bold m-2 text-center lg:text-left'>Mis proyectos</h1>
+                <div className='flex flex-col justify-between p-7 gap-4 lg:flex-row'>
+                    <h1 className='text-4xl font-bold m-2 text-center lg:text-left'>Mis proyectos</h1>
                     <Button variant="contained" startIcon={<IoIosAddCircleOutline/>}>Agregar</Button>
                 </div>
-                
-
                 <div className='flex flex-col gap-4'>
                 {proyectos.map((pro,index) => 
                     (
-                        <div key={index} className='flex justify-between bg-white shadow-sm m-3 p-4 rounded-sm'>
+                    <a href="#">
+                        <div key={index} className='flex justify-between bg-white shadow-sm m-3 p-4 rounded-sm hover:shadow-lg transition-all'>
                             <div className='flex flex-col'>
-                                <p>{pro.nombre}</p>
+                                <p className='font-bold text-2xl'>{pro.nombre}</p>
                                 <p>{pro.fecha}</p>
                             </div>
                             <div className=' content-center'>
-                                <p className={pro.balance > 0 ? 'text-emerald-500' : 'text-rose-600'}>{pro.balance}</p>
+                                <p className={pro.balance > 0 ? 'text-emerald-500 text-xl' : 'text-rose-600 text-xl'}>{pro.balance}</p>
                             </div>
                         </div>
+                    </a>
                     )
                 )}
                 </div>

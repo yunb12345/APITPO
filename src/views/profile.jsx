@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 
+
 const proyectos = [
     {
         nombre:'Proyecto 1',
@@ -77,26 +78,27 @@ const Profile = () => {
                     <div>
                         <img alt='usr' src={imguser} className='h-20 w-20 m-5 rounded-2xl'/>
                     </div>
-                    <div className='justify-center text-left content-center'>
-                        <div className='flex flex-row gap-4 justify-center'>
-                            <h1>Balance</h1>
-                            <h1>$850</h1>
+                    <div className='justify-center text-center content-center'>
+                        <div className='flex flex-col justify-center'>
+                            <p className='text-bold text-3xl'>{userData.Usuario}</p>
+                            <h1 className=''>Balance</h1>
+                            <h1 className='text-bold text-2xl text-emerald-500'>$850</h1>
                         </div>
-                        <p>{userData.Usuario}</p>
+                        
                     </div>
                 </div>
                 <div className='flex flex-col p-4 text-sm gap-2 w-full lg:w-2/3 m-auto'>
                     <div>
-                        <p className='text-gray-400'>NOMBRE Y APELLIDO</p>
-                        <p>{userData.Nombre} {userData.Apellido}</p>
+                        <p className='text-lg text-gray-400'>NOMBRE Y APELLIDO</p>
+                        <p className='text-lg'>{userData.Nombre} {userData.Apellido}</p>
                     </div>
                     <div>
-                        <p className='text-gray-400'>EMAIL</p>
-                        <p>{userData.Mail}</p>
+                        <p className='text-lg text-gray-400'>EMAIL</p>
+                        <p className='text-lg'>{userData.Mail}</p>
                     </div>
                     <div>
-                        <p className='text-gray-400'>CONTRASEÑA</p>
-                        <p>***********</p>
+                        <p className='text-lg text-gray-400'>CONTRASEÑA</p>
+                        <p className='text-lg'>***********</p>
                     </div>
                 </div>
                 <div className='flex flex-wrap gap-4 justify-center'>
@@ -147,9 +149,10 @@ const Profile = () => {
                     </div>
                 </Box>
             </Modal>
-            <div>
-                <div>
-                    <h1>Ultimas 5 transacciones</h1>
+            <div className='py-5'>
+                <div className='flex flex-row justify-between py-10'>
+                    <h1 className='text-2xl'>Ultimas 5 transacciones</h1>
+                    <Button>Ver Más</Button>
                 </div>
                 <div>
                     <div className='flex flex-col gap-4'>

@@ -23,7 +23,7 @@ const navbar = () => {
                 </Dropdown.Header>
                 <Link to="/board"><Dropdown.Item>Panel</Dropdown.Item></Link>
                 <Link to="/profile"><Dropdown.Item>Perfil</Dropdown.Item></Link>
-                <Dropdown.Item>Configuracion</Dropdown.Item>
+                <Link to="/transactions"><Dropdown.Item>Mis transacciones</Dropdown.Item></Link>
                 <Dropdown.Divider />
                 <Dropdown.Item>Sign out</Dropdown.Item>
                 </Dropdown>
