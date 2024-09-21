@@ -6,7 +6,8 @@ module.exports = {
     extend: {
       colors:{
         apiyellow: '#FAFF0F',
-        apigray : '#d2d2d2',
+        apigray : '#F0F0F0',
+        apiyellowhover: '#E5E200',
       }
     },
   },

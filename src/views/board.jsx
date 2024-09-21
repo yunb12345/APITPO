@@ -1,30 +1,26 @@
 import * as React from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import imgadd from "../imgs/plus.png";
 import Button from '@mui/material/Button';
 import { IoIosAddCircleOutline } from "react-icons/io";
+import { FaArrowUp } from "react-icons/fa";
+import { FaArrowDown } from "react-icons/fa";
+import { BsFillHandIndexFill } from 'react-icons/bs';
 
 
-const projects = [
-    "Proyecto 1",
-    "Proyecto 2",
-    "Proyecto 3",
-    "Proyecto 4",
-    "Proyecto 5",
-    "Proyecto 6",
-];
 const proyectos = [
     {
         nombre:'Proyecto 1',
         fecha:'Junio 10, 2018',
-        balance:'-180'
+        balance:-180
     },
     {
         nombre:'Proyecto 2',
         fecha:'Junio 7, 2018',
-        balance:'880'
+        balance:880
+    },
+    {
+        nombre:'Proyecto 3',
+        fecha:'Agosto 10, 2018',
+        balance:10000
     },
 
 ]
@@ -41,7 +37,8 @@ const Board = () => {
                         <div>
                             <p className='m-0'>Te deben</p>
                         </div>
-                        <div>
+                        <div className='flex flex-row items-center justify-center gap-2'>
+                            <FaArrowUp className='text-emerald-500'/>
                             <p className='text-emerald-500'>58,30</p>
                         </div>
                     </div>
@@ -49,29 +46,30 @@ const Board = () => {
                         <div>
                             <p className='m-0'>Debes</p>
                         </div>
-                        <div>
+                        <div className='flex flex-row items-center justify-center gap-2'>
+                            <FaArrowDown className='text-rose-600'/>
                             <p className='text-rose-600'>1,40</p>
                         </div>
                     </div>
                 </div>
             </div>
             <div className='pb-14 relative'>
-                <div className='flex justify-between p-7'>
-                    <h1 className='text-3xl font-bold m-2'>Mis proyectos</h1>
+                <div className='flex flex-col justify-between p-7 lg:flex-row'>
+                    <h1 className='text-3xl font-bold m-2 text-center lg:text-left'>Mis proyectos</h1>
                     <Button variant="contained" startIcon={<IoIosAddCircleOutline/>}>Agregar</Button>
                 </div>
                 
 
                 <div className='flex flex-col gap-4'>
-                {proyectos.map(pro => 
+                {proyectos.map((pro,index) => 
                     (
-                        <div className='flex justify-between bg-white shadow-sm m-3'>
+                        <div key={index} className='flex justify-between bg-white shadow-sm m-3 p-4 rounded-sm'>
                             <div className='flex flex-col'>
                                 <p>{pro.nombre}</p>
                                 <p>{pro.fecha}</p>
                             </div>
-                            <div>
-                                <p>{pro.balance}</p>
+                            <div className=' content-center'>
+                                <p className={pro.balance > 0 ? 'text-emerald-500' : 'text-rose-600'}>{pro.balance}</p>
                             </div>
                         </div>
                     )

@@ -1,4 +1,6 @@
 import TextField from '@mui/material/TextField';
+import { Link } from "react-router-dom";
+
 
 const registrar =()=>{
     return(
@@ -15,9 +17,12 @@ const registrar =()=>{
                             </div>
                         </div>
                         <div className="flex flex-wrap justify-center py-4">
-                            <button className="bg-transparent border border-black px-5 py-1 rounded-full lg:px-10 lg:py-2">
-                                Loguear
-                            </button>
+                            <Link to="/login">
+                                <button className="bg-transparent border border-black px-5 py-1 rounded-lg lg:px-10 lg:py-2 hover:bg-black hover:text-white transition-all">
+                                    Loguear
+                                </button>
+                            </Link>
+                            
                         </div>
                     </div>
                 </div>
@@ -38,7 +43,7 @@ const registrar =()=>{
                             />
                         </div>
                         <div className='py-5'>
-                            <button className="bg-apiyellow px-8 py-2 rounded-full lg:px-20">
+                            <button className="bg-apiyellow px-8 py-2 rounded-lg lg:px-20 hover:bg-apiyellowhover shadow-md transition-all">
                                 Registrar
                             </button>
                         </div>
