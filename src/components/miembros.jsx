@@ -28,7 +28,7 @@ const Miembros = (props) => {
 
     const handleAddIntegrante = () => {
         const nuevoId = integrantes.length > 0 ? integrantes[integrantes.length - 1].id + 1 : 1; // Genera un nuevo id
-        setIntegrantes([...integrantes, { id: nuevoId, name: newIntegrante}]);
+        setIntegrantes([...integrantes, { id: nuevoId, name: newIntegrante, transacciones:0}]);
         setNewIntegrante('');
         handleCloseIntegrante();
     };

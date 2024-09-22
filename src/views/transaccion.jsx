@@ -7,12 +7,14 @@ const datat = [
       title: 'Proyecto1',
       date: '"2015-03-25"',
       value: 321,
+      comprobante: "test"
     },
     {
         id: 2,
         title: 'Proyecto2',
         date: '"2018-01-12"',
         value: 489,
+        comprobante: "test2"
     },
 ]
 const columnst = [
@@ -29,6 +31,11 @@ const columnst = [
 	{
 		name: 'Monto',
 		selector: row => row.value,
+		sortable: true,
+	},
+    {
+		name: 'Comprobante',
+		selector: row => row.comprobante.name,
 		sortable: true,
 	},
     
