@@ -7,6 +7,7 @@ import { BrowserRouter as Router,Routes,Route } from 'react-router-dom';
 import Profile from "./views/profile";
 import Board from "./views/board";
 import Transaction from "./views/transaccion";
+import Proyecto from "./views/proyecto";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path='/profile' element={<Profile/>}/>
           <Route path='/board' element={<Board/>}/>
           <Route path='/transactions' element={<Transaction/>}/>
+          <Route path='/proyecto' element={<Proyecto/>}/>
         </Route>
         <Route path='/register' element={<Registrar/>}/>
         <Route path='/login' element={<Login/>}/>

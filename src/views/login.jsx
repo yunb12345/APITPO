@@ -1,7 +1,7 @@
 import TextField from '@mui/material/TextField';
 import { Link } from "react-router-dom";
 
-const login = () =>{
+const Login = () =>{
     return(
         <div className="bg-apigray h-screen overflow-x-hidden flex flex-wrap justify-center transition-all">
             <div className="my-10 flex flex-wrap bg-slate-100 justify-center items-center w-2/3">
@@ -30,4 +30,4 @@ const login = () =>{
         </div>
     )
 }
-export default login;
+export default Login;

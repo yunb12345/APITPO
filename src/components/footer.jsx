@@ -1,7 +1,7 @@
 import { Footer } from "flowbite-react";
 import logo from "../imgs/A.png";
 
-const footer = () => {
+const FFooter = () => {
     return(
         <Footer container className="">
             <div className="w-full text-center">
@@ -12,10 +12,6 @@ const footer = () => {
                     alt="Logo"
                     name="Splitify"
                 />
-                <Footer.LinkGroup>
-                    <Footer.Link href="#">About</Footer.Link>
-                    <Footer.Link href="#">Contact</Footer.Link>
-                </Footer.LinkGroup>
                 </div>
                 <Footer.Divider />
                 <Footer.Copyright href="#" by="Splitify" year={2024} />
@@ -23,4 +19,4 @@ const footer = () => {
         </Footer>
     );
 };
-export default footer;
+export default FFooter;

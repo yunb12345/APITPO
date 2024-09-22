@@ -1,17 +1,50 @@
 import * as React from 'react';
 import Tabla from "../components/tabletran";
 
-const transaccion = () =>{
+const datat = [
+    {
+      id: 1,
+      title: 'Proyecto1',
+      date: '"2015-03-25"',
+      value: 321,
+    },
+    {
+        id: 2,
+        title: 'Proyecto2',
+        date: '"2018-01-12"',
+        value: 489,
+    },
+]
+const columnst = [
+	{
+		name: 'Nombre del proyecto',
+		selector: row => row.title,
+		sortable: true,
+	},
+	{
+		name: 'Fecha',
+		selector: row => row.date,
+		sortable: true,
+	},
+	{
+		name: 'Monto',
+		selector: row => row.value,
+		sortable: true,
+	},
+    
+];
+
+const Transaccion = () =>{
     return(
         <div className='mx-5 lg:mx-20 h-screen'>
             <div className='py-10'>
                 <h1 className='text-center text-4xl font-bold'>Transacciones</h1>
             </div>
             <div>
-                <Tabla>
+                <Tabla data={datat} columns={columnst}>
                 </Tabla>
             </div>
         </div>
     );
 }
-export default transaccion;
+export default Transaccion;

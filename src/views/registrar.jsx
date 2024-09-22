@@ -2,7 +2,7 @@ import TextField from '@mui/material/TextField';
 import { Link } from "react-router-dom";
 
 
-const registrar =()=>{
+const Registrar =()=>{
     return(
         <div className="bg-apigray h-screen overflow-x-hidden flex flex-wrap justify-center">
             <div className="mx-10 my-10 flex flex-wrap bg-slate-100">
@@ -53,4 +53,4 @@ const registrar =()=>{
         </div>
     );
 }
-export default registrar;
+export default Registrar;

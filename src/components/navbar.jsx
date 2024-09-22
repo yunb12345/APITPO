@@ -3,7 +3,7 @@ import logo from "../imgs/A.png";
 import { Link } from "react-router-dom";
 import { Avatar, Dropdown, Navbar } from "flowbite-react";
 
-const navbar = () => {
+const NNavbar = () => {
     return (
         <Navbar fluid rounded className="bg-apiyellow">
             <Navbar.Brand href="">
@@ -54,4 +54,4 @@ const navbar = () => {
         </Navbar>
     );
 }
-export default navbar;
+export default NNavbar;

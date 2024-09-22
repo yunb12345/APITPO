@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
-
+import { Link } from "react-router-dom";
 
 const proyectos = [
     {
@@ -152,7 +152,7 @@ const Profile = () => {
             <div className='py-5'>
                 <div className='flex flex-row justify-between py-10'>
                     <h1 className='text-2xl'>Ultimas 5 transacciones</h1>
-                    <Button>Ver Más</Button>
+                    <Link to="/transactions"><Button>Ver Más</Button></Link>
                 </div>
                 <div>
                     <div className='flex flex-col gap-4'>
