@@ -56,7 +56,7 @@ const Board = () => {
             <div className='pb-14 relative'>
                 <div className='flex flex-col justify-between p-7 gap-4 lg:flex-row'>
                     <h1 className='text-4xl font-bold m-2 text-center lg:text-left'>Mis proyectos</h1>
-                    <Button variant="contained" startIcon={<IoIosAddCircleOutline/>}>Agregar</Button>
+                    <Button variant="contained" startIcon={<IoIosAddCircleOutline/>}>Crear Proyecto</Button>
                 </div>
                 <div className='flex flex-col gap-4'>
                 {proyectos.map((pro,index) => 

@@ -84,8 +84,8 @@ const TransaccionGrupo = (props) => {
                         onChange={(e) => setNewMovement({ ...newMovement, comprobante: e.target.files[0] })}
                     />
                     </Button>
-                    <Button onClick={handleAddMovement} variant="contained" sx={{ mt: 2, backgroundColor: '#FAFF0F', color: 'black' }}>
-                    Añadir
+                    <Button onClick={handleOpenImageModal} variant="contained" sx={{ mt: 2, backgroundColor: '#FAFF0F', color: 'black' }}>
+                    Añadir comprobante
                     </Button>
                 </Box>
             </Modal>
