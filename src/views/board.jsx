@@ -4,6 +4,7 @@ import { IoIosAddCircleOutline } from "react-icons/io";
 import { FaArrowUp } from "react-icons/fa";
 import { FaArrowDown } from "react-icons/fa";
 import { BsFillHandIndexFill } from 'react-icons/bs';
+import { useNavigate } from "react-router-dom";
 
 
 const proyectos = [
@@ -26,6 +27,12 @@ const proyectos = [
 ]
 
 const Board = () => {
+    const navigate = useNavigate();
+    const openProyect = () => {
+        navigate("/proyecto");
+    }
+
+    
     return (
         <div className='mx-10'>
             <div className='flex flex-col justify-between m-auto items-center py-5'>
@@ -61,17 +68,15 @@ const Board = () => {
                 <div className='flex flex-col gap-4'>
                 {proyectos.map((pro,index) => 
                     (
-                    <a href="#">
-                        <div key={index} className='flex justify-between bg-white shadow-sm m-3 p-4 rounded-sm hover:shadow-lg transition-all'>
-                            <div className='flex flex-col'>
-                                <p className='font-bold text-2xl'>{pro.nombre}</p>
-                                <p>{pro.fecha}</p>
-                            </div>
-                            <div className=' content-center'>
-                                <p className={pro.balance > 0 ? 'text-emerald-500 text-xl' : 'text-rose-600 text-xl'}>{pro.balance}</p>
-                            </div>
+                    <div key={index} onClick={openProyect} className='flex justify-between bg-white shadow-sm m-3 p-4 rounded-sm hover:shadow-lg transition-all'>
+                        <div className='flex flex-col'>
+                            <p className='font-bold text-2xl'>{pro.nombre}</p>
+                            <p>{pro.fecha}</p>
                         </div>
-                    </a>
+                        <div className=' content-center'>
+                            <p className={pro.balance > 0 ? 'text-emerald-500 text-xl' : 'text-rose-600 text-xl'}>{pro.balance}</p>
+                        </div>
+                    </div>
                     )
                 )}
                 </div>

@@ -14,6 +14,8 @@ import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 
 
+const Proyecto = () =>{
+
 /*tabla para transaccion*/
 const dataTransaccion = [
     {
@@ -44,12 +46,12 @@ const columnsTransaccion = [
 	},
 	{
 		name: 'Monto',
-		selector: row => row.value,
+		selector: row => "$" + row.value,
 		sortable: true,
 	},
     {
 		name: 'Comprobante',
-		selector: row => row.comprobante,
+        cell: (row) => <span onClick={() => handleOpenImageModal(row, { selector: row.comprobante.name })}>{row.comprobante.name}</span>,
 		sortable: true,
 	},
     
@@ -65,7 +67,7 @@ const columnsMiembro = [
     },
     {
         name:'Transacciones',
-        selector: row => row.transacciones,
+        selector: row => "$" + row.transacciones,
 		sortable: true,
     },
 ];
@@ -94,27 +96,43 @@ const tabsN = [{
     
 ];
 
+
+
+
+    
+
 const tabsContent = [<TransaccionGrupo tablaColumna={columnsTransaccion} tablaContenido={dataTransaccion}/>,<Miembros tablaColumna={columnsMiembro} tablaContenido={dataMiembro}/>]
 //
 
-const Proyecto = () =>{
 
-    const [openEdit, setOpenEdit] = React.useState(false);
-    const [projectName, setProjectName] = React.useState('Nombre del proyecto');
-    const [projectDescription, setProjectDescription] = React.useState('Descripcion del proyecto');
 
-    const [TempProjectName, setTempProjectName] = React.useState(projectName);
-    const [TempProjectDescription, setTempProjectDescription] = React.useState(projectDescription);
-    const handleOpenEdit = () => setOpenEdit(true);
-    const handleCloseEdit = () => setOpenEdit(false);
+
+
+    
+const [openEdit, setOpenEdit] = React.useState(false);
+const [projectName, setProjectName] = React.useState('Nombre del proyecto');
+const [projectDescription, setProjectDescription] = React.useState('Descripcion del proyecto');
+
+const [TempProjectName, setTempProjectName] = React.useState(projectName);
+const [TempProjectDescription, setTempProjectDescription] = React.useState(projectDescription);
+const handleOpenEdit = () => setOpenEdit(true);
+const handleCloseEdit = () => setOpenEdit(false);
   
-    const handleUpdateProject = () => {
-      setProjectName(TempProjectName);
-      setProjectDescription(TempProjectDescription);
-      handleCloseEdit();
-    };
-  
-  
+const handleUpdateProject = () => {
+    setProjectName(TempProjectName);
+    setProjectDescription(TempProjectDescription);
+    handleCloseEdit();
+};
+    
+
+const [selectedComprobante, setSelectedComprobante] = React.useState(null);
+const [openImageModal, setOpenImageModal] = React.useState(false);
+const handleOpenImageModal = (cell) => {
+    console.log(cell);
+    setSelectedComprobante(URL.createObjectURL(cell.comprobante));
+    setOpenImageModal(true);
+};
+    
 
     return(
         <div className="h-screen">
@@ -157,6 +175,11 @@ const Proyecto = () =>{
                     <Button onClick={handleUpdateProject} variant="contained" sx={{ mt: 2, backgroundColor: '#FAFF0F', color: 'black' }}>
                     Guardar
                     </Button>
+                </Box>
+            </Modal>
+            <Modal open={openImageModal} onClose={() => setOpenImageModal(false)}>
+                <Box sx={{ ...style, width: '80%', height: '80%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    {selectedComprobante && <img src={selectedComprobante} alt="Comprobante" style={{ maxWidth: '100%', maxHeight: '100%' }} />}
                 </Box>
             </Modal>
         </div>

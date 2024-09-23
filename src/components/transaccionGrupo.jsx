@@ -37,6 +37,21 @@ const TransaccionGrupo = (props) => {
       setOpenImageModal(true);
     };
 
+    const dataMiembro = [
+        {
+            id: 1,
+            name:'Agustin',
+            transacciones:200,
+            porcentaje:0
+        },
+        {
+            id:2,
+            name:'Alex',
+            transacciones:430,
+            porcentaje:0
+        }
+    ];
+
   
     return(
         <div>
