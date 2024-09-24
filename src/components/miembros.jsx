@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
+import CustomBox from "./box";
 
 const Miembros = (props) => {
     const {tablaColumna,tablaContenido} = props;
@@ -37,15 +38,17 @@ const Miembros = (props) => {
         <div>
             <div className=''>
                 <Table data={integrantes} columns={tablaColumna}/>
-                <Button variant="contained" onClick={handleOpenIntegrante} style={{
-                        borderRadius: "10px", width: "20%", backgroundColor: "#FAFF0F", color: "black",
-                        height: "50px", marginBottom: "30px", marginLeft: "50px", marginRight: "40px", textAlign:"end", 
-                }}>
-                Añadir Integrante
-                </Button>
+                <div className='flex justify-center'>
+                    <Button variant="contained" onClick={handleOpenIntegrante} style={{
+                            borderRadius: "10px", width: "40%", backgroundColor: "#FAFF0F", color: "black",
+                            height: "50px", marginBottom: "30px", marginLeft: "50px", marginRight: "40px", textAlign:"center",
+                    }}>
+                    Añadir Miembro
+                    </Button>
+                </div>
             </div>
             <Modal open={openIntegrante} onClose={handleCloseIntegrante}>
-                <Box sx={{ ...style, width: 400 }}>
+                <CustomBox moreStyles={{width:400}}>
                     <h2 className='py-5'>Añadir Integrante</h2>
                     <TextField
                     label="Nombre del Integrante"
@@ -56,19 +59,9 @@ const Miembros = (props) => {
                     <Button onClick={handleAddIntegrante} variant="contained" sx={{ mt: 2, backgroundColor: '#FAFF0F', color: 'black' }}>
                     Añadir
                     </Button>
-                </Box>
+                </CustomBox>
             </Modal>
         </div>
     )
 }
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-  };
 export default Miembros;

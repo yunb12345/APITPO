@@ -1,9 +1,10 @@
 import * as React from 'react';
 import Table from "./tabletran";
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
+import CustomBox from "./box";
+
 
 const TransaccionGrupo = (props) => {
     const {tablaColumna,tablaContenido} = props;
@@ -57,15 +58,18 @@ const TransaccionGrupo = (props) => {
         <div>
             <div className=''>
                 <Table data={rows} columns={tablaColumna}/>
-                <Button variant="contained" onClick={handleOpenMovement} style={{
-                        borderRadius: "10px", width: "20%", backgroundColor: "#FAFF0F", color: "black",
-                        height: "50px", marginBottom: "30px", marginLeft: "50px", marginRight: "40px", textAlign:"end", 
-                }}>
-                Añadir transaccion
-                </Button>
+                <div className='flex justify-center'>
+                    <Button variant="contained" onClick={handleOpenMovement} style={{
+                            borderRadius: "10px", width: "40%", backgroundColor: "#FAFF0F", color: "black",
+                            height: "50px", marginBottom: "30px", marginLeft: "50px", marginRight: "40px", textAlign:"center",
+                    }}>
+                    Añadir transaccion
+                    </Button>
+                </div>
+                
             </div>
             <Modal open={openMovement} onClose={handleCloseMovement}>
-                <Box sx={{ ...style, width: 400 }}>
+                <CustomBox moreStyles={{width:400}}>
                     <h2>Añadir Movimiento</h2>
                     <TextField
                     label="Nombre"
@@ -87,42 +91,34 @@ const TransaccionGrupo = (props) => {
                     fullWidth
                     sx={{ mt: 2 }}
                     />
-                    <Button
-                    variant="contained"
-                    component="label"
-                    sx={{ mt: 2, backgroundColor: '#FAFF0F', color: 'black' }}
-                    >
-                    Adjuntar Comprobante
-                    <input
-                        type="file"
-                        hidden
-                        onChange={(e) => setNewMovement({ ...newMovement, comprobante: e.target.files[0] })}
-                    />
-                    </Button>
-                    <Button onClick={handleOpenImageModal} variant="contained" sx={{ mt: 2, backgroundColor: '#FAFF0F', color: 'black' }}>
-                    Añadir comprobante
-                    </Button>
-                </Box>
+                    <div className='flex flex-wrap justify-around'>
+                        <Button
+                        variant="contained"
+                        component="label"
+                        sx={{ mt: 2, backgroundColor: '#FAFF0F', color: 'black',textAlign:'center'}}
+                        >
+                        Adjuntar Comprobante
+                        <input
+                            type="file"
+                            hidden
+                            onChange={(e) => setNewMovement({ ...newMovement, comprobante: e.target.files[0] })}
+                        />
+                        </Button>
+                        <Button onClick={handleOpenImageModal} variant="contained" sx={{ mt: 2, backgroundColor: '#FAFF0F', color: 'black' }}>
+                        Añadir comprobante
+                        </Button>
+                    </div>
+                    
+                </CustomBox>
             </Modal>
 
             {/* Modal para mostrar la imagen del comprobante */}
             <Modal open={openImageModal} onClose={() => setOpenImageModal(false)}>
-                <Box sx={{ ...style, width: '80%', height: '80%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <CustomBox moreStyles={{width: '80%', height: '80%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                     {selectedComprobante && <img src={selectedComprobante} alt="Comprobante" style={{ maxWidth: '100%', maxHeight: '100%' }} />}
-                </Box>
+                </CustomBox>
             </Modal>
         </div>
     )
 }
 export default TransaccionGrupo;
-
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-};

@@ -6,7 +6,7 @@ import { Avatar, Dropdown, Navbar } from "flowbite-react";
 const NNavbar = () => {
     return (
         <Navbar fluid rounded className="bg-apiyellow">
-            <Navbar.Brand href="">
+            <Navbar.Brand href="/">
                 <img src={logo} className="mr-3 h-6 sm:h-9" alt="Logo" />
                 <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Splitify</span>
             </Navbar.Brand>
@@ -30,25 +30,20 @@ const NNavbar = () => {
                 <Navbar.Toggle />
             </div>
             <Navbar.Collapse>
-                <Link to="/" className='block py-2 pl-3 pr-4 md:p-0 border-b border-gray-100 
+                <Link to="/#seccion1" className='block py-2 pl-3 pr-4 md:p-0 border-b border-gray-100 
                 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 
                 dark:hover:text-white md:border-0 md:hover:bg-transparent md:hover:text-cyan-700 md:dark:hover:bg-transparent md:dark:hover:text-white'>
                 Inicio
                 </Link>
-                <Link to="/" className='block py-2 pl-3 pr-4 md:p-0 border-b border-gray-100 
+                <Link to="/#seccion2" className='block py-2 pl-3 pr-4 md:p-0 border-b border-gray-100 
                 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 
                 dark:hover:text-white md:border-0 md:hover:bg-transparent md:hover:text-cyan-700 md:dark:hover:bg-transparent md:dark:hover:text-white'>
                 Acerca de
                 </Link>
-                <Link to="/" className='block py-2 pl-3 pr-4 md:p-0 border-b border-gray-100 
+                <Link to="/#seccion3" className='block py-2 pl-3 pr-4 md:p-0 border-b border-gray-100 
                 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 
                 dark:hover:text-white md:border-0 md:hover:bg-transparent md:hover:text-cyan-700 md:dark:hover:bg-transparent md:dark:hover:text-white'>
                 Servicios
-                </Link>
-                <Link to="/" className='block py-2 pl-3 pr-4 md:p-0 border-b border-gray-100 
-                text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 
-                dark:hover:text-white md:border-0 md:hover:bg-transparent md:hover:text-cyan-700 md:dark:hover:bg-transparent md:dark:hover:text-white'>
-                Contacto
                 </Link>
             </Navbar.Collapse>
         </Navbar>
