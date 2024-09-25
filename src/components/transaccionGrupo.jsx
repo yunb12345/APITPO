@@ -124,7 +124,7 @@ const TransaccionGrupo = (props) => {
                     <Button onClick={handleAddMovement} variant="contained" sx={{ mt: 2, backgroundColor: '#FAFF0F', color: 'black' }}>
                     Añadir
                     </Button>
-                </Box>
+                </CustomBox>
             </Modal>
 
             {/* Modal para mostrar la imagen del comprobante */}
