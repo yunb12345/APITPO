@@ -20,24 +20,38 @@ const TransaccionGrupo = (props) => {
     const [rows, setRows] = React.useState(tablaContenido);
     
     const handleOpenMovement = () => setOpenMovement(true);
-    const handleCloseMovement = () => setOpenMovement(false);
-  
+    const handleCloseMovement = () => {
+        setNewMovement({ nameTransaccion: '', date: "", value: "", comprobante: null });
+        setOpenMovement(false);
+    }
+    
+
+    function validarPorcentaje(array) {
+        console.log(array)
+        const sumaPorcentajes = array.reduce((suma, item) => {
+            const porcentaje = parseFloat(item.porcentaje);
+            return !isNaN(porcentaje) ? suma + porcentaje : suma;
+        }, 0);
+        return sumaPorcentajes === 100;
+    }
     const handleAddMovement = () => {
-        console.log(newMovement.comprobante);
-        const newRow = {nameTransaccion:newMovement.nameTransaccion,date:newMovement.date,value:newMovement.value,comprobante:newMovement.comprobante};
-        setRows([...rows, newRow]);
-        dataMiembro.map((miembro) => {
-            miembro.transacciones = miembro.transacciones + newMovement.value * (parseInt(miembro.porcentaje)/100)
-            console.log(miembro.transacciones);
-        })
-        setNewMovement({ nameTransaccion: '', date: '', value: '', comprobante: null });
-        handleCloseMovement();
+        console.log(validarPorcentaje(dataMiembro))
+        if(newMovement.comprobante && newMovement.nameTransaccion !== "" && newMovement.date && newMovement.value > 0 && validarPorcentaje(dataMiembro)){
+            console.log(newMovement.comprobante);
+            const newRow = {nameTransaccion:newMovement.nameTransaccion,date:newMovement.date,value:newMovement.value,comprobante:newMovement.comprobante};
+            setRows([...rows, newRow]);
+            dataMiembro.map((miembro) => {
+                miembro.transacciones = miembro.transacciones + newMovement.value * (parseInt(miembro.porcentaje)/100)
+            })
+            
+            setNewMovement({ nameTransaccion: '', date: "", value: "", comprobante: null });
+            handleCloseMovement();
+        }
     };
     
     const [selectedComprobante, setSelectedComprobante] = React.useState(null);
     const [openImageModal, setOpenImageModal] = React.useState(false);
     const handleOpenImageModal = (comprobante) => {
-      console.log("test");
       setSelectedComprobante(URL.createObjectURL(comprobante));
       setOpenImageModal(true);
     };
