@@ -25,6 +25,10 @@ const TransaccionGrupo = (props) => {
         console.log(newMovement.comprobante);
         const newRow = {nameTransaccion:newMovement.nameTransaccion,date:newMovement.date,value:newMovement.value,comprobante:newMovement.comprobante};
         setRows([...rows, newRow]);
+        dataMiembro.map((miembro) => {
+            miembro.transacciones = miembro.transacciones + newMovement.value * (parseInt(miembro.porcentaje)/100)
+            console.log(miembro.transacciones);
+        })
         setNewMovement({ nameTransaccion: '', date: '', value: '', comprobante: null });
         handleCloseMovement();
     };
@@ -74,6 +78,7 @@ const TransaccionGrupo = (props) => {
                     fullWidth
                     />
                     <TextField
+                    type='number'
                     label="Monto"
                     value={newMovement.value}
                     onChange={(e) => setNewMovement({ ...newMovement, value: e.target.value })}
@@ -81,12 +86,25 @@ const TransaccionGrupo = (props) => {
                     sx={{ mt: 2 }}
                     />
                     <TextField
-                    label="Fecha"
                     value={newMovement.date}
+                    type='date'
                     onChange={(e) => setNewMovement({ ...newMovement, date: e.target.value })}
                     fullWidth
                     sx={{ mt: 2 }}
                     />
+                    {dataMiembro.map((pro,index) => 
+                            (
+                                <div>
+                                    <p>Porcentaje de {pro.name}</p>
+                                    <TextField
+                                    type='number'
+                                    onChange={(e) => pro.porcentaje = e.target.value }
+                                    fullWidth
+                                    sx={{ mt: 2 }}
+                                    />
+                                </div>
+                            )             
+                        )}
                     <Button
                     variant="contained"
                     component="label"
