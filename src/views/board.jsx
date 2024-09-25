@@ -3,7 +3,6 @@ import Button from '@mui/material/Button';
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { FaArrowUp } from "react-icons/fa";
 import { FaArrowDown } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const proyectos = [
@@ -31,13 +30,25 @@ const proyectos = [
 
 ]
 
+const Board = () => {
+    let totalBalance = 0;
+    let balanceNegativo = 0;
+    let balancePositivo = 0;
+  
+    proyectos.forEach(proyecto => {
+        totalBalance += proyecto.balance;
+        if (proyecto.balance < 0) {
+          balanceNegativo+=proyecto.balance;
+        } else if (proyecto.balance > 0) {
+          balancePositivo+=proyecto.balance;
+        }
+    });
 
-const Board = () => {    
     return (
         <div className='mx-10'>
             <div className='flex flex-col justify-between m-auto items-center py-5'>
                 <div className="items-center py-5">
-                    <h2 className='text-6xl font-bold'>$56,00</h2>
+                    <h2 className='text-6xl font-bold'>${totalBalance}</h2>
                 </div>
                 <div className='flex flex-row border-2 gap-5 p-3 text-center bg-white shadow-sm rounded-lg items-center w-2/3 lg:w-1/3'>
                     <div className='flex flex-col text-xl font-bold w-1/2'>
@@ -46,7 +57,7 @@ const Board = () => {
                         </div>
                         <div className='flex flex-row items-center justify-center gap-2'>
                             <FaArrowUp className='text-emerald-500'/>
-                            <p className='text-emerald-500'>58,30</p>
+                            <p className='text-emerald-500'>{balancePositivo}</p>
                         </div>
                     </div>
                     <div className='flex flex-col text-xl font-bold w-1/2'>
@@ -55,7 +66,7 @@ const Board = () => {
                         </div>
                         <div className='flex flex-row items-center justify-center gap-2'>
                             <FaArrowDown className='text-rose-600'/>
-                            <p className='text-rose-600'>1,40</p>
+                            <p className='text-rose-600'>{balanceNegativo}</p>
                         </div>
                     </div>
                 </div>
@@ -72,6 +83,7 @@ const Board = () => {
                             <div key={index} className='flex justify-between bg-white shadow-sm m-3 p-4 rounded-sm hover:shadow-lg transition-all'>
                                 <div className='flex flex-col'>
                                     <p className='font-bold text-2xl'>{pro.nombre}</p>
+                                    <p className='font-bold text-lg text-stone-500'>{pro.descripcion}</p>
                                     <p>{pro.fecha}</p>
                                 </div>
                                 <div className=' content-center'>
@@ -83,7 +95,6 @@ const Board = () => {
                 )}
                 </div>
             </div>
-            
         </div>
 
     );

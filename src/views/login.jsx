@@ -1,20 +1,18 @@
-import TextField from '@mui/material/TextField';
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Box from '@mui/material/Box';
+
+import TextField from '@mui/material/TextField';
 import Modal from '@mui/material/Modal';
 import CustomBox from "../components/box";
 
 const Login = () =>{
-
     const [user, setUser] = useState("");
     const [pass, setPass] = useState("");
     const logintest = {
         usuario: "test",
         contrasena: "test"
     }
-
 
     const navigate = useNavigate();
     const handleLogin = () => {
@@ -28,7 +26,6 @@ const Login = () =>{
     };
     const [openError, setOpenError] = React.useState(false);
     const handleCloseError = () => setOpenError(false);
-
 
     return(
         <div className="bg-apigray h-screen overflow-x-hidden flex flex-wrap justify-center transition-all">

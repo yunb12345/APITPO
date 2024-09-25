@@ -9,10 +9,9 @@ import { FaEdit } from "react-icons/fa";
 import { FaRegTrashAlt } from "react-icons/fa";
 
 import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
-
+import CustomBox from "../components/box";
 
 const Proyecto = () =>{
 
@@ -64,8 +63,18 @@ const Proyecto = () =>{
     /*tabla para miembros*/
     const columnsMiembro = [
         {
-            name:'Miembros',
+            name:'Usuario',
+            selector: row => row.userName,
+            sortable: true,
+        },
+        {
+            name:'Nombre',
             selector: row => row.name,
+            sortable: true,
+        },
+        {
+            name:'Apellido',
+            selector: row => row.lastName,
             sortable: true,
         },
         {
@@ -78,12 +87,16 @@ const Proyecto = () =>{
     const dataMiembro = [
         {
             id: 1,
+            userName:'Bam',
             name:'Agustin',
+            lastName:'Yoon',
             transacciones:200,
         },
         {
             id:2,
+            userName:'shkh',
             name:'Alex',
+            lastName:'Yoon',
             transacciones:430,
         }
     ];
@@ -98,18 +111,10 @@ const Proyecto = () =>{
     }
         
     ];
-
-
-
-
         
 
     const tabsContent = [<TransaccionGrupo tablaColumna={columnsTransaccion} tablaContenido={dataTransaccion}/>,<Miembros tablaColumna={columnsMiembro} tablaContenido={dataMiembro}/>]
-    //
-
-
-
-
+    //contenido de los tabs
 
         
     const [openEdit, setOpenEdit] = React.useState(false);
@@ -158,7 +163,7 @@ const Proyecto = () =>{
                 </Tabs>
             </div>
             <Modal open={openEdit} onClose={handleCloseEdit}>
-                <Box sx={{ ...style, width: 400 }}>
+                <CustomBox moreStyles={{width: 400}}>
                     <h2>Editar Proyecto</h2>
                     <TextField
                     label="Nombre del Proyecto"
@@ -178,26 +183,15 @@ const Proyecto = () =>{
                     <Button onClick={handleUpdateProject} variant="contained" sx={{ mt: 2, backgroundColor: '#FAFF0F', color: 'black' }}>
                     Guardar
                     </Button>
-                </Box>
+                </CustomBox>
             </Modal>
             <Modal open={openImageModal} onClose={() => setOpenImageModal(false)}>
-                <Box sx={{ ...style, width: '80%', height: '80%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <CustomBox moreStyles={{width: '80%', height: '80%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     {selectedComprobante && <img src={selectedComprobante} alt="Comprobante" style={{ maxWidth: '100%', maxHeight: '100%' }} />}
-                </Box>
+                </CustomBox>
             </Modal>
         </div>
     );
 }
-
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-};
 
 export default Proyecto;

@@ -32,7 +32,6 @@ const proyectos = [
         fecha:'Septiempre 20, 2018',
         balance:-750
     },
-
 ]
 
 const Profile = () => {
