@@ -3,36 +3,36 @@ import Button from '@mui/material/Button';
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { FaArrowUp } from "react-icons/fa";
 import { FaArrowDown } from "react-icons/fa";
-import { BsFillHandIndexFill } from 'react-icons/bs';
 import { useNavigate } from "react-router-dom";
-
+import { Link } from "react-router-dom";
 
 const proyectos = [
     {
+        id:1,
         nombre:'Proyecto 1',
+        descripcion:'ejemplo1',
         fecha:'Junio 10, 2018',
         balance:-180
     },
     {
+        id:2,
         nombre:'Proyecto 2',
+        descripcion:'ejemplo2',
         fecha:'Junio 7, 2018',
         balance:880
     },
     {
+        id:3,
         nombre:'Proyecto 3',
+        descripcion:'ejemplo3',
         fecha:'Agosto 10, 2018',
         balance:10000
     },
 
 ]
 
-const Board = () => {
-    const navigate = useNavigate();
-    const openProyect = () => {
-        navigate("/proyecto");
-    }
 
-    
+const Board = () => {    
     return (
         <div className='mx-10'>
             <div className='flex flex-col justify-between m-auto items-center py-5'>
@@ -63,20 +63,22 @@ const Board = () => {
             <div className='pb-14 relative'>
                 <div className='flex flex-col justify-between p-7 gap-4 lg:flex-row'>
                     <h1 className='text-4xl font-bold m-2 text-center lg:text-left'>Mis proyectos</h1>
-                    <Button variant="contained" startIcon={<IoIosAddCircleOutline/>}>Agregar</Button>
+                    <Button variant="contained" startIcon={<IoIosAddCircleOutline/>}>Crear Proyecto</Button>
                 </div>
                 <div className='flex flex-col gap-4'>
                 {proyectos.map((pro,index) => 
                     (
-                    <div key={index} onClick={openProyect} className='flex justify-between bg-white shadow-sm m-3 p-4 rounded-sm hover:shadow-lg transition-all'>
-                        <div className='flex flex-col'>
-                            <p className='font-bold text-2xl'>{pro.nombre}</p>
-                            <p>{pro.fecha}</p>
-                        </div>
-                        <div className=' content-center'>
-                            <p className={pro.balance > 0 ? 'text-emerald-500 text-xl' : 'text-rose-600 text-xl'}>{pro.balance}</p>
-                        </div>
-                    </div>
+                        <Link to={"/proyecto/" + pro.id} key={index} state={pro}>
+                            <div key={index} className='flex justify-between bg-white shadow-sm m-3 p-4 rounded-sm hover:shadow-lg transition-all'>
+                                <div className='flex flex-col'>
+                                    <p className='font-bold text-2xl'>{pro.nombre}</p>
+                                    <p>{pro.fecha}</p>
+                                </div>
+                                <div className=' content-center'>
+                                    <p className={pro.balance > 0 ? 'text-emerald-500 text-xl' : 'text-rose-600 text-xl'}>{pro.balance}</p>
+                                </div>
+                            </div>
+                        </Link>
                     )
                 )}
                 </div>

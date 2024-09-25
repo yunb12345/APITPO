@@ -1,3 +1,4 @@
+import * as React from 'react';
 import image from "../imgs/landing_img.png";
 import { FaCalculator } from "react-icons/fa";
 import { FaCalendar } from "react-icons/fa";
@@ -5,11 +6,22 @@ import { FaRocket } from "react-icons/fa";
 import { Card } from "flowbite-react";
 import { Button } from "flowbite-react";
 import { Link } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 
 const Home =()=>{
+    const location = useLocation();
+
+    React.useEffect(() => {
+        if (location.hash) {
+        const element = document.getElementById(location.hash.substring(1));
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+        }
+    }, [location]);
     return(
         <div>
-            <div className="flex flex-wrap items-center py-5 lg:py-10">
+            <div id="seccion1" className="flex flex-wrap items-center py-5 lg:py-10">
                 <div className="w-full px-10 lg:w-1/2">
                     <img src={image} alt="" className="h-auto w-full"></img>
                 </div>
@@ -18,7 +30,7 @@ const Home =()=>{
                     <Link to="/register"><Button color="dark" className="px-10 lg:px-32 lg:py-2 m-auto font-bold">Entrar</Button></Link>
                 </div>
             </div>
-            <div className="items-center w-screen bg-[#F0F0F0]">
+            <div id="seccion2" className="items-center w-screen bg-[#F0F0F0]">
                 <div className="">
                     <div className="mx-20 pt-10 text-center lg:text-left">
                         <p className="text-3xl m-5 font-bold lg:text-5xl">Potencia tu creatividad</p>
@@ -48,7 +60,7 @@ const Home =()=>{
                     </div>
                 </div>
             </div>
-            <div className="py-10 px-10">
+            <div id="seccion3" className="py-10 px-10">
                 <div className="text-center py-5 text-2xl lg:text-left lg:text-4xl">
                     <h1 className="font-bold">¿Que puedo hacer en Splitify?</h1>
                 </div>

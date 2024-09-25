@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
+import CustomBox from "../components/box";
 
 const Login = () =>{
 
@@ -11,13 +12,13 @@ const Login = () =>{
     const [pass, setPass] = useState("");
     const logintest = {
         usuario: "test",
-        contraseña: "test"
+        contrasena: "test"
     }
 
 
     const navigate = useNavigate();
     const handleLogin = () => {
-        if(user === logintest.usuario && pass === logintest.contraseña){
+        if(user === logintest.usuario && pass === logintest.contrasena){
             console.log("sesion iniciada");
             navigate("/board");
         } else {
@@ -56,25 +57,11 @@ const Login = () =>{
                 </div>
             </div>
             <Modal open={openError} onClose={handleCloseError}>
-                <Box sx={{ ...style, width: 400 }}>
+                <CustomBox moreStyles={{width: 400 }}>
                     <h2>Usuario o contraseña incorrecta</h2>
-                </Box>
+                </CustomBox>
             </Modal>
         </div>
     )
 }
-
-
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-};
-
-
 export default Login;
