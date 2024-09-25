@@ -50,7 +50,8 @@ const Profile = () => {
         Nombre: "John",
         Apellido: "Doe",
         Mail: "usuario1@test.com",
-        Foto: imguser
+        Foto: imguser,
+        Contraseña: "*******"
     });
     
     const [tempUserData, setTempUserData] = React.useState(userData);
@@ -63,11 +64,18 @@ const Profile = () => {
             [name]: value  
         }));
     };
+
+    function validarMail(mail) {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(mail);
+      }
     
     const handleSave = () => {
-        setUserData(tempUserData);
-        console.log("Datos guardados:", userData);
-        setOpen(false); 
+        if(tempUserData.Usuario != "" && tempUserData.Nombre != "" && tempUserData.Apellido != "" && validarMail(tempUserData.Mail) && tempUserData.Contraseña != ""){
+            setUserData(tempUserData);
+            console.log("Datos guardados:", userData);
+            setOpen(false); 
+        }
     };
     
     return(
@@ -112,6 +120,16 @@ const Profile = () => {
                 <Box sx={{ width: "60%", height: "auto", backgroundColor: "white", color: "white", borderRadius: "30px", display: "flex", flexDirection: "column" }}>
                     <h3 className='text-black m-5 font-bold text-lg'>Editar Usuario</h3>
                     <TextField
+                        name="Usuario"
+                        id="outlined-basic"
+                        label="Usuario"
+                        variant="outlined"
+                        style={{ margin: "20px" }}
+                        onChange={handleChange}
+                        value={tempUserData.Usuario}
+                        required
+                    />
+                    <TextField
                         name="Nombre"
                         id="outlined-basic"
                         label="Nombre"
@@ -139,6 +157,16 @@ const Profile = () => {
                         style={{ margin: "20px" }}
                         onChange={handleChange}
                         value={tempUserData.Mail}
+                    />
+                    <TextField
+                        type="password"
+                        name="Contraseña"
+                        id="outlined-basic"
+                        label="Contraseña"
+                        variant="outlined"
+                        style={{ margin: "20px" }}
+                        onChange={handleChange}
+                        value={tempUserData.Contraseña}
                     />
                     <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
                         <Button onClick={handleSave} variant="contained" style={{

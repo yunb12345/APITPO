@@ -20,20 +20,38 @@ const TransaccionGrupo = (props) => {
     const [rows, setRows] = React.useState(tablaContenido);
     
     const handleOpenMovement = () => setOpenMovement(true);
-    const handleCloseMovement = () => setOpenMovement(false);
-  
+    const handleCloseMovement = () => {
+        setNewMovement({ nameTransaccion: '', date: "", value: "", comprobante: null });
+        setOpenMovement(false);
+    }
+    
+
+    function validarPorcentaje(array) {
+        console.log(array)
+        const sumaPorcentajes = array.reduce((suma, item) => {
+            const porcentaje = parseFloat(item.porcentaje);
+            return !isNaN(porcentaje) ? suma + porcentaje : suma;
+        }, 0);
+        return sumaPorcentajes === 100;
+    }
     const handleAddMovement = () => {
-        console.log(newMovement.comprobante);
-        const newRow = {nameTransaccion:newMovement.nameTransaccion,date:newMovement.date,value:newMovement.value,comprobante:newMovement.comprobante};
-        setRows([...rows, newRow]);
-        setNewMovement({ nameTransaccion: '', date: '', value: '', comprobante: null });
-        handleCloseMovement();
+        console.log(validarPorcentaje(dataMiembro))
+        if(newMovement.comprobante && newMovement.nameTransaccion !== "" && newMovement.date && newMovement.value > 0 && validarPorcentaje(dataMiembro)){
+            console.log(newMovement.comprobante);
+            const newRow = {nameTransaccion:newMovement.nameTransaccion,date:newMovement.date,value:newMovement.value,comprobante:newMovement.comprobante};
+            setRows([...rows, newRow]);
+            dataMiembro.map((miembro) => {
+                miembro.transacciones = miembro.transacciones + newMovement.value * (parseInt(miembro.porcentaje)/100)
+            })
+            
+            setNewMovement({ nameTransaccion: '', date: "", value: "", comprobante: null });
+            handleCloseMovement();
+        }
     };
     
     const [selectedComprobante, setSelectedComprobante] = React.useState(null);
     const [openImageModal, setOpenImageModal] = React.useState(false);
     const handleOpenImageModal = (comprobante) => {
-      console.log("test");
       setSelectedComprobante(URL.createObjectURL(comprobante));
       setOpenImageModal(true);
     };
@@ -78,6 +96,7 @@ const TransaccionGrupo = (props) => {
                     fullWidth
                     />
                     <TextField
+                    type='number'
                     label="Monto"
                     value={newMovement.value}
                     onChange={(e) => setNewMovement({ ...newMovement, value: e.target.value })}
@@ -85,30 +104,40 @@ const TransaccionGrupo = (props) => {
                     sx={{ mt: 2 }}
                     />
                     <TextField
-                    label="Fecha"
                     value={newMovement.date}
+                    type='date'
                     onChange={(e) => setNewMovement({ ...newMovement, date: e.target.value })}
                     fullWidth
                     sx={{ mt: 2 }}
                     />
-                    <div className='flex flex-wrap justify-around'>
-                        <Button
-                        variant="contained"
-                        component="label"
-                        sx={{ mt: 2, backgroundColor: '#FAFF0F', color: 'black',textAlign:'center'}}
-                        >
-                        Adjuntar Comprobante
-                        <input
-                            type="file"
-                            hidden
-                            onChange={(e) => setNewMovement({ ...newMovement, comprobante: e.target.files[0] })}
-                        />
-                        </Button>
-                        <Button onClick={handleOpenImageModal} variant="contained" sx={{ mt: 2, backgroundColor: '#FAFF0F', color: 'black' }}>
-                        Añadir comprobante
-                        </Button>
-                    </div>
-                    
+                    {dataMiembro.map((pro,index) => 
+                            (
+                                <div>
+                                    <p>Porcentaje de {pro.name}</p>
+                                    <TextField
+                                    type='number'
+                                    onChange={(e) => pro.porcentaje = e.target.value }
+                                    fullWidth
+                                    sx={{ mt: 2 }}
+                                    />
+                                </div>
+                            )             
+                        )}
+                    <Button
+                    variant="contained"
+                    component="label"
+                    sx={{ mt: 2, backgroundColor: '#FAFF0F', color: 'black' }}
+                    >
+                    Adjuntar Comprobante
+                    <input
+                        type="file"
+                        hidden
+                        onChange={(e) => setNewMovement({ ...newMovement, comprobante: e.target.files[0] })}
+                    />
+                    </Button>
+                    <Button onClick={handleAddMovement} variant="contained" sx={{ mt: 2, backgroundColor: '#FAFF0F', color: 'black' }}>
+                    Añadir
+                    </Button>
                 </CustomBox>
             </Modal>
 

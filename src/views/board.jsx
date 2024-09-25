@@ -4,8 +4,13 @@ import { IoIosAddCircleOutline } from "react-icons/io";
 import { FaArrowUp } from "react-icons/fa";
 import { FaArrowDown } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import CustomBox from "../components/box";
+import Modal from '@mui/material/Modal';
+import TextField from '@mui/material/TextField';
 
-const proyectos = [
+const Board = () => { 
+
+const proyects = [
     {
         id:1,
         nombre:'Proyecto 1',
@@ -29,13 +34,11 @@ const proyectos = [
     },
 
 ]
-
-const Board = () => {
     let totalBalance = 0;
     let balanceNegativo = 0;
     let balancePositivo = 0;
   
-    proyectos.forEach(proyecto => {
+    proyects.forEach(proyecto => {
         totalBalance += proyecto.balance;
         if (proyecto.balance < 0) {
           balanceNegativo+=proyecto.balance;
@@ -44,6 +47,43 @@ const Board = () => {
         }
     });
 
+const [proyectos, setProyectos] = React.useState(proyects);
+
+const [rows, setRows] = React.useState(proyectos);
+
+const [newProyecto, setNewProyecto] = React.useState({
+    id: proyectos[proyectos.length-1].id + 1,
+    nombre:'',
+    descripcion:'',
+    fecha:'',
+    balance:0
+})
+const [openCreateProyect, setOpenCreateProyect] = React.useState(false);
+const createProyect = () => setOpenCreateProyect(true);
+const handleCloseProyect = () => setOpenCreateProyect(false);
+
+
+const handleAddProyecto = () => {
+    if(newProyecto.nombre !== "" && newProyecto.descripcion !== ""){
+        const meses = [
+            "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+            "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+          ];
+        
+        const fecha = new Date();
+        const dia = fecha.getDate();
+        const mes = meses[fecha.getMonth()];
+        const año = fecha.getFullYear();
+        newProyecto.fecha = `${mes} ${dia}, ${año}`
+        setProyectos([...proyectos, { id: newProyecto.id, nombre: newProyecto.nombre, descripcion: newProyecto.descripcion, fecha: newProyecto.fecha, balance: newProyecto.balance}]);
+        setNewProyecto({ nombre: '', descripcion: '', fecha: '', balance: 0 });
+        handleCloseProyect();
+    }
+    
+}
+
+
+   
     return (
         <div className='mx-10'>
             <div className='flex flex-col justify-between m-auto items-center py-5'>
@@ -74,7 +114,7 @@ const Board = () => {
             <div className='pb-14 relative'>
                 <div className='flex flex-col justify-between p-7 gap-4 lg:flex-row'>
                     <h1 className='text-4xl font-bold m-2 text-center lg:text-left'>Mis proyectos</h1>
-                    <Button variant="contained" startIcon={<IoIosAddCircleOutline/>}>Crear Proyecto</Button>
+                    <Button variant="contained" onClick={createProyect} startIcon={<IoIosAddCircleOutline/>}>Crear Proyecto</Button>
                 </div>
                 <div className='flex flex-col gap-4'>
                 {proyectos.map((pro,index) => 
@@ -95,6 +135,27 @@ const Board = () => {
                 )}
                 </div>
             </div>
+            <Modal open= {openCreateProyect} onClose={handleCloseProyect}>
+                <CustomBox moreStyles={{width:400}}>
+                    <h2>Crear Proyecto</h2>
+                    <TextField
+                    label="Nombre"
+                    value={newProyecto.nombre}
+                    onChange={(e) => setNewProyecto({ ...newProyecto, nombre: e.target.value })}
+                    fullWidth
+                    />
+                    <TextField
+                    label="Descripcion"
+                    value={newProyecto.descripcion}
+                    onChange={(e) => setNewProyecto({ ...newProyecto, descripcion: e.target.value })}
+                    fullWidth
+                    sx={{ mt: 2 }}
+                    />
+                    <Button onClick={handleAddProyecto} variant="contained" sx={{ mt: 2, backgroundColor: '#FAFF0F', color: 'black' }}>
+                    Añadir
+                    </Button>
+                </CustomBox>
+            </Modal>
         </div>
 
     );
