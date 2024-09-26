@@ -4,14 +4,16 @@ import Tabla from "../components/tabletran";
 const datat = [
     {
       id: 1,
-      title: 'Proyecto1',
+      projectTitle: 'Proyecto1',
+      transactionName:"pago rueda",
       date: '"2015-03-25"',
       value: 321,
       comprobante: "test"
     },
     {
         id: 2,
-        title: 'Proyecto2',
+        projectTitle: 'Proyecto1',
+        transactionName:"pago motor",
         date: '"2018-01-12"',
         value: 489,
         comprobante: "test2"
@@ -20,7 +22,12 @@ const datat = [
 const columnst = [
 	{
 		name: 'Nombre del proyecto',
-		selector: row => row.title,
+		selector: row => row.projectTitle,
+		sortable: true,
+	},
+    {
+		name: 'Nombre Transaccion',
+		selector: row => row.transactionName,
 		sortable: true,
 	},
 	{
