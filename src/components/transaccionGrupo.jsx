@@ -57,6 +57,8 @@ const TransaccionGrupo = (props) => {
             
             setNewMovement({ nameTransaccion: '', date: "", value: "", comprobante: null });
             handleCloseMovement();
+        }else{
+            setOpenError(true);
         }
     };
     
@@ -91,6 +93,9 @@ const TransaccionGrupo = (props) => {
         setDataMiembro(miembros);
     }
 
+    const [openError, setOpenError] = React.useState(false);
+    const handleCloseError = () => setOpenError(false);
+
   
     return(
         <div>
@@ -108,7 +113,7 @@ const TransaccionGrupo = (props) => {
             </div>
             <Modal open={openMovement} onClose={handleCloseMovement}>
                 <CustomBox moreStyles={{width:400}}>
-                    <h2>Añadir Movimiento</h2>
+                    <h2 style={{marginBottom:"10px"}}>Añadir Movimiento</h2>
                     <TextField
                     label="Nombre"
                     value={newMovement.nombre}
@@ -133,7 +138,7 @@ const TransaccionGrupo = (props) => {
                     {dataMiembro.map((x,i) => 
                             (
                                 <div>
-                                    <p>Porcentaje de {x.name}</p>
+                                    <p style={{marginTop:"10px"}}>Porcentaje de {x.name}</p>
                                     <TextField
                                     type='number'
                                     onChange={(e) => handleChangePorcentaje(e, i)}
@@ -143,21 +148,23 @@ const TransaccionGrupo = (props) => {
                                 </div>
                             )             
                         )}
-                    <Button
-                    variant="contained"
-                    component="label"
-                    sx={{ mt: 2, backgroundColor: '#FAFF0F', color: 'black' }}
-                    >
-                    Adjuntar Comprobante
-                    <input
-                        type="file"
-                        hidden
-                        onChange={(e) => setNewMovement({ ...newMovement, comprobante: e.target.files[0] })}
-                    />
-                    </Button>
-                    <Button onClick={handleAddMovement} variant="contained" sx={{ mt: 2, backgroundColor: '#FAFF0F', color: 'black' }}>
-                    Añadir
-                    </Button>
+                    <div style={{display:'flex', justifyContent:"space-between"}}>
+                        <Button
+                        variant="contained"
+                        component="label"
+                        sx={{ mt: 2, backgroundColor: '#FAFF0F', color: 'black' }}
+                        >
+                        Adjuntar Comprobante
+                        <input
+                            type="file"
+                            hidden
+                            onChange={(e) => setNewMovement({ ...newMovement, comprobante: e.target.files[0] })}
+                        />
+                        </Button>
+                        <Button onClick={handleAddMovement} variant="contained" sx={{ mt: 2, backgroundColor: '#FAFF0F', color: 'black' }}>
+                        Añadir
+                        </Button>
+                    </div>
                 </CustomBox>
             </Modal>
 
@@ -165,6 +172,11 @@ const TransaccionGrupo = (props) => {
             <Modal open={openImageModal} onClose={() => setOpenImageModal(false)}>
                 <CustomBox moreStyles={{width: '80%', height: '80%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                     {selectedComprobante && <img src={selectedComprobante} alt="Comprobante" style={{ maxWidth: '100%', maxHeight: '100%' }} />}
+                </CustomBox>
+            </Modal>
+            <Modal open={openError} onClose={handleCloseError}>
+                <CustomBox moreStyles={{width: 400 }}>
+                    <h2>Complete todos los campos y/o adjunte un comprobante. Asegurese de que los porcentajes sumen 100</h2>
                 </CustomBox>
             </Modal>
         </div>

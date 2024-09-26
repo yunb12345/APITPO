@@ -18,22 +18,32 @@ const Registrar =()=>{
     const navigate = useNavigate();
 
     const handleRegister = () => {
-        const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
-        const userExists = existingUsers.some(user => user.email === mail);
-        if(userExists){
+        if(nombre != "" && pass != "" && validarMail(mail)){
+            const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
+            const userExists = existingUsers.some(user => user.email === mail);
+            if(userExists){
+                setOpenError(true);
+            } else{
+                const newUser = {
+                    user: user,
+                    name:name,
+                    lastName:lastName,
+                    mail:mail,
+                    pass:pass,
+                };
+                register(newUser);
+                login(mail,pass);
+                navigate("/board");
+            }
+        }else{
             setOpenError(true);
-        } else{
-            const newUser = {
-                user: user,
-                name:name,
-                lastName:lastName,
-                mail:mail,
-                pass:pass,
-            };
-            register(newUser);
-            login(mail,pass);
-            navigate("/board");
         }
+       
+    };
+
+    function validarMail(mail) {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(mail);
     };
 
     const [openError, setOpenError] = React.useState(false);
@@ -58,7 +68,6 @@ const Registrar =()=>{
                                     Loguear
                                 </button>
                             </Link>
-                            
                         </div>
                     </div>
                 </div>
@@ -67,11 +76,39 @@ const Registrar =()=>{
                         <div className='py-0 lg:py-5'>
                             <h1 className='text-xl lg:text-4xl font-bold'>Crear Cuenta</h1>
                         </div>
-                        <div className='flex flex-col py-5 gap-4 justify-center'>
-                            <TextField id="outlined-basic" label="Nombre de usuario" variant="outlined" size="small" value={user} onChange={(e) => setUser(e.target.value)}/>
-                            <TextField id="outlined-basic" label="Nombre" variant="outlined" size="small" value={name} onChange={(e) => setName(e.target.value)}/>
-                            <TextField id="outlined-basic" label="Apellido" variant="outlined" size="small" value={lastName} onChange={(e) => setLastName(e.target.value)}/>
-                            <TextField id="outlined-basic" label="Email" variant="outlined" size="small" value={mail} onChange={(e) => setMail(e.target.value)}/>
+                        <div className='flex flex-wrap py-5 gap-4 justify-center'>
+                            <TextField 
+                            id="outlined-basic" 
+                            label="Nombre de usuario" 
+                            variant="outlined" 
+                            size="small"
+                            value={user}
+                            onChange={(e) => setUser(e.target.value)}
+                            />
+                            <TextField 
+                            id="outlined-basic" 
+                            label="Nombre" 
+                            variant="outlined" 
+                            size="small"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            />
+                            <TextField 
+                            id="outlined-basic" 
+                            label="Apellido" 
+                            variant="outlined" 
+                            size="small"
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
+                            />
+                            <TextField 
+                            id="outlined-basic" 
+                            label="Email" 
+                            variant="outlined" 
+                            size="small"
+                            value={mail}
+                            onChange={(e) => setMail(e.target.value)}
+                            />
                             <TextField
                                 id="outlined-password-input"
                                 label="Password"
@@ -91,7 +128,7 @@ const Registrar =()=>{
             </div>
             <Modal open={openError} onClose={handleCloseError}>
                 <CustomBox moreStyles={{width: 400 }}>
-                    <h2>El mail ya esta registrado</h2>
+                    <h2>Complete todos los campos con datos válidos</h2>
                 </CustomBox>
             </Modal>
         </div>

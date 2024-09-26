@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import { Link } from "react-router-dom";
+import CustomBox from "../components/box";
 
 import { AuthContext } from "../components/authContext";
 const proyectos = [
@@ -78,8 +79,13 @@ const Profile = () => {
         if(tempUserData.user != "" && tempUserData.name != "" && tempUserData.lastName != "" && validarMail(tempUserData.mail) && tempUserData.pass != ""){
             updateUser(tempUserData);
             setOpen(false); 
+        }else{
+            setOpenError(true)
         }
     };
+
+    const [openError, setOpenError] = React.useState(false);
+    const handleCloseError = () => setOpenError(false);
     
     return(
         <div className='mx-5'>
@@ -202,6 +208,11 @@ const Profile = () => {
                     </div>
                 </div>
             </div>
+            <Modal open={openError} onClose={handleCloseError}>
+                <CustomBox moreStyles={{width: 400 }}>
+                    <h2>Complete todos los campos con datos válidos</h2>
+                </CustomBox>
+            </Modal>
         </div>
     );
 };
