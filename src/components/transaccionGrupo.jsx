@@ -56,7 +56,7 @@ const TransaccionGrupo = (props) => {
       setOpenImageModal(true);
     };
 
-    const dataMiembro = [
+    const [dataMiembro,setDataMiembro] = React.useState([
         {
             id: 1,
             name:'Agustin',
@@ -69,7 +69,16 @@ const TransaccionGrupo = (props) => {
             transacciones:430,
             porcentaje:0
         }
-    ];
+    ]);
+
+    const handleChangePorcentaje = (e, i) =>{
+        const miembros = [...dataMiembro];
+        console.log(e)
+    
+        miembros[i].porcentaje = e.target.value;
+
+        setDataMiembro(miembros);
+    }
 
   
     return(
@@ -110,13 +119,13 @@ const TransaccionGrupo = (props) => {
                     fullWidth
                     sx={{ mt: 2 }}
                     />
-                    {dataMiembro.map((pro,index) => 
+                    {dataMiembro.map((x,i) => 
                             (
                                 <div>
-                                    <p>Porcentaje de {pro.name}</p>
+                                    <p>Porcentaje de {x.name}</p>
                                     <TextField
                                     type='number'
-                                    onChange={(e) => pro.porcentaje = e.target.value }
+                                    onChange={(e) => handleChangePorcentaje(e, i)}
                                     fullWidth
                                     sx={{ mt: 2 }}
                                     />
