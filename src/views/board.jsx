@@ -10,30 +10,30 @@ import TextField from '@mui/material/TextField';
 
 const Board = () => { 
 
-const proyects = [
-    {
-        id:1,
-        nombre:'Proyecto 1',
-        descripcion:'ejemplo1',
-        fecha:'Junio 10, 2018',
-        balance:-180
-    },
-    {
-        id:2,
-        nombre:'Proyecto 2',
-        descripcion:'ejemplo2',
-        fecha:'Junio 7, 2018',
-        balance:880
-    },
-    {
-        id:3,
-        nombre:'Proyecto 3',
-        descripcion:'ejemplo3',
-        fecha:'Agosto 10, 2018',
-        balance:10000
-    },
+    const proyects = [
+        {
+            id:1,
+            nombre:'Proyecto 1',
+            descripcion:'ejemplo1',
+            fecha:'Junio 10, 2018',
+            balance:-180
+        },
+        {
+            id:2,
+            nombre:'Proyecto 2',
+            descripcion:'ejemplo2',
+            fecha:'Junio 7, 2018',
+            balance:880
+        },
+        {
+            id:3,
+            nombre:'Proyecto 3',
+            descripcion:'ejemplo3',
+            fecha:'Agosto 10, 2018',
+            balance:10000
+        },
 
-]
+    ]
     let totalBalance = 0;
     let balanceNegativo = 0;
     let balancePositivo = 0;
@@ -47,43 +47,40 @@ const proyects = [
         }
     });
 
-const [proyectos, setProyectos] = React.useState(proyects);
+    const [proyectos, setProyectos] = React.useState(proyects);
 
-const [rows, setRows] = React.useState(proyectos);
+    const [rows, setRows] = React.useState(proyectos);
 
-const [newProyecto, setNewProyecto] = React.useState({
-    id: proyectos[proyectos.length-1].id + 1,
-    nombre:'',
-    descripcion:'',
-    fecha:'',
-    balance:0
-})
-const [openCreateProyect, setOpenCreateProyect] = React.useState(false);
-const createProyect = () => setOpenCreateProyect(true);
-const handleCloseProyect = () => setOpenCreateProyect(false);
+    const [newProyecto, setNewProyecto] = React.useState({
+        id: proyectos[proyectos.length-1].id + 1,
+        nombre:'',
+        descripcion:'',
+        fecha:'',
+        balance:0
+    })
+    const [openCreateProyect, setOpenCreateProyect] = React.useState(false);
+    const createProyect = () => setOpenCreateProyect(true);
+    const handleCloseProyect = () => setOpenCreateProyect(false);
 
-
-const handleAddProyecto = () => {
-    if(newProyecto.nombre !== "" && newProyecto.descripcion !== ""){
-        const meses = [
-            "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-            "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-          ];
+    const handleAddProyecto = () => {
+        if(newProyecto.nombre !== "" && newProyecto.descripcion !== ""){
+            const meses = [
+                "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+            ];
+            
+            const fecha = new Date();
+            const dia = fecha.getDate();
+            const mes = meses[fecha.getMonth()];
+            const año = fecha.getFullYear();
+            newProyecto.fecha = `${mes} ${dia}, ${año}`
+            setProyectos([...proyectos, { id: newProyecto.id, nombre: newProyecto.nombre, descripcion: newProyecto.descripcion, fecha: newProyecto.fecha, balance: newProyecto.balance}]);
+            setNewProyecto({ nombre: '', descripcion: '', fecha: '', balance: 0 });
+            handleCloseProyect();
+        }
         
-        const fecha = new Date();
-        const dia = fecha.getDate();
-        const mes = meses[fecha.getMonth()];
-        const año = fecha.getFullYear();
-        newProyecto.fecha = `${mes} ${dia}, ${año}`
-        setProyectos([...proyectos, { id: newProyecto.id, nombre: newProyecto.nombre, descripcion: newProyecto.descripcion, fecha: newProyecto.fecha, balance: newProyecto.balance}]);
-        setNewProyecto({ nombre: '', descripcion: '', fecha: '', balance: 0 });
-        handleCloseProyect();
     }
-    
-}
 
-
-   
     return (
         <div className='mx-10'>
             <div className='flex flex-col justify-between m-auto items-center py-5'>

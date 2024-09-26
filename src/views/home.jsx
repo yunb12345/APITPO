@@ -1,5 +1,6 @@
 import * as React from 'react';
 import image from "../imgs/landing_img.png";
+import image2 from "../imgs/landing2-removebg-preview.png";
 import { FaCalculator } from "react-icons/fa";
 import { FaCalendar } from "react-icons/fa";
 import { FaRocket } from "react-icons/fa";
@@ -40,7 +41,7 @@ const Home =()=>{
                     </div>
                     <div className="flex mx-10 flex-wrap items-center justify-center pb-10">
                         <div className="flex justify-center pt-5 lg:w-2/3 lg:pt-0">
-                            <img src={image} alt="" className="h-full w-full m-auto"></img>
+                            <img src={image2} alt="" className="h-2/3 w-2/3 m-auto"></img>
                         </div>
                         <div className="items-center text-center lg:w-1/3 lg:text-left">
                             <div className="text-lg m-20">

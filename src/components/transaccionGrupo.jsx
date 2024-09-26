@@ -75,7 +75,7 @@ const TransaccionGrupo = (props) => {
     return(
         <div>
             <div className=''>
-                <Table data={rows} columns={tablaColumna}/>
+                <Table data={rows} columns={tablaColumna} expandable={true}/>
                 <div className='flex justify-center'>
                     <Button variant="contained" onClick={handleOpenMovement} style={{
                             borderRadius: "10px", width: "40%", backgroundColor: "#FAFF0F", color: "black",

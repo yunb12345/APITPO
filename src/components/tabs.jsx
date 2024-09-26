@@ -43,9 +43,9 @@ export default function BasicTabs(props) {
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
+        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered key={0}>
             {tabs.map((tab,index) => (
-                <Tab label={tab.name} {...a11yProps({index})} />
+                <Tab label={tab.name} {...a11yProps({index})} key={index}/>
             ))}
         </Tabs>
       </Box>

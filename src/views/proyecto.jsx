@@ -21,11 +21,21 @@ const Proyecto = () =>{
     /*tabla para transaccion*/
     const dataTransaccion = [
         {
-        id: 1,
-        nameTransaccion:'Pago rueda',
-        date: '"2015-03-25"',
-        value: 321,
-        comprobante:"default",
+            id: 1,
+            nameTransaccion:'Pago rueda',
+            date: '"2015-03-25"',
+            value: 321,
+            comprobante:"default",
+            participantes:[
+                {
+                    nombre:"Bam",
+                    porcentaje:50,
+                },
+                {
+                    nombre:"shkhs",
+                    porcentaje:50,
+                },
+            ],
         },
         {
             id: 2,
@@ -33,6 +43,20 @@ const Proyecto = () =>{
             date: '"2015-03-25"',
             value: 321,
             comprobante:"default",
+            participantes:[
+                {
+                    nombre:"Bam",
+                    porcentaje:60,
+                },
+                {
+                    nombre:"shkhs",
+                    porcentaje:20,
+                },
+                {
+                    nombre:"Mat",
+                    porcentaje:20,
+                },
+            ],
         },
     ]
     const columnsTransaccion = [
@@ -111,12 +135,11 @@ const Proyecto = () =>{
     }
         
     ];
-        
 
-    const tabsContent = [<TransaccionGrupo tablaColumna={columnsTransaccion} tablaContenido={dataTransaccion}/>,<Miembros tablaColumna={columnsMiembro} tablaContenido={dataMiembro}/>]
     //contenido de los tabs
+    const tabsContent = [<TransaccionGrupo tablaColumna={columnsTransaccion} tablaContenido={dataTransaccion} expandable={true}/>,
+    <Miembros tablaColumna={columnsMiembro} tablaContenido={dataMiembro}/>]
 
-        
     const [openEdit, setOpenEdit] = React.useState(false);
     const [projectName, setProjectName] = React.useState(project.nombre);  //usamos el valor recibido por el location state
     const [projectDescription, setProjectDescription] = React.useState(project.descripcion);

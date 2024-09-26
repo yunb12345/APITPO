@@ -33,6 +33,10 @@ const proyectos = [
         balance:-750
     },
 ]
+let totalBalance = 0;
+proyectos.forEach(proyecto => {
+    totalBalance += proyecto.balance;
+});
 
 const Profile = () => {
     const [open, setOpen] = React.useState(false);
@@ -89,7 +93,7 @@ const Profile = () => {
                         <div className='flex flex-col justify-center'>
                             <p className='text-bold text-3xl'>{userData.Usuario}</p>
                             <h1 className=''>Balance</h1>
-                            <h1 className='text-bold text-2xl text-emerald-500'>$850</h1>
+                            <h1 className='text-bold text-2xl text-emerald-500'>${totalBalance}</h1>
                         </div>
                         
                     </div>

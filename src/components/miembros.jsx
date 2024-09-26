@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Table from "./tabletran";
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
@@ -17,16 +16,6 @@ const Miembros = (props) => {
     const handleOpenIntegrante = () => setOpenIntegrante(true);
     const handleCloseIntegrante = () => setOpenIntegrante(false);
 
-    /*
-    const handleAddIntegrante = () => {
-        if (newIntegrante.trim()) {
-          setIntegrantes([...integrantes, {name: newIntegrante}]);
-          setNewIntegrante('');
-          handleCloseIntegrante();
-        }
-      };
-    */
-
     const handleAddIntegrante = () => {
         const nuevoId = integrantes.length > 0 ? integrantes[integrantes.length - 1].id + 1 : 1; // Genera un nuevo id
         setIntegrantes([...integrantes, { id: nuevoId, name: newIntegrante, transacciones:0}]);
@@ -37,7 +26,7 @@ const Miembros = (props) => {
     return(
         <div>
             <div className=''>
-                <Table data={integrantes} columns={tablaColumna}/>
+                <Table data={integrantes} columns={tablaColumna} expandable={false}/> {/*le paso si es expandible o no*/}
                 <div className='flex justify-center'>
                     <Button variant="contained" onClick={handleOpenIntegrante} style={{
                             borderRadius: "10px", width: "40%", backgroundColor: "#FAFF0F", color: "black",
