@@ -6,6 +6,7 @@ import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import { Link } from "react-router-dom";
 
+import { AuthContext } from "../components/authContext";
 const proyectos = [
     {
         nombre:'Proyecto 1',
@@ -39,8 +40,9 @@ proyectos.forEach(proyecto => {
 });
 
 const Profile = () => {
-    const [open, setOpen] = React.useState(false);
+    const { user,updateUser } = React.useContext(AuthContext); //datos del usuario logueado
 
+    const [open, setOpen] = React.useState(false);
     const handleOpen = () => {
         setOpen(true);
         setTempUserData(userData);
@@ -50,22 +52,20 @@ const Profile = () => {
         setOpen(false);
     };
     const [userData, setUserData] = React.useState({
-        Usuario: "UsuarioTest",
-        Nombre: "John",
-        Apellido: "Doe",
-        Mail: "usuario1@test.com",
-        Foto: imguser,
-        Contraseña: "*******"
+        user: user.user,
+        name: user.name,
+        lastName: user.lastName,
+        mail: user.mail,
+        pass: user.pass
     });
     
     const [tempUserData, setTempUserData] = React.useState(userData);
-    
     
     const handleChange = (e) => {
         const { name, value } = e.target;
         setTempUserData((prevTempUserData) => ({
             ...prevTempUserData,
-            [name]: value  
+            [name]: value
         }));
     };
 
@@ -75,9 +75,8 @@ const Profile = () => {
       }
     
     const handleSave = () => {
-        if(tempUserData.Usuario != "" && tempUserData.Nombre != "" && tempUserData.Apellido != "" && validarMail(tempUserData.Mail) && tempUserData.Contraseña != ""){
-            setUserData(tempUserData);
-            console.log("Datos guardados:", userData);
+        if(tempUserData.user != "" && tempUserData.name != "" && tempUserData.lastName != "" && validarMail(tempUserData.mail) && tempUserData.pass != ""){
+            updateUser(tempUserData);
             setOpen(false); 
         }
     };
@@ -91,7 +90,7 @@ const Profile = () => {
                     </div>
                     <div className='justify-center text-center content-center'>
                         <div className='flex flex-col justify-center'>
-                            <p className='text-bold text-3xl'>{userData.Usuario}</p>
+                            <p className='text-bold text-3xl'>{user.user}</p>
                             <h1 className=''>Balance</h1>
                             <h1 className='text-bold text-2xl text-emerald-500'>${totalBalance}</h1>
                         </div>
@@ -101,11 +100,11 @@ const Profile = () => {
                 <div className='flex flex-col p-4 text-sm gap-2 w-full lg:w-2/3 m-auto'>
                     <div>
                         <p className='text-lg text-gray-400'>NOMBRE Y APELLIDO</p>
-                        <p className='text-lg'>{userData.Nombre} {userData.Apellido}</p>
+                        <p className='text-lg'>{user.name} {user.lastName}</p>
                     </div>
                     <div>
                         <p className='text-lg text-gray-400'>EMAIL</p>
-                        <p className='text-lg'>{userData.Mail}</p>
+                        <p className='text-lg'>{user.mail}</p>
                     </div>
                     <div>
                         <p className='text-lg text-gray-400'>CONTRASEÑA</p>
@@ -124,53 +123,53 @@ const Profile = () => {
                 <Box sx={{ width: "60%", height: "auto", backgroundColor: "white", color: "white", borderRadius: "30px", display: "flex", flexDirection: "column" }}>
                     <h3 className='text-black m-5 font-bold text-lg'>Editar Usuario</h3>
                     <TextField
-                        name="Usuario"
+                        name="user"
                         id="outlined-basic"
                         label="Usuario"
                         variant="outlined"
                         style={{ margin: "20px" }}
                         onChange={handleChange}
-                        value={tempUserData.Usuario}
+                        value={tempUserData.user}
                         required
                     />
                     <TextField
-                        name="Nombre"
+                        name="name"
                         id="outlined-basic"
                         label="Nombre"
                         variant="outlined"
                         style={{ margin: "20px" }}
                         onChange={handleChange}
-                        value={tempUserData.Nombre}
+                        value={tempUserData.name}
                         required
                     />
                     <TextField
-                        name="Apellido"
+                        name="lastName"
                         id="outlined-basic"
                         label="Apellido"
                         variant="outlined"
                         style={{ margin: "20px" }}
                         onChange={handleChange}
-                        value={tempUserData.Apellido}
+                        value={tempUserData.lastName}
                         required
                     />
                     <TextField
-                        name="Mail"
+                        name="mail"
                         id="outlined-basic"
                         label="Email"
                         variant="outlined"
                         style={{ margin: "20px" }}
                         onChange={handleChange}
-                        value={tempUserData.Mail}
+                        value={tempUserData.mail}
                     />
                     <TextField
-                        type="password"
+                        type="pass"
                         name="Contraseña"
                         id="outlined-basic"
                         label="Contraseña"
                         variant="outlined"
                         style={{ margin: "20px" }}
                         onChange={handleChange}
-                        value={tempUserData.Contraseña}
+                        value={tempUserData.pass}
                     />
                     <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "flex-end" }}>
                         <Button onClick={handleSave} variant="contained" style={{

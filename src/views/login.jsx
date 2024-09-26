@@ -1,29 +1,27 @@
 import { Link } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 import TextField from '@mui/material/TextField';
 import Modal from '@mui/material/Modal';
 import CustomBox from "../components/box";
+import {AuthContext} from "../components/authContext";
 
 const Login = () =>{
-    const [user, setUser] = useState("");
+    const {login} = useContext(AuthContext);
+    const [mail, setMail] = useState("");
     const [pass, setPass] = useState("");
-    const logintest = {
-        usuario: "test",
-        contrasena: "test"
-    }
 
     const navigate = useNavigate();
     const handleLogin = () => {
-        if(user === logintest.usuario && pass === logintest.contrasena){
-            console.log("sesion iniciada");
+        if(login(mail,pass)){
             navigate("/board");
         } else {
             console.log("error");
             setOpenError(true);
         }
     };
+
     const [openError, setOpenError] = React.useState(false);
     const handleCloseError = () => setOpenError(false);
 
@@ -35,7 +33,7 @@ const Login = () =>{
                         <h1 className='font-bold text-2xl'>Log in</h1>
                     </div>
                     <div className='flex flex-col items-center justify-center gap-4 m-auto lg:w-2/3'>
-                        <TextField id="outlined-basic" label="Email" variant="outlined" value={user} onChange={(e) => setUser(e.target.value)}/>
+                        <TextField id="outlined-basic" label="Email" variant="outlined" value={mail} onChange={(e) => setMail(e.target.value)}/>
                         <TextField
                                 id="outlined-password-input"
                                 label="Password"

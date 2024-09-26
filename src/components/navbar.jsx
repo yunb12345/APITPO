@@ -1,9 +1,18 @@
+import React, {useContext } from "react";
 import imguser from "../imgs/default-user-icon-8.jpg";
 import logo from "../imgs/A.png";
 import { Link } from "react-router-dom";
 import { Avatar, Dropdown, Navbar } from "flowbite-react";
-
+import { AuthContext } from "./authContext";
+import { useNavigate } from "react-router-dom";
 const NNavbar = () => {
+    const { isAuthenticated } = useContext(AuthContext);
+    const { user,logout } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const handleLogout = () => {
+        logout();
+        navigate("/");
+    };
     return (
         <Navbar fluid rounded className="bg-apiyellow">
             <Navbar.Brand href="/">
@@ -11,22 +20,31 @@ const NNavbar = () => {
                 <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Splitify</span>
             </Navbar.Brand>
             <div className="flex md:order-2">
-                <Dropdown
-                arrowIcon={false}
-                inline
-                label={
-                    <Avatar alt="User settings" img={imguser} rounded />
-                }
-                >
-                <Dropdown.Header>
-                    <span className="block text-sm">Nombre de usuario</span>
-                </Dropdown.Header>
-                <Link to="/board"><Dropdown.Item>Panel</Dropdown.Item></Link>
-                <Link to="/profile"><Dropdown.Item>Perfil</Dropdown.Item></Link>
-                <Link to="/transactions"><Dropdown.Item>Mis transacciones</Dropdown.Item></Link>
-                <Dropdown.Divider />
-                <Dropdown.Item>Sign out</Dropdown.Item>
-                </Dropdown>
+                {isAuthenticated ? (
+                    <Dropdown
+                    arrowIcon={false}
+                    inline
+                    label={
+                        <Avatar alt="User settings" img={imguser} rounded />
+                    }
+                    >
+                    <Dropdown.Header>
+                        <span className="block text-sm">{user.user}</span>
+                    </Dropdown.Header>
+                    <Link to="/board"><Dropdown.Item>Panel</Dropdown.Item></Link>
+                    <Link to="/profile"><Dropdown.Item>Perfil</Dropdown.Item></Link>
+                    <Link to="/transactions"><Dropdown.Item>Mis transacciones</Dropdown.Item></Link>
+                    <Dropdown.Divider />
+                    <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
+                    </Dropdown>
+                ) : (
+                    <div className="flex items-center pr-5">
+                        <Link to="/login" className="text-gray-700 dark:text-gray-400 dark:hover:text-white hover:text-cyan-700">
+                            Iniciar Sesión
+                        </Link>
+                    </div>
+
+                )}
                 <Navbar.Toggle />
             </div>
             <Navbar.Collapse>

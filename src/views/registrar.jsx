@@ -1,11 +1,47 @@
 import TextField from '@mui/material/TextField';
+import Modal from '@mui/material/Modal';
 import { Link } from "react-router-dom";
-
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import CustomBox from "../components/box";
+import {AuthContext} from "../components/authContext";
 
 const Registrar =()=>{
+
+    const {register,login} = useContext(AuthContext);
+    const [user, setUser] = useState("");
+    const [name, setName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [mail, setMail] = useState("");
+    const [pass, setPass] = useState("");
+
+    const navigate = useNavigate();
+
+    const handleRegister = () => {
+        const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
+        const userExists = existingUsers.some(user => user.email === mail);
+        if(userExists){
+            setOpenError(true);
+        } else{
+            const newUser = {
+                user: user,
+                name:name,
+                lastName:lastName,
+                mail:mail,
+                pass:pass,
+            };
+            register(newUser);
+            login(mail,pass);
+            navigate("/board");
+        }
+    };
+
+    const [openError, setOpenError] = React.useState(false);
+    const handleCloseError = () => setOpenError(false);
+
     return(
         <div className="bg-apigray h-screen overflow-x-hidden flex flex-wrap justify-center">
-            <div className="mx-10 my-10 flex flex-wrap bg-slate-100">
+            <div className="mx-10 my-10 flex flex-wrap bg-slate-100 w-2/3">
                 <div className="bg-apiyellow justify-center content-center w-full lg:w-1/3">
                     <div className="flex flex-col px-10 justify-center lg:gap-4">
                         <div className="flex flex-col justify-center text-center gap-2">
@@ -31,25 +67,33 @@ const Registrar =()=>{
                         <div className='py-0 lg:py-5'>
                             <h1 className='text-xl lg:text-4xl font-bold'>Crear Cuenta</h1>
                         </div>
-                        <div className='flex flex-wrap py-5 gap-4 justify-center'>
-                            <TextField id="outlined-basic" label="Nombre" variant="outlined" size="small"/>
-                            <TextField id="outlined-basic" label="Email" variant="outlined" size="small"/>
+                        <div className='flex flex-col py-5 gap-4 justify-center'>
+                            <TextField id="outlined-basic" label="Nombre de usuario" variant="outlined" size="small" value={user} onChange={(e) => setUser(e.target.value)}/>
+                            <TextField id="outlined-basic" label="Nombre" variant="outlined" size="small" value={name} onChange={(e) => setName(e.target.value)}/>
+                            <TextField id="outlined-basic" label="Apellido" variant="outlined" size="small" value={lastName} onChange={(e) => setLastName(e.target.value)}/>
+                            <TextField id="outlined-basic" label="Email" variant="outlined" size="small" value={mail} onChange={(e) => setMail(e.target.value)}/>
                             <TextField
                                 id="outlined-password-input"
                                 label="Password"
                                 type="password"
                                 autoComplete="current-password"
                                 size="small"
+                                value={pass} onChange={(e) => setPass(e.target.value)}
                             />
                         </div>
                         <div className='py-5'>
-                            <button className="bg-apiyellow px-8 py-2 rounded-lg lg:px-20 hover:bg-apiyellowhover shadow-md transition-all">
+                            <button className="bg-apiyellow px-8 py-2 rounded-lg lg:px-20 hover:bg-apiyellowhover shadow-md transition-all" onClick={handleRegister}>
                                 Registrar
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
+            <Modal open={openError} onClose={handleCloseError}>
+                <CustomBox moreStyles={{width: 400 }}>
+                    <h2>El mail ya esta registrado</h2>
+                </CustomBox>
+            </Modal>
         </div>
     );
 }
