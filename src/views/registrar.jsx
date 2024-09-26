@@ -15,10 +15,10 @@ const Registrar =()=>{
     const [mail, setMail] = useState("");
     const [pass, setPass] = useState("");
 
-    const navigate = useNavigate();
+    const navigate = useNavigate(); 
 
     const handleRegister = () => {
-        if(nombre != "" && pass != "" && validarMail(mail)){
+        if(name != "" && pass != "" && validarMail(mail)){
             const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
             const userExists = existingUsers.some(user => user.email === mail);
             if(userExists){
