@@ -57,6 +57,8 @@ const TransaccionGrupo = (props) => {
             
             setNewMovement({ nameTransaccion: '', date: "", value: "", comprobante: null });
             handleCloseMovement();
+        }else{
+            setOpenError(true);
         }
     };
     
@@ -90,6 +92,9 @@ const TransaccionGrupo = (props) => {
 
         setDataMiembro(miembros);
     }
+
+    const [openError, setOpenError] = React.useState(false);
+    const handleCloseError = () => setOpenError(false);
 
   
     return(
@@ -167,6 +172,11 @@ const TransaccionGrupo = (props) => {
             <Modal open={openImageModal} onClose={() => setOpenImageModal(false)}>
                 <CustomBox moreStyles={{width: '80%', height: '80%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                     {selectedComprobante && <img src={selectedComprobante} alt="Comprobante" style={{ maxWidth: '100%', maxHeight: '100%' }} />}
+                </CustomBox>
+            </Modal>
+            <Modal open={openError} onClose={handleCloseError}>
+                <CustomBox moreStyles={{width: 400 }}>
+                    <h2>Complete todos los campos y/o adjunte un comprobante. Asegurese de que los porcentajes sumen 100</h2>
                 </CustomBox>
             </Modal>
         </div>
