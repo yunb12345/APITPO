@@ -38,7 +38,18 @@ const TransaccionGrupo = (props) => {
         console.log(validarPorcentaje(dataMiembro))
         if(newMovement.comprobante && newMovement.nameTransaccion !== "" && newMovement.date && newMovement.value > 0 && validarPorcentaje(dataMiembro)){
             console.log(newMovement.comprobante);
-            const newRow = {nameTransaccion:newMovement.nameTransaccion,date:newMovement.date,value:newMovement.value,comprobante:newMovement.comprobante};
+            let participantes = []
+            dataMiembro.map((miembro) => {
+                participantes.push({nombre: miembro.name, porcentaje: miembro.porcentaje})
+            })
+            console.log(participantes)
+            const newRow = {
+                nameTransaccion:newMovement.nameTransaccion,
+                date:newMovement.date,
+                value:newMovement.value,
+                comprobante:newMovement.comprobante,
+                participantes: participantes
+            };
             setRows([...rows, newRow]);
             dataMiembro.map((miembro) => {
                 miembro.transacciones = miembro.transacciones + newMovement.value * (parseInt(miembro.porcentaje)/100)
