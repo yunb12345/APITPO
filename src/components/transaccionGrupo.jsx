@@ -108,7 +108,7 @@ const TransaccionGrupo = (props) => {
             </div>
             <Modal open={openMovement} onClose={handleCloseMovement}>
                 <CustomBox moreStyles={{width:400}}>
-                    <h2>Añadir Movimiento</h2>
+                    <h2 style={{marginBottom:"10px"}}>Añadir Movimiento</h2>
                     <TextField
                     label="Nombre"
                     value={newMovement.nombre}
@@ -133,7 +133,7 @@ const TransaccionGrupo = (props) => {
                     {dataMiembro.map((x,i) => 
                             (
                                 <div>
-                                    <p>Porcentaje de {x.name}</p>
+                                    <p style={{marginTop:"10px"}}>Porcentaje de {x.name}</p>
                                     <TextField
                                     type='number'
                                     onChange={(e) => handleChangePorcentaje(e, i)}
@@ -143,21 +143,23 @@ const TransaccionGrupo = (props) => {
                                 </div>
                             )             
                         )}
-                    <Button
-                    variant="contained"
-                    component="label"
-                    sx={{ mt: 2, backgroundColor: '#FAFF0F', color: 'black' }}
-                    >
-                    Adjuntar Comprobante
-                    <input
-                        type="file"
-                        hidden
-                        onChange={(e) => setNewMovement({ ...newMovement, comprobante: e.target.files[0] })}
-                    />
-                    </Button>
-                    <Button onClick={handleAddMovement} variant="contained" sx={{ mt: 2, backgroundColor: '#FAFF0F', color: 'black' }}>
-                    Añadir
-                    </Button>
+                    <div style={{display:'flex', justifyContent:"space-between"}}>
+                        <Button
+                        variant="contained"
+                        component="label"
+                        sx={{ mt: 2, backgroundColor: '#FAFF0F', color: 'black' }}
+                        >
+                        Adjuntar Comprobante
+                        <input
+                            type="file"
+                            hidden
+                            onChange={(e) => setNewMovement({ ...newMovement, comprobante: e.target.files[0] })}
+                        />
+                        </Button>
+                        <Button onClick={handleAddMovement} variant="contained" sx={{ mt: 2, backgroundColor: '#FAFF0F', color: 'black' }}>
+                        Añadir
+                        </Button>
+                    </div>
                 </CustomBox>
             </Modal>
 

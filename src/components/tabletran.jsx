@@ -21,7 +21,7 @@ const ExpandedComponent = ({ data }) => {
 					<tr key={index}>
 						<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{participante.nombre}</td>
 						<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{participante.porcentaje}%</td>
-						<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{valorCalculado}</td>
+						<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${valorCalculado}</td>
 					</tr>
 				)
 				})}
