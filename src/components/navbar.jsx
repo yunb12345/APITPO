@@ -35,7 +35,7 @@ const NNavbar = () => {
                     <Link to="/profile"><Dropdown.Item>Perfil</Dropdown.Item></Link>
                     <Link to="/transactions"><Dropdown.Item>Mis transacciones</Dropdown.Item></Link>
                     <Dropdown.Divider />
-                    <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
+                    <Dropdown.Item onClick={handleLogout}>Cerar Sesion</Dropdown.Item>
                     </Dropdown>
                 ) : (
                     <div className="flex items-center pr-5">

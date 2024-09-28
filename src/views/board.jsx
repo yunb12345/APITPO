@@ -72,8 +72,8 @@ const Board = () => {
             const fecha = new Date();
             const dia = fecha.getDate();
             const mes = meses[fecha.getMonth()];
-            const año = fecha.getFullYear();
-            newProyecto.fecha = `${mes} ${dia}, ${año}`
+            const anio = fecha.getFullYear();
+            newProyecto.fecha = `${mes} ${dia}, ${anio}`
             setProyectos([...proyectos, { id: newProyecto.id, nombre: newProyecto.nombre, descripcion: newProyecto.descripcion, fecha: newProyecto.fecha, balance: newProyecto.balance}]);
             setNewProyecto({ nombre: '', descripcion: '', fecha: '', balance: 0 });
             handleCloseProyect();
@@ -88,7 +88,7 @@ const Board = () => {
                     <h2 className='text-6xl font-bold'>${totalBalance}</h2>
                 </div>
                 <div className='flex flex-row border-2 gap-5 p-3 text-center bg-white shadow-sm rounded-lg items-center w-2/3 lg:w-1/3'>
-                    <div className='flex flex-col text-xl font-bold w-1/2'>
+                    <div className='flex flex-col text-base lg:text-xl font-bold w-1/2'>
                         <div>
                             <p className='m-0'>Te deben</p>
                         </div>
@@ -97,7 +97,7 @@ const Board = () => {
                             <p className='text-emerald-500'>{balancePositivo}</p>
                         </div>
                     </div>
-                    <div className='flex flex-col text-xl font-bold w-1/2'>
+                    <div className='flex flex-col text-base lg:text-xl font-bold w-1/2'>
                         <div>
                             <p className='m-0'>Debes</p>
                         </div>
@@ -134,7 +134,7 @@ const Board = () => {
             </div>
             <Modal open= {openCreateProyect} onClose={handleCloseProyect}>
                 <CustomBox moreStyles={{width:400}}>
-                    <h2>Crear Proyecto</h2>
+                    <h2 className='py-5'>Crear Proyecto</h2>
                     <TextField
                     label="Nombre"
                     value={newProyecto.nombre}

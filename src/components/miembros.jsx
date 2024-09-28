@@ -38,7 +38,7 @@ const Miembros = (props) => {
         <div>
             <div className=''>
                 <Table data={integrantes} columns={tablaColumna} expandable={false}/> {/*le paso si es expandible o no*/}
-                <div className='flex justify-center'>
+                <div className='flex flex-col lg:flex-row items-center justify-center'>
                     <Button variant="contained" onClick={handleOpenIntegrante} style={{
                             borderRadius: "10px", width: "40%", backgroundColor: "#FAFF0F", color: "black",
                             height: "50px", marginBottom: "30px", marginLeft: "50px", marginRight: "40px", textAlign:"center",
@@ -46,7 +46,7 @@ const Miembros = (props) => {
                     Añadir Miembro
                     </Button>
                     <Button variant="contained" onClick={handleOpenDeleteIntegrante} style={{
-                            borderRadius: "10px", width: "40%", backgroundColor: "#FAFF0F", color: "black",
+                            borderRadius: "10px", width: "40%", backgroundColor: "#FF4C4C", color: "white",
                             height: "50px", marginBottom: "30px", marginLeft: "50px", marginRight: "40px", textAlign:"center",
                     }}>
                     Eliminar Miembro
@@ -76,7 +76,7 @@ const Miembros = (props) => {
                                     <div>
                                         <p style={{marginTop:"10px", marginRight:"10px"}}>{x.userName}</p>
                                     </div>
-                                    <Button onClick={() => handleDeleteIntegrante(x.userName)} variant="contained" sx={{ mt: 2, backgroundColor: '#FAFF0F', color: 'black' }}>
+                                    <Button onClick={() => handleDeleteIntegrante(x.userName)} variant="contained" sx={{ mt: 2, backgroundColor: '#FF4C4C', color: 'white' }}>
                                         Eliminar
                                     </Button>
                                 </div>

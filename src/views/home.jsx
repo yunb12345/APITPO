@@ -1,6 +1,6 @@
 import * as React from 'react';
 import image from "../imgs/landing_img.png";
-import image2 from "../imgs/landing2-removebg-preview.png";
+import image2 from "../imgs/people-analyzing-growth-charts-business-illustration-free-vector.jpg";
 import { FaCalculator } from "react-icons/fa";
 import { FaCalendar } from "react-icons/fa";
 import { FaRocket } from "react-icons/fa";
@@ -8,10 +8,11 @@ import { Card } from "flowbite-react";
 import { Button } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
+import { AuthContext } from "../components/authContext";
 
 const Home =()=>{
     const location = useLocation();
-
+    const { isAuthenticated } = React.useContext(AuthContext);
     React.useEffect(() => {
         if (location.hash) {
         const element = document.getElementById(location.hash.substring(1));
@@ -20,6 +21,7 @@ const Home =()=>{
         }
         }
     }, [location]);
+
     return(
         <div>
             <div id="seccion1" className="flex flex-wrap items-center py-5 lg:py-10">
@@ -28,10 +30,13 @@ const Home =()=>{
                 </div>
                 <div className="w-full px-10 py-10 lg:w-1/2 lg:py-0 text-2xl text-center lg:text-5xl font-bold">
                     <p className="lg:text-left py-10">Lleva tus proyectos al siguiente nivel: organización, control y éxito en un solo lugar.</p>
-                    <Link to="/register"><Button color="dark" className="px-10 lg:px-32 lg:py-2 m-auto font-bold">Entrar</Button></Link>
+                    {isAuthenticated ? (
+                    null
+                    ) : (<Link to="/register"><Button color="dark" className="px-10 lg:px-32 lg:py-2 m-auto font-bold">Entrar</Button></Link>)}
+                    
                 </div>
             </div>
-            <div id="seccion2" className="items-center w-screen bg-[#F0F0F0]">
+            <div id="seccion2" className="items-center w-screen bg-[#EAEEF7]">
                 <div className="">
                     <div className="mx-20 pt-10 text-center lg:text-left">
                         <p className="text-3xl m-5 font-bold lg:text-5xl">Potencia tu creatividad</p>
