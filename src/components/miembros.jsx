@@ -4,8 +4,6 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import CustomBox from "./box";
-import { useThemeProps } from '@mui/material';
-import { FaRegTrashAlt } from "react-icons/fa";
 
 const Miembros = (props) => {
     const {tablaColumna,tablaContenido} = props;
@@ -57,7 +55,7 @@ const Miembros = (props) => {
                 <CustomBox moreStyles={{width:400}}>
                     <h2 className='py-5'>Añadir Miembro</h2>
                     <TextField
-                    label="Nombre del Miembro"
+                    label="Nombre de usuario"
                     value={newIntegrante}
                     onChange={(e) => setNewIntegrante(e.target.value)}
                     fullWidth

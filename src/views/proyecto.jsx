@@ -41,7 +41,7 @@ const Proyecto = () =>{
             id: 2,
             nameTransaccion:'Pago motor',
             date: '"2015-03-25"',
-            value: 321,
+            value: 500,
             comprobante:"default",
             participantes:[
                 {

@@ -8,7 +8,6 @@ import CustomBox from "./box";
 
 const TransaccionGrupo = (props) => {
     const {tablaColumna,tablaContenido} = props;
-
     const [openMovement, setOpenMovement] = React.useState(false);
     const [newMovement, setNewMovement] = React.useState({
         nameTransaccion: '',
@@ -27,7 +26,6 @@ const TransaccionGrupo = (props) => {
     
 
     function validarPorcentaje(array) {
-        console.log(array)
         const sumaPorcentajes = array.reduce((suma, item) => {
             const porcentaje = parseFloat(item.porcentaje);
             return !isNaN(porcentaje) ? suma + porcentaje : suma;
@@ -35,15 +33,15 @@ const TransaccionGrupo = (props) => {
         return sumaPorcentajes === 100;
     }
     const handleAddMovement = () => {
-        console.log(validarPorcentaje(dataMiembro))
         if(newMovement.comprobante && newMovement.nameTransaccion !== "" && newMovement.date && newMovement.value > 0 && validarPorcentaje(dataMiembro)){
             console.log(newMovement.comprobante);
-            let participantes = []
+            let participantes = [];
             dataMiembro.map((miembro) => {
                 participantes.push({nombre: miembro.name, porcentaje: miembro.porcentaje})
-            })
-            console.log(participantes)
+            });
+            const nuevoId = rows.length > 0 ? rows[rows.length - 1].id + 1 : 1; // Genera un nuevo id
             const newRow = {
+                id:nuevoId,
                 nameTransaccion:newMovement.nameTransaccion,
                 date:newMovement.date,
                 value:newMovement.value,
@@ -52,9 +50,8 @@ const TransaccionGrupo = (props) => {
             };
             setRows([...rows, newRow]);
             dataMiembro.map((miembro) => {
-                miembro.transacciones = miembro.transacciones + newMovement.value * (parseInt(miembro.porcentaje)/100)
-            })
-            
+                miembro.transacciones = miembro.transacciones + newMovement.value * (parseInt(miembro.porcentaje)/100);
+            });
             setNewMovement({ nameTransaccion: '', date: "", value: "", comprobante: null });
             handleCloseMovement();
         }else{
@@ -86,7 +83,6 @@ const TransaccionGrupo = (props) => {
 
     const handleChangePorcentaje = (e, i) =>{
         const miembros = [...dataMiembro];
-        console.log(e)
     
         miembros[i].porcentaje = e.target.value;
 
