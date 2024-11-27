@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import { IoIosAddCircleOutline } from "react-icons/io";
-import { FaArrowUp } from "react-icons/fa";
+import { FaArrowUp, FaRegFontAwesomeLogoFull } from "react-icons/fa";
 import { FaArrowDown } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import CustomBox from "../components/box";
@@ -9,8 +9,34 @@ import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 
 const Board = () => { 
+    const proyectos2 = []
 
-    const proyects = [
+    const fetchData = async () => {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type","application/json")
+        const requestOptions = {
+            method: "GET",
+            redirect: "follow"
+          };
+          
+        let response = await fetch("http://localhost:8080/api/user_proyects/proyects/2", requestOptions)
+        let jsonData = await response.json()
+        for (const [key, value] of Object.entries(jsonData)) {
+            let responseProyectos = await fetch("http://localhost:8080/api/proyects/" + value.ProyectId, requestOptions)
+            let jsonDataProyectos = await responseProyectos.json()
+            proyectos2.push(jsonDataProyectos)
+            console.log(proyectos2)
+          }
+
+    }
+
+    fetchData();
+    
+    const proyects = proyectos2;
+
+    console.log(proyects);
+
+    /*const proyects = [
         {
             id:1,
             nombre:'Proyecto 1',
@@ -33,26 +59,25 @@ const Board = () => {
             balance:10000
         },
 
-    ]
+    ]*/
     let totalBalance = 0;
     let balanceNegativo = 0;
     let balancePositivo = 0;
   
-    proyects.forEach(proyecto => {
+    /*proyects.forEach(proyecto => {
         totalBalance += proyecto.balance;
         if (proyecto.balance < 0) {
           balanceNegativo+=proyecto.balance;
         } else if (proyecto.balance > 0) {
           balancePositivo+=proyecto.balance;
         }
-    });
+    });*/
 
     const [proyectos, setProyectos] = React.useState(proyects);
 
     const [rows, setRows] = React.useState(proyectos);
 
     const [newProyecto, setNewProyecto] = React.useState({
-        id: proyectos[proyectos.length-1].id + 1,
         nombre:'',
         descripcion:'',
         fecha:'',
@@ -119,8 +144,8 @@ const Board = () => {
                         <Link to={"/proyecto/" + pro.id} key={index} state={pro}>
                             <div key={index} className='flex justify-between bg-white shadow-sm m-3 p-4 rounded-sm hover:shadow-lg transition-all'>
                                 <div className='flex flex-col'>
-                                    <p className='font-bold text-2xl'>{pro.nombre}</p>
-                                    <p className='font-bold text-lg text-stone-500'>{pro.descripcion}</p>
+                                    <p className='font-bold text-2xl'>{pro.proyectName}</p>
+                                    <p className='font-bold text-lg text-stone-500'>{pro.proyectDesc}</p>
                                     <p>{pro.fecha}</p>
                                 </div>
                                 <div className=' content-center'>

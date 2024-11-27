@@ -15,6 +15,24 @@ import CustomBox from "../components/box";
 
 const Proyecto = () =>{
 
+    const fetchData = async () => {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type","application/json")
+        const requestOptions = {
+            method: "GET",
+            redirect: "follow"
+          };
+          
+        let response = await fetch("http://localhost:8080/api/proyects/2", requestOptions)
+        let jsonData = await response.json()
+        let response2 = await fetch("http://localhost:8080/api/user_proyects/users/2", requestOptions)
+        let jsonData2 = await response2.json()
+        console.log(jsonData);
+        console.log(jsonData2.body);
+    }
+
+    fetchData();
+
     const location = useLocation();
     const project = location.state;  //Recibimos info del proyecto de la pagina board
 
