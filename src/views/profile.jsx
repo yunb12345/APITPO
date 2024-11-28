@@ -41,6 +41,21 @@ proyectos.forEach(proyecto => {
 });
 
 const Profile = () => {
+
+    const fetchData = async () => {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type","application/json")
+        const requestOptions = {
+            method: "GET",
+            redirect: "follow"
+          };
+          
+        let response = await fetch("http://localhost:8080/api/users/2", requestOptions)
+        let jsonData = await response.json()
+        console.log(jsonData);
+    }
+
+    fetchData();
     const { user,updateUser } = React.useContext(AuthContext); //datos del usuario logueado
 
     const [open, setOpen] = React.useState(false);
