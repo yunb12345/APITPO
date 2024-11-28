@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null); //iniciamos sin usuarios
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
+        const token = sessionStorage.getItem('access-token');
         if (token) {
             try{
                 const decoded = jwtDecode(token);

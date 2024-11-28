@@ -1,41 +1,22 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import { IoIosAddCircleOutline } from "react-icons/io";
-import { FaArrowUp, FaRegFontAwesomeLogoFull } from "react-icons/fa";
+import { FaArrowUp} from "react-icons/fa";
 import { FaArrowDown } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import CustomBox from "../components/box";
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
+import getProyectos from '../api/board_api';
+import {AuthContext} from '../components/authContext';
 
-const Board = () => { 
-    const proyectos2 = []
-
-    const fetchData = async () => {
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type","application/json")
-        const requestOptions = {
-            method: "GET",
-            redirect: "follow"
-          };
-          
-        let response = await fetch("http://localhost:8080/api/user_proyects/proyects/2", requestOptions)
-        let jsonData = await response.json()
-        for (const [key, value] of Object.entries(jsonData)) {
-            let responseProyectos = await fetch("http://localhost:8080/api/proyects/" + value.ProyectId, requestOptions)
-            let jsonDataProyectos = await responseProyectos.json()
-            proyectos2.push(jsonDataProyectos)
-            console.log(proyectos2)
-          }
-
-    }
-
-    fetchData();
-    
-    const proyects = proyectos2;
-
-    console.log(proyects);
-
+const Board = () => {
+    const [proyectos, setProyectos] = React.useState([]);
+    const {user} = React.useContext(AuthContext);
+    React.useEffect(() => {
+        console.log("Pido la lista de productos con mi token de sesion")
+        getProyectos(user.id,setProyectos);
+    }, [setProyectos]);
     /*const proyects = [
         {
             id:1,
@@ -44,21 +25,6 @@ const Board = () => {
             fecha:'Junio 10, 2018',
             balance:-180
         },
-        {
-            id:2,
-            nombre:'Proyecto 2',
-            descripcion:'ejemplo2',
-            fecha:'Junio 7, 2018',
-            balance:880
-        },
-        {
-            id:3,
-            nombre:'Proyecto 3',
-            descripcion:'ejemplo3',
-            fecha:'Agosto 10, 2018',
-            balance:10000
-        },
-
     ]*/
     let totalBalance = 0;
     let balanceNegativo = 0;
@@ -73,16 +39,12 @@ const Board = () => {
         }
     });*/
 
-    const [proyectos, setProyectos] = React.useState(proyects);
-
-    const [rows, setRows] = React.useState(proyectos);
-
     const [newProyecto, setNewProyecto] = React.useState({
         nombre:'',
         descripcion:'',
         fecha:'',
         balance:0
-    })
+    });
     const [openCreateProyect, setOpenCreateProyect] = React.useState(false);
     const createProyect = () => setOpenCreateProyect(true);
     const handleCloseProyect = () => setOpenCreateProyect(false);
