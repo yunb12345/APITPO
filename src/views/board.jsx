@@ -107,7 +107,7 @@ const Board = () => {
     }
 
     return (
-        <div className='mx-10'>
+        <div className='mx-10 min-h-screen'>
             <div className='flex flex-col justify-between m-auto items-center py-5'>
                 <div className="items-center py-5">
                     <h2 className='text-6xl font-bold'>${totalBalance}</h2>

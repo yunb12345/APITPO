@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 import { Avatar, Dropdown, Navbar } from "flowbite-react";
 import { AuthContext } from "./authContext";
 import { useNavigate } from "react-router-dom";
+
 const NNavbar = () => {
-    const { isAuthenticated } = useContext(AuthContext);
-    const { user,logout } = useContext(AuthContext);
+    const { isAuthenticated,user,logout } = useContext(AuthContext);
     const navigate = useNavigate();
     const handleLogout = () => {
         logout();
@@ -29,7 +29,7 @@ const NNavbar = () => {
                     }
                     >
                     <Dropdown.Header>
-                        <span className="block text-sm">{user.user}</span>
+                        <span className="block text-sm">{user.username}</span>
                     </Dropdown.Header>
                     <Link to="/board"><Dropdown.Item>Panel</Dropdown.Item></Link>
                     <Link to="/profile"><Dropdown.Item>Perfil</Dropdown.Item></Link>

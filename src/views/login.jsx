@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import login from '../api/login_api';
+import { AuthContext } from "../components/authContext";
+
 
 import TextField from '@mui/material/TextField';
 import Modal from '@mui/material/Modal';
@@ -11,13 +13,14 @@ import CustomBox from "../components/box";
 const Login = () =>{
     const [mail, setMail] = useState("");
     const [pass, setPass] = useState("");
-
+    const { loginSuccess } = useContext(AuthContext);
     const navigate = useNavigate();
     const handleLogin = async (e) => {
         e.preventDefault();
         let response = await login(mail,pass);
         if(response.status === 200){
-            sessionStorage.setItem("access-token",response.token);
+            const token = response.token;
+            loginSuccess(token);
             navigate("/");
         } else {
             console.log("error");

@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
+import { jwtDecode } from "jwt-decode";
 
 export const AuthContext = createContext(); //crea el contexto
 
@@ -7,28 +8,29 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null); //iniciamos sin usuarios
 
     useEffect(() => {
-        const loggedUser = JSON.parse(localStorage.getItem('loggedInUser')); //transforma el string de usuario que esta almacenado en el local storage a un objeto de js
-        if (loggedUser) { //si existe
-            setIsAuthenticated(true);
-            setUser(loggedUser);
+        const token = localStorage.getItem('token');
+        if (token) {
+            try{
+                const decoded = jwtDecode(token);
+                setUser(decoded);
+                setIsAuthenticated(true);
+            } catch(error){
+                console.error("Error al decodificar el token",error);
+                logout();
+            }
         }
     }, []);
 
-    const login = (email, password) => {
-        const users = JSON.parse(localStorage.getItem('users')) || []; //si esta vacio devuelve un arreglo vacio
-        const user = users.find(user => user.mail === email && user.pass === password); //busca dentro de los usuarios almacenados que coincida el mail y el pass
-        if (user) {
-            localStorage.setItem('loggedInUser', JSON.stringify(user));
-            setIsAuthenticated(true);
-            setUser(user); //ahora va aser nuestro usuario
-            return true;
-        } else {
-            return false;
-        }
+    const loginSuccess = (token,user) => {
+
+        sessionStorage.setItem("access-token", token);
+        const decoded = jwtDecode(token);
+        setUser(decoded); // Actualiza la información del usuario
+        setIsAuthenticated(true); // Actualiza el estado de autenticación
     };
 
     const logout = () => {
-        localStorage.removeItem('loggedInUser');
+        localStorage.removeItem('token');
         setIsAuthenticated(false); //cambia los estados
         setUser(null);
     };
@@ -54,7 +56,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, login, logout, register, user, updateUser, deleteUser }}>
+        <AuthContext.Provider value={{ isAuthenticated, loginSuccess, logout, register, user, updateUser, deleteUser }}>
             {children}
         </AuthContext.Provider>
     );
