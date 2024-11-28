@@ -5,10 +5,12 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import CustomBox from "../components/box";
 import {AuthContext} from "../components/authContext";
+import login from '../api/login_api';
+import registrar from '../api/register_api';
 
 const Registrar =()=>{
 
-    const {register,login} = useContext(AuthContext);
+    const {loginSuccess} = useContext(AuthContext);
     const [user, setUser] = useState("");
     const [name, setName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -17,7 +19,8 @@ const Registrar =()=>{
 
     const navigate = useNavigate(); 
 
-    const handleRegister = () => {
+    const handleRegister = async (e) => {
+        e.preventDefault();
         if(name != "" && pass != "" && validarMail(mail)){
             const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
             const userExists = existingUsers.some(user => user.email === mail);
@@ -31,10 +34,16 @@ const Registrar =()=>{
                     email:mail,
                     password:pass,
                 };
-                registrar(newUser);
-                /*register(newUser);
-                login(mail,pass);
-                navigate("/board");*/
+                let responseRegister = await registrar(newUser);
+                if(responseRegister.status === 200){
+                    let response = await login(mail,pass);
+                    const token = response.token;
+                    loginSuccess(token);
+                    navigate("/board");
+                }
+                else{
+                    console.log("error");
+                }
 
             }
         }else{
@@ -43,31 +52,7 @@ const Registrar =()=>{
        
     };
 
-    const registrar = async(usuario) => {
-        var myHeaders = new Headers();
 
-        myHeaders.append("Content-Type", "application/json");
-    
-        var raw = JSON.stringify({
-        "username": usuario.username,
-        "email": usuario.email,
-        "password": usuario.password,
-        "balance": 0
-        });
-
-        var requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
-          };
-          
-          let response = await fetch("http://localhost:8080/api/users/", requestOptions);
-          let jsonData = await response.json();
-      
-          return jsonData;
-
-    }
 
     function validarMail(mail) {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

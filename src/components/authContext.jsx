@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
         }
     }, []);
 
-    const loginSuccess = (token,user) => {
+    const loginSuccess = (token) => {
 
         sessionStorage.setItem("access-token", token);
         const decoded = jwtDecode(token);
