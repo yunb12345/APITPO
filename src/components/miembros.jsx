@@ -4,10 +4,24 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import CustomBox from "./box";
+import * as miembros from '../api/miembros_api';
 
 const Miembros = (props) => {
+    console.log(props);
+
+    const [integrantes, setIntegrantes] = React.useState([]);
+    //const {user} = React.useContext(AuthContext);
+    React.useEffect(() => {
+        console.log("Pido la lista de productos con mi token de sesion")
+        miembros.getMiembros(2,setIntegrantes);
+    }, [setIntegrantes]);
+
+    console.log(integrantes)
+
+
     const {tablaColumna,tablaContenido} = props;
-    const [integrantes, setIntegrantes] = React.useState(tablaContenido);
+    //const [integrantes, setIntegrantes] = React.useState(tablaContenido);
+    //const [integrantes, setIntegrantes] = miembros;
     const [openIntegrante, setOpenIntegrante] = React.useState(false);
     const [openDeleteIntegrante, setOpenDeleteIntegrante] = React.useState(false);
     const [newIntegrante, setNewIntegrante] = React.useState('');
@@ -26,10 +40,12 @@ const Miembros = (props) => {
         handleCloseDeleteIntegrante()
     }
     const handleAddIntegrante = () => {
-        const nuevoId = integrantes.length > 0 ? integrantes[integrantes.length - 1].id + 1 : 1; // Genera un nuevo id
+        /*const nuevoId = integrantes.length > 0 ? integrantes[integrantes.length - 1].id + 1 : 1; // Genera un nuevo id
         setIntegrantes([...integrantes, { id: nuevoId, userName: newIntegrante, transacciones:0}]);
         setNewIntegrante('');
-        handleCloseIntegrante();
+        handleCloseIntegrante();*/
+        let id = miembros.getId(newIntegrante);
+        console.log(id);
     };
 
     return(
@@ -72,7 +88,7 @@ const Miembros = (props) => {
                             (
                                 <div style={{display:"flex", justifyContent:"space-between", alignItems:"center"}}>
                                     <div>
-                                        <p style={{marginTop:"10px", marginRight:"10px"}}>{x.userName}</p>
+                                        <p style={{marginTop:"10px", marginRight:"10px"}}>{x.username}</p>
                                     </div>
                                     <Button onClick={() => handleDeleteIntegrante(x.userName)} variant="contained" sx={{ mt: 2, backgroundColor: '#FF4C4C', color: 'white' }}>
                                         Eliminar

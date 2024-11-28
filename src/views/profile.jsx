@@ -6,6 +6,7 @@ import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import { Link } from "react-router-dom";
 import CustomBox from "../components/box";
+import * as profile from '../api/profile_api';
 
 import { AuthContext } from "../components/authContext";
 const proyectos = [
@@ -41,8 +42,18 @@ proyectos.forEach(proyecto => {
 });
 
 const Profile = () => {
+    
+    
+    const [perfil, setPerfil] = React.useState([]);
+    React.useEffect(() => {
+                const userData = profile.getUser(5);
+                setPerfil(userData); 
+                console.log(perfil)
+            }
+        ,[]);
 
-    const fetchData = async () => {
+    
+    /*const fetchData = async () => {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type","application/json")
         const requestOptions = {
@@ -55,7 +66,7 @@ const Profile = () => {
         console.log(jsonData);
     }
 
-    fetchData();
+    fetchData();*/
     const { user,updateUser } = React.useContext(AuthContext); //datos del usuario logueado
 
     const [open, setOpen] = React.useState(false);
@@ -68,11 +79,11 @@ const Profile = () => {
         setOpen(false);
     };
     const [userData, setUserData] = React.useState({
-        user: user.user,
-        name: user.name,
-        lastName: user.lastName,
-        mail: user.mail,
-        pass: user.pass
+        user: perfil.username,
+        name: perfil.name,
+        lastName: perfil.lastName,
+        mail: perfil.mail,
+        pass: perfil.pass
     });
     
     const [tempUserData, setTempUserData] = React.useState(userData);
@@ -111,7 +122,7 @@ const Profile = () => {
                     </div>
                     <div className='justify-center text-center content-center'>
                         <div className='flex flex-col justify-center'>
-                            <p className='text-bold text-3xl'>{user.user}</p>
+                            <p className='text-bold text-3xl'>{perfil.user}</p>
                             <h1 className=''>Balance</h1>
                             <h1 className='text-bold text-2xl text-emerald-500'>${totalBalance}</h1>
                         </div>
@@ -121,11 +132,11 @@ const Profile = () => {
                 <div className='flex flex-col p-4 text-sm gap-2 w-full lg:w-2/3 m-auto'>
                     <div>
                         <p className='text-lg text-gray-400'>NOMBRE Y APELLIDO</p>
-                        <p className='text-lg'>{user.name} {user.lastName}</p>
+                        <p className='text-lg'>{perfil.name} {perfil.lastName}</p>
                     </div>
                     <div>
                         <p className='text-lg text-gray-400'>EMAIL</p>
-                        <p className='text-lg'>{user.mail}</p>
+                        <p className='text-lg'>{perfil.mail}</p>
                     </div>
                     <div>
                         <p className='text-lg text-gray-400'>CONTRASEÑA</p>
