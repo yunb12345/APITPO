@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation,useParams,useNavigate } from 'react-router-dom';
+
 
 import Tabs from "../components/tabs";
 import Miembros from "../components/miembros";
@@ -8,34 +9,18 @@ import TransaccionGrupo from "../components/transaccionGrupo";
 import { FaEdit } from "react-icons/fa";
 import { FaRegTrashAlt } from "react-icons/fa";
 
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import CustomBox from "../components/box";
+import {getProyect,updateProyect,deleteProyect} from "../api/proyect_api";
 
 const Proyecto = () =>{
-
-    /*
-    const fetchData = async () => {
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type","application/json")
-        const requestOptions = {
-            method: "GET",
-            redirect: "follow"
-          };
-        
-        let response = await fetch("http://localhost:8080/api/proyects/2", requestOptions)
-        let jsonData = await response.json();
-        let response2 = await fetch("http://localhost:8080/api/user_proyects/users/2", requestOptions)
-        let jsonData2 = await response2.json();
-        console.log(jsonData);
-        console.log(jsonData2.body);
-    }
-
-    fetchData();
-    */
+    const navigate = useNavigate();
     const location = useLocation();
     const project = location.state;  //Recibimos info del proyecto de la pagina board
+    const { id } = useParams(); //id de la url
 
     /*tabla para transaccion*/
     const dataTransaccion = [
@@ -163,12 +148,38 @@ const Proyecto = () =>{
     const [projectName, setProjectName] = React.useState(project.nombre);  //usamos el valor recibido por el location state
     const [projectDescription, setProjectDescription] = React.useState(project.descripcion);
 
+    const [openB, setOpenB] = React.useState(false); // Estado para controlar el modal de "Borrar"
+
+    // Función para abrir el modal de borrar
+    const handleOpenB = () => {
+        setOpenB(true);
+    };
+    
+    // Función para cerrar el modal de borrar
+    const handleCloseB = () => {
+        setOpenB(false);
+    };
+
+    const handleBorrar = async () => {
+        try{
+            const response = await deleteProyect(id);
+            if(response.status===200){
+                navigate("/board");
+            }
+        }
+        catch(error) {
+            console.error('Error al eliminar el proyecto:', error);
+        }
+    }
+
+
     const [TempProjectName, setTempProjectName] = React.useState(projectName);
     const [TempProjectDescription, setTempProjectDescription] = React.useState(projectDescription);
     const handleOpenEdit = () => setOpenEdit(true);
     const handleCloseEdit = () => setOpenEdit(false);
     
     const handleUpdateProject = () => {
+        updateProyect(id,TempProjectName,TempProjectDescription);
         setProjectName(TempProjectName);
         setProjectDescription(TempProjectDescription);
         handleCloseEdit();
@@ -182,7 +193,10 @@ const Proyecto = () =>{
         setSelectedComprobante(URL.createObjectURL(cell.comprobante));
         setOpenImageModal(true);
     };
-    
+
+    React.useEffect(() => {
+        getProyect(id,setProjectName,setProjectDescription);
+    },[setProjectName,setProjectDescription]);
 
     return(
         <div className="h-screen">
@@ -192,7 +206,7 @@ const Proyecto = () =>{
                     <p>{projectDescription}</p>
                 </div>
                 <div className="flex justify-center gap-4">
-                    <Button variant="outlined" startIcon={<FaRegTrashAlt />}>
+                    <Button variant="outlined" onClick={handleOpenB} startIcon={<FaRegTrashAlt />}>
                         Eliminar
                     </Button>
                     <Button variant="contained" startIcon={<FaEdit/>} onClick={handleOpenEdit}>
@@ -204,6 +218,30 @@ const Proyecto = () =>{
                 <Tabs tabs={tabsN} content={tabsContent}>
                 </Tabs>
             </div>
+            <Modal open={openB} onClose={handleCloseB} aria-labelledby="child-modal-title" aria-describedby="child-modal-description"
+                        style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <Box                     sx={{
+                        width: "400px",
+                        padding: "20px",
+                        backgroundColor: "white",
+                        borderRadius: "8px",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        boxShadow: 3, // Sombra más sutil
+                    }}>
+                    <h3 style={{ textAlign: "center", color: "#333" }}>¿Estás seguro de esto?</h3>
+                    <p style={{ textAlign: "center", color: "#555", marginBottom: "20px" }}>
+                        Esta acción eliminará este proyecto. ¿Quieres continuar?
+                    </p>
+                    <Button variant="outlined" onClick={handleBorrar} color="error" style={{ width: "45%" }}>
+                        Borrar
+                    </Button>
+                    <Button variant="contained" onClick={handleCloseB} style={{ width: "45%" }}>
+                        Cancelar
+                    </Button>
+                </Box>
+            </Modal>
             <Modal open={openEdit} onClose={handleCloseEdit}>
                 <CustomBox moreStyles={{width: 400}}>
                     <h2>Editar Proyecto</h2>
