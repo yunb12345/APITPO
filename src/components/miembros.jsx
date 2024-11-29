@@ -5,15 +5,15 @@ import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import CustomBox from "./box";
 import * as miembros from '../api/miembros_api';
+import { useParams } from 'react-router-dom';
 
 const Miembros = (props) => {
     console.log(props);
-
+    const { id } = useParams();
     const [integrantes, setIntegrantes] = React.useState([]);
-    //const {user} = React.useContext(AuthContext);
     React.useEffect(() => {
         console.log("Pido la lista de productos con mi token de sesion")
-        miembros.getMiembros(2,setIntegrantes);
+        miembros.getMiembros(id,setIntegrantes);
     }, [setIntegrantes]);
 
     console.log(integrantes)
@@ -39,13 +39,14 @@ const Miembros = (props) => {
         setIntegrantes(updated);
         handleCloseDeleteIntegrante()
     }
-    const handleAddIntegrante = () => {
-        /*const nuevoId = integrantes.length > 0 ? integrantes[integrantes.length - 1].id + 1 : 1; // Genera un nuevo id
-        setIntegrantes([...integrantes, { id: nuevoId, userName: newIntegrante, transacciones:0}]);
+    const handleAddIntegrante = async () => {
+        //const nuevoId = integrantes.length > 0 ? integrantes[integrantes.length - 1].id + 1 : 1; // Genera un nuevo id
+        
+        const miembroCreado = await miembros.agregarMiembro(id,newIntegrante);
+        console.log(miembroCreado);
+        setIntegrantes([...integrantes,miembroCreado]);
         setNewIntegrante('');
-        handleCloseIntegrante();*/
-        let id = miembros.getId(newIntegrante);
-        console.log(id);
+        handleCloseIntegrante();
     };
 
     return(

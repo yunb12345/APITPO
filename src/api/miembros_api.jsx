@@ -4,7 +4,6 @@ const getMiembros = async(id,setMiembros) => {
         method: "GET",
         redirect: "follow"
       };
-      
     let response = await fetch(`http://localhost:8080/api/user_proyects/users/${id}`, requestOptions);
     let jsonData = await response.json();
     for (const value of Object.values(jsonData.body)) {
@@ -28,28 +27,40 @@ const getMiembros = async(id,setMiembros) => {
 
 }
 
-const getId = async (username) => {
-    let userId = ""
-    var body = JSON.stringify({
-        "username": username
+const agregarMiembro = async (id,username) => {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    
+    const raw = JSON.stringify({
+      "username": username
     });
+    
     const requestOptions = {
-        method: "POST",
-        redirect: "follow",
-        body:"body"
-      };
-      
-    let response = await fetch(`http://localhost:8080/api/users/username`, requestOptions);
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow"
+    };
+    
+    let response = await fetch("http://localhost:8080/api/users/username", requestOptions);
     let jsonData = await response.json();
     
+    const raw1 = JSON.stringify({
+        "UserId": jsonData.id,
+        "ProyectId": id,
+        "balance": 0
+        });
     
-    try {
-        userId = jsonData;
-    } catch (error) {
-        console.error('fallos', error);
-        userId = ""
-    }
+    const requestOptions1 = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw1,
+    redirect: "follow"
+    };
+    await fetch("http://localhost:8080/api/user_proyects/", requestOptions1);
+
+    return jsonData;
     
 };
 
-export {getMiembros, getId};
+export {getMiembros, agregarMiembro};
