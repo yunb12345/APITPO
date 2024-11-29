@@ -63,4 +63,43 @@ const agregarMiembro = async (id,username) => {
     
 };
 
-export {getMiembros, agregarMiembro};
+const eliminarMiembro = async (id,username) => {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    
+    const raw = JSON.stringify({
+      "username": username
+    });
+    
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow"
+    };
+    
+    let response = await fetch("http://localhost:8080/api/users/username", requestOptions);
+    let jsonData = await response.json();
+    
+    const myHeaders2 = new Headers();
+    myHeaders2.append("Content-Type", "application/json");
+
+    const raw2 = JSON.stringify({
+    "userid": jsonData.id,
+    "proyectid": id
+    });
+
+    const requestOptions2 = {
+    method: "DELETE",
+    headers: myHeaders,
+    body: raw2,
+    redirect: "follow"
+    };
+
+    fetch("http://localhost:8080/api/user_proyects/", requestOptions2)
+
+    return jsonData;
+    
+};
+
+export {getMiembros, agregarMiembro, eliminarMiembro};

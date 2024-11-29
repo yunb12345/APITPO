@@ -34,8 +34,9 @@ const Miembros = (props) => {
     const handleCloseDeleteIntegrante = () => setOpenDeleteIntegrante(false);
 
 
-    const handleDeleteIntegrante = (user) => {
-        const updated = integrantes.filter((member) => member.userName !== user);
+    const handleDeleteIntegrante = async (user) => {
+        const miembroEliminado = await miembros.eliminarMiembro(id,user);
+        const updated = integrantes.filter((member) => member.username !== user);
         setIntegrantes(updated);
         handleCloseDeleteIntegrante()
     }
@@ -91,7 +92,7 @@ const Miembros = (props) => {
                                     <div>
                                         <p style={{marginTop:"10px", marginRight:"10px"}}>{x.username}</p>
                                     </div>
-                                    <Button onClick={() => handleDeleteIntegrante(x.userName)} variant="contained" sx={{ mt: 2, backgroundColor: '#FF4C4C', color: 'white' }}>
+                                    <Button onClick={() => handleDeleteIntegrante(x.username)} variant="contained" sx={{ mt: 2, backgroundColor: '#FF4C4C', color: 'white' }}>
                                         Eliminar
                                     </Button>
                                 </div>
