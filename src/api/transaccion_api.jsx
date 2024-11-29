@@ -157,5 +157,49 @@ const eliminarMiembro = async (id,username) => {
     return jsonData;
     
 };
+const getTransaccionByUserId = async(id) => {
+  //traemos todos los gastos del usuario para obtener la informacion de la transaccion
+  //ej
+  /*
+  [
+     {
+      id: 1,
+      projectTitle: 'Proyecto1',
+      transactionName:"pago rueda",
+      date: '"2015-03-25"',
+      value: 321,
+      comprobante: "test"
+    },
+  ]
+  */
+  const data = [];
 
-export {crearTransaccion, agregarMiembro, eliminarMiembro};
+  const requestOptions = {
+    method: "GET",
+    redirect: "follow"
+  };
+  
+  const response = await fetch(`http://localhost:8080/api/gastos/user/${id}`, requestOptions);
+  const gastos = await response.json();
+  for (const gasto of gastos) {
+    const transactionResponse = await fetch(
+      `http://localhost:8080/api/transacciones/${gasto.TransaccioneId}`,
+      requestOptions
+    );
+    const transaction = await transactionResponse.json();
+
+    const proyectResponse = await fetch(`http://localhost:8080/api/proyects/${transaction.proyectId}`,requestOptions);
+    const proyect = await proyectResponse.json();
+    // Formatear la información y agregarla a 'data'
+    data.push({
+      id: transaction.id,
+      projectTitle: proyect.proyectName, // Reemplaza por la propiedad real si es diferente
+      transactionName: transaction.nombreTransaccion,
+      date: transaction.updatedAt,
+      value: transaction.montoTotal,
+      comprobante: transaction.imageUrl,
+    });
+  }
+  return data;
+}
+export {crearTransaccion, agregarMiembro, eliminarMiembro,getTransaccionByUserId};

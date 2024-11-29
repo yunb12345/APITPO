@@ -5,15 +5,17 @@ export const getProyectos = async(id,setProyects) => {
         redirect: "follow"
       };
       
-    let response = await fetch(`http://localhost:8080/api/user_proyects/proyects/${id}`, requestOptions);
-    let jsonData = await response.json();
-    for (const value of Object.values(jsonData)) {
-        proyects.push(
-            fetch(`http://localhost:8080/api/proyects/${value.ProyectId}`, requestOptions)
-                .then((response) => {
-                    if (!response.ok) throw new Error(`Error fetching project ${value.ProyectId}`);
-                    return response.json();
-                })
+    const responseUsersProyects = await fetch(`http://localhost:8080/api/user_proyects/proyects/${id}`, requestOptions);
+    const usersProyects = await responseUsersProyects.json();
+    for (const value of Object.values(usersProyects)) {
+        const proyectResponse = await fetch(`http://localhost:8080/api/proyects/${value.ProyectId}`, requestOptions);
+        const proyect = await proyectResponse.json();
+        proyects.push({
+            id:proyect.id,
+            proyectName:proyect.proyectName,
+            proyectDesc:proyect.proyectDesc,
+            balance:value.balance,
+        }
         );
     }
     
