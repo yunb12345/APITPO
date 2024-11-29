@@ -44,22 +44,8 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('users', JSON.stringify(users));
     };
 
-    const updateUser = (updatedUser) => {
-        const users = JSON.parse(localStorage.getItem('users')) || [];
-        const newUserList = users.map(user => user.mail === updatedUser.mail ? updatedUser : user);
-        localStorage.setItem('users', JSON.stringify(newUserList));
-        localStorage.setItem('loggedInUser', JSON.stringify(updatedUser));
-        setUser(updatedUser);
-    };
-
-    const deleteUser = (userEmail) => {
-        const users = JSON.parse(localStorage.getItem('users')) || [];
-        const newUserList = users.filter(user => user.email !== userEmail);
-        localStorage.setItem('users', JSON.stringify(newUserList));
-    };
-
     return (
-        <AuthContext.Provider value={{ isAuthenticated, loginSuccess, logout, register, user, updateUser, deleteUser }}>
+        <AuthContext.Provider value={{ isAuthenticated, loginSuccess, logout, register, user }}>
             {children}
         </AuthContext.Provider>
     );

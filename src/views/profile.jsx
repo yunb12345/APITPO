@@ -6,9 +6,10 @@ import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import { Link } from "react-router-dom";
 import CustomBox from "../components/box";
-import * as profile from '../api/profile_api';
-
 import { AuthContext } from "../components/authContext";
+import {getUser,updateUser,deleteUser} from "../api/profile_api";
+import { useNavigate } from "react-router-dom";
+
 const proyectos = [
     {
         nombre:'Proyecto 1',
@@ -36,57 +37,44 @@ const proyectos = [
         balance:-750
     },
 ]
-let totalBalance = 0;
-proyectos.forEach(proyecto => {
-    totalBalance += proyecto.balance;
-});
 
 const Profile = () => {
     
-    
-    const [perfil, setPerfil] = React.useState([]);
+    const navigate = useNavigate();
+    const {logout} = React.useContext(AuthContext);
+
+    const { user } = React.useContext(AuthContext); //datos del usuario logueado
+    const [perfil, setPerfil] = React.useState({});
     React.useEffect(() => {
-                const userData = profile.getUser(5);
-                setPerfil(userData); 
-                console.log(perfil)
-            }
-        ,[]);
-
+        if(user){
+            getUser(user.id,setPerfil);
+        }
+    },[user,setPerfil]);
     
-    /*const fetchData = async () => {
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type","application/json")
-        const requestOptions = {
-            method: "GET",
-            redirect: "follow"
-          };
-          
-        let response = await fetch("http://localhost:8080/api/users/2", requestOptions)
-        let jsonData = await response.json()
-        console.log(jsonData);
-    }
-
-    fetchData();*/
-    const { user,updateUser } = React.useContext(AuthContext); //datos del usuario logueado
-
+    // handle para ventanas
     const [open, setOpen] = React.useState(false);
+    const [openB, setOpenB] = React.useState(false); // Estado para controlar el modal de "Borrar"
+
+    // Función para abrir el modal de borrar
+    const handleOpenB = () => {
+        setOpenB(true);
+    };
+    
+    // Función para cerrar el modal de borrar
+    const handleCloseB = () => {
+        setOpenB(false);
+    };
+
     const handleOpen = () => {
         setOpen(true);
-        setTempUserData(userData);
+        setTempUserData(perfil);
     };
     
     const handleClose = () => {
         setOpen(false);
     };
-    const [userData, setUserData] = React.useState({
-        user: perfil.username,
-        name: perfil.name,
-        lastName: perfil.lastName,
-        mail: perfil.mail,
-        pass: perfil.pass
-    });
-    
-    const [tempUserData, setTempUserData] = React.useState(userData);
+
+    const [tempUserData, setTempUserData] = React.useState({});
     
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -99,11 +87,37 @@ const Profile = () => {
     function validarMail(mail) {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return regex.test(mail);
-      }
+    }
     
-    const handleSave = () => {
-        if(tempUserData.user != "" && tempUserData.name != "" && tempUserData.lastName != "" && validarMail(tempUserData.mail) && tempUserData.pass != ""){
-            updateUser(tempUserData);
+    const handleBorrar = async () => {
+        try{
+            const response = await deleteUser(user.id);
+            if(response.status===200){
+                logout();
+                navigate("/");
+            }
+        }
+        catch(error) {
+            console.error('Error al eliminar el usuario:', error);
+        }
+    }
+    
+    // para editar el perfil
+    const handleSave = async () => {
+        //if(tempUserData.user !== "" && tempUserData.name !== "" && tempUserData.lastName !== "" && validarMail(tempUserData.mail) && tempUserData.pass !== ""){
+        if(tempUserData.user !== "" && validarMail(tempUserData.mail) && tempUserData.pass !== ""){
+            const userData = {
+                username:tempUserData.user,
+                /*
+                name:tempUserData.name,
+                lastName:tempUserData.lastName,
+                */
+                email:tempUserData.mail,
+                password:tempUserData.pass
+            };
+            const updatedProfile = await updateUser(user.id,userData);
+            console.log(updatedProfile);
+            setPerfil(updatedProfile);
             setOpen(false); 
         }else{
             setOpenError(true)
@@ -124,7 +138,7 @@ const Profile = () => {
                         <div className='flex flex-col justify-center'>
                             <p className='text-bold text-3xl'>{perfil.user}</p>
                             <h1 className=''>Balance</h1>
-                            <h1 className='text-bold text-2xl text-emerald-500'>${totalBalance}</h1>
+                            <h1 className='text-bold text-2xl text-emerald-500'>${perfil.balance}</h1>
                         </div>
                         
                     </div>
@@ -144,12 +158,37 @@ const Profile = () => {
                     </div>
                 </div>
                 <div className='flex flex-wrap gap-4 justify-center'>
-                    <Button variant="outlined" color="error">
+                    <Button variant="outlined" onClick={handleOpenB} color="error">
                         Borrar
                     </Button>
+
                     <Button variant="contained" onClick={handleOpen}>Editar</Button>
                 </div>
             </div>
+            <Modal open={openB} onClose={handleCloseB} aria-labelledby="child-modal-title" aria-describedby="child-modal-description"
+                        style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <Box                     sx={{
+                        width: "400px",
+                        padding: "20px",
+                        backgroundColor: "white",
+                        borderRadius: "8px",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        boxShadow: 3, // Sombra más sutil
+                    }}>
+                    <h3 style={{ textAlign: "center", color: "#333" }}>¿Estás seguro de esto?</h3>
+                    <p style={{ textAlign: "center", color: "#555", marginBottom: "20px" }}>
+                        Esta acción eliminará permanentemente tu cuenta. ¿Quieres continuar?
+                    </p>
+                    <Button variant="outlined" onClick={handleBorrar} color="error" style={{ width: "45%" }}>
+                        Borrar
+                    </Button>
+                    <Button variant="contained" onClick={handleCloseB} style={{ width: "45%" }}>
+                        Cancelar
+                    </Button>
+                </Box>
+            </Modal>
             <Modal open={open} onClose={handleClose} aria-labelledby="child-modal-title" aria-describedby="child-modal-description"
                 style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <Box sx={{ width: "60%", height: "auto", backgroundColor: "white", color: "white", borderRadius: "30px", display: "flex", flexDirection: "column" }}>
@@ -164,6 +203,7 @@ const Profile = () => {
                         value={tempUserData.user}
                         required
                     />
+                    {/*
                     <TextField
                         name="name"
                         id="outlined-basic"
@@ -184,6 +224,7 @@ const Profile = () => {
                         value={tempUserData.lastName}
                         required
                     />
+                    */}
                     <TextField
                         name="mail"
                         id="outlined-basic"
@@ -195,7 +236,7 @@ const Profile = () => {
                     />
                     <TextField
                         type="pass"
-                        name="Contraseña"
+                        name="pass"
                         id="outlined-basic"
                         label="Contraseña"
                         variant="outlined"

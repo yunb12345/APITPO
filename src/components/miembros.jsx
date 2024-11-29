@@ -12,9 +12,8 @@ const Miembros = (props) => {
     const { id } = useParams();
     const [integrantes, setIntegrantes] = React.useState([]);
     React.useEffect(() => {
-        console.log("Pido la lista de productos con mi token de sesion")
         miembros.getMiembros(id,setIntegrantes);
-    }, [setIntegrantes]);
+    }, [id,setIntegrantes]);
 
     console.log(integrantes)
 
