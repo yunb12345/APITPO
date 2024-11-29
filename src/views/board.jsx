@@ -7,16 +7,19 @@ import { Link } from "react-router-dom";
 import CustomBox from "../components/box";
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
-import getProyectos from '../api/board_api';
+import {getProyectos,crearProyecto} from '../api/board_api';
 import {AuthContext} from '../components/authContext';
 
 const Board = () => {
     const [proyectos, setProyectos] = React.useState([]);
     const {user} = React.useContext(AuthContext);
     React.useEffect(() => {
-        console.log("Pido la lista de productos con mi token de sesion")
-        getProyectos(user.id,setProyectos);
-    }, [setProyectos]);
+        if(user){
+            console.log("Pido la lista de proyectos con mi token de sesion")
+            getProyectos(user.id,setProyectos);
+        }
+
+    }, [user,setProyectos]);
     /*const proyects = [
         {
             id:1,
@@ -49,23 +52,18 @@ const Board = () => {
     const createProyect = () => setOpenCreateProyect(true);
     const handleCloseProyect = () => setOpenCreateProyect(false);
 
-    const handleAddProyecto = () => {
-        if(newProyecto.nombre !== "" && newProyecto.descripcion !== ""){
-            const meses = [
-                "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-                "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-            ];
-            
-            const fecha = new Date();
-            const dia = fecha.getDate();
-            const mes = meses[fecha.getMonth()];
-            const anio = fecha.getFullYear();
-            newProyecto.fecha = `${mes} ${dia}, ${anio}`
-            setProyectos([...proyectos, { id: newProyecto.id, nombre: newProyecto.nombre, descripcion: newProyecto.descripcion, fecha: newProyecto.fecha, balance: newProyecto.balance}]);
-            setNewProyecto({ nombre: '', descripcion: '', fecha: '', balance: 0 });
-            handleCloseProyect();
+    const handleAddProyecto = async () => {
+        try{
+            if(newProyecto.nombre !== "" && newProyecto.descripcion !== ""){
+                const createdProyect = await crearProyecto(user.id,newProyecto.nombre,newProyecto.descripcion);
+                setProyectos([...proyectos, createdProyect]);
+                setNewProyecto({ nombre: '', descripcion: '', fecha: '', balance: 0 });
+                handleCloseProyect();
+            }
         }
-        
+        catch(error){
+            console.error("Error al crear el proyecot",error);
+        }
     }
 
     return (

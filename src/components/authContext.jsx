@@ -9,10 +9,11 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const token = sessionStorage.getItem('access-token');
-        if (token) {
+        const userData = localStorage.getItem("user");
+        if (token && userData) {
             try{
-                const decoded = jwtDecode(token);
-                setUser(decoded);
+                const userObject = JSON.parse(userData);
+                setUser(userObject);
                 setIsAuthenticated(true);
             } catch(error){
                 console.error("Error al decodificar el token",error);
@@ -25,12 +26,14 @@ export const AuthProvider = ({ children }) => {
 
         sessionStorage.setItem("access-token", token);
         const decoded = jwtDecode(token);
+        localStorage.setItem("user",JSON.stringify(decoded));
         setUser(decoded); // Actualiza la información del usuario
         setIsAuthenticated(true); // Actualiza el estado de autenticación
     };
 
     const logout = () => {
-        localStorage.removeItem('token');
+        sessionStorage.removeItem('token');
+        localStorage.removeItem("user");
         setIsAuthenticated(false); //cambia los estados
         setUser(null);
     };
