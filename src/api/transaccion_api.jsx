@@ -11,14 +11,16 @@ const crearTransaccion = async(id,nombre,monto,comprobante,integrantes) => {
     redirect: "follow"
     };
 
-    const response = await fetch("http://localhost:8080/api/transacciones/", requestOptions)
+    const response = await fetch("http://localhost:8080/api/transacciones/", requestOptions);
     let jsonData = await response.json();
 
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
-    for (const integrante of Object.values(integrantes)){
-        let porcentaje = parseInt(integrante.porcentaje)
+    const promises = integrantes.map(async (integrante) => {
+        const porcentaje = parseInt(integrante.porcentaje);
+        const balance = (monto * porcentaje) /100;
+
         const raw = JSON.stringify({
         "porcentaje": porcentaje,
         "TransaccioneId": jsonData.id,
@@ -32,18 +34,53 @@ const crearTransaccion = async(id,nombre,monto,comprobante,integrantes) => {
         redirect: "follow"
         };
 
-        fetch("http://localhost:8080/api/gastos/", requestOptions2)
+        await fetch("http://localhost:8080/api/gastos/", requestOptions2)
         .then((response) => response.text())
         .then((result) => console.log(result))
         .catch((error) => console.error(error));
-    }
-    
 
-    
+        const raw2 = JSON.stringify({
+          "UserId": integrante.id,
+          "ProyectId": id,
+          "balance": balance
+        });
 
+        const requestOptions3 = {
+          method: "PUT",
+          headers: myHeaders,
+          body: raw2,
+          redirect: "follow"
+        };
 
-    
+        await fetch("http://localhost:8080/api/user_proyects/", requestOptions3)
+        .then((response) => response.text())
+        .then((result) => console.log(result))
+        .catch((error) => console.error(error));
 
+        const requestOptions4 = {
+          method: "GET",
+          redirect: "follow"
+        };
+        
+        const response1 = await fetch(`http://localhost:8080/api/users/${integrante.id}`, requestOptions4);
+        const userData = await response1.json();
+        const newBalance = userData.balance - balance;
+        
+        const newUserData = {
+          username:userData.username,
+          email:userData.email,
+          balance:newBalance
+        }
+        const raw3 = JSON.stringify(newUserData);
+        const requestOptions5 = {
+          method: "PUT",
+          headers: myHeaders,
+          body: raw3,
+          redirect: "follow"
+        };
+        await fetch(`http://localhost:8080/api/users/${integrante.id}`, requestOptions5);
+    });
+    await Promise.all(promises);
 }
 
 const agregarMiembro = async (id,username) => {
