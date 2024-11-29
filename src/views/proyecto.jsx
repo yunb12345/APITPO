@@ -106,7 +106,7 @@ const Proyecto = () =>{
     const columnsMiembro = [
         {
             name:'Usuario',
-            selector: row => row.userName,
+            selector: row => row.username,
             sortable: true,
         },
         {
@@ -121,7 +121,7 @@ const Proyecto = () =>{
         },
         {
             name:'Transacciones',
-            selector: row => "$" + row.transacciones,
+            selector: row => "$" + row.balance,
             sortable: true,
         },
     ];
