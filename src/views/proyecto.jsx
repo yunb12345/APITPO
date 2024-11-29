@@ -14,15 +14,26 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import CustomBox from "../components/box";
-import {getProyect,updateProyect,deleteProyect} from "../api/proyect_api";
+import {getProyect,updateProyect,deleteProyect,getTransaccionByProyectId} from "../api/proyect_api";
 
 const Proyecto = () =>{
     const navigate = useNavigate();
     const location = useLocation();
     const project = location.state;  //Recibimos info del proyecto de la pagina board
     const { id } = useParams(); //id de la url
-
+    const[dataTransaccion,setData] = React.useState([]);
+    React.useEffect(() =>{
+        const fetchData = async() =>{
+            const data = await getTransaccionByProyectId(id);
+            console.log(data);
+            setData(data);
+        };
+        fetchData();
+        
+    },[id]);
+    console.log(dataTransaccion);
     /*tabla para transaccion*/
+    /*
     const dataTransaccion = [
         {
             id: 1,
@@ -63,6 +74,7 @@ const Proyecto = () =>{
             ],
         },
     ]
+    */
     const columnsTransaccion = [
         {
             name: 'Transaccion',
@@ -193,11 +205,11 @@ const Proyecto = () =>{
         setSelectedComprobante(URL.createObjectURL(cell.comprobante));
         setOpenImageModal(true);
     };
-
+    /*
     React.useEffect(() => {
         getProyect(id,setProjectName,setProjectDescription);
     },[setProjectName,setProjectDescription]);
-
+    */
     return(
         <div className="h-screen">
             <div className="flex flex-col py-10 justify-center gap-4 text-center">
