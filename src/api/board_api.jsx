@@ -48,7 +48,6 @@ export const crearProyecto = async (userId,nombre,descripcion) => {
         throw new Error('Error al crear el proyecto');
     }
     let jsonData = await response.json();
-    console.log(jsonData);
     
     const raw1 = JSON.stringify({
     "UserId": userId,
