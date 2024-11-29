@@ -4,6 +4,9 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import CustomBox from "./box";
+import * as miembros from '../api/miembros_api';
+import * as transaccion from '../api/transaccion_api';
+import { useParams } from 'react-router-dom';
 
 
 const TransaccionGrupo = (props) => {
@@ -15,6 +18,15 @@ const TransaccionGrupo = (props) => {
         value: '',
         comprobante: null,
     });
+
+    const { id } = useParams();
+    const [dataMiembro, setDataMiembro] = React.useState([]);
+    React.useEffect(() => {
+        console.log("Pido la lista de productos con mi token de sesion")
+        miembros.getMiembros(id,setDataMiembro);
+    }, [setDataMiembro]);
+
+    console.log(dataMiembro);
 
     const [rows, setRows] = React.useState(tablaContenido);
     
@@ -33,13 +45,14 @@ const TransaccionGrupo = (props) => {
         return sumaPorcentajes === 100;
     }
     const handleAddMovement = () => {
-        if(newMovement.comprobante && newMovement.nameTransaccion !== "" && newMovement.date && newMovement.value > 0 && validarPorcentaje(dataMiembro)){
+        if(newMovement.comprobante && newMovement.nameTransaccion !== "" && newMovement.date && newMovement.value > 0 && validarPorcentaje(dataMiembro) || true){
             console.log(newMovement.comprobante);
             let participantes = [];
             dataMiembro.map((miembro) => {
-                participantes.push({nombre: miembro.name, porcentaje: miembro.porcentaje})
+                participantes.push({id: miembro.id, porcentaje: miembro.porcentaje})
             });
-            const nuevoId = rows.length > 0 ? rows[rows.length - 1].id + 1 : 1; // Genera un nuevo id
+            transaccion.crearTransaccion(id,newMovement.nameTransaccion,newMovement.value,newMovement.comprobante,participantes);
+            /*const nuevoId = rows.length > 0 ? rows[rows.length - 1].id + 1 : 1; // Genera un nuevo id
             const newRow = {
                 id:nuevoId,
                 nameTransaccion:newMovement.nameTransaccion,
@@ -53,7 +66,7 @@ const TransaccionGrupo = (props) => {
                 miembro.transacciones = miembro.transacciones + newMovement.value * (parseInt(miembro.porcentaje)/100);
             });
             setNewMovement({ nameTransaccion: '', date: "", value: "", comprobante: null });
-            handleCloseMovement();
+            handleCloseMovement();*/
         }else{
             setOpenError(true);
         }
@@ -66,20 +79,8 @@ const TransaccionGrupo = (props) => {
       setOpenImageModal(true);
     };
 
-    const [dataMiembro,setDataMiembro] = React.useState([
-        {
-            id: 1,
-            name:'Agustin',
-            transacciones:200,
-            porcentaje:0
-        },
-        {
-            id:2,
-            name:'Alex',
-            transacciones:430,
-            porcentaje:0
-        }
-    ]);
+    //const [dataMiembro,setDataMiembro] = React.useState([integrantes]);
+    console.log(dataMiembro);
 
     const handleChangePorcentaje = (e, i) =>{
         const miembros = [...dataMiembro];
@@ -134,7 +135,7 @@ const TransaccionGrupo = (props) => {
                     {dataMiembro.map((x,i) => 
                             (
                                 <div>
-                                    <p style={{marginTop:"10px"}}>Porcentaje de {x.name}</p>
+                                    <p style={{marginTop:"10px"}}>Porcentaje de {x.username}</p>
                                     <TextField
                                     type='number'
                                     onChange={(e) => handleChangePorcentaje(e, i)}
