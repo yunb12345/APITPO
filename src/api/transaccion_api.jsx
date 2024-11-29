@@ -1,29 +1,48 @@
-const getMiembros = async(id,setMiembros) => {
-    const miembros = []
+const crearTransaccion = async(id,nombre,monto,comprobante,integrantes) => {
+    const formdata = new FormData();
+    formdata.append("proyectId", id);
+    formdata.append("montoTotal", monto);
+    formdata.append("nombreTransaccion", nombre);
+    formdata.append("file", comprobante, URL.createObjectURL(comprobante));
+
     const requestOptions = {
-        method: "GET",
-        redirect: "follow"
-      };
-    let response = await fetch(`http://localhost:8080/api/user_proyects/users/${id}`, requestOptions);
+    method: "POST",
+    body: formdata,
+    redirect: "follow"
+    };
+
+    const response = await fetch("http://localhost:8080/api/transacciones/", requestOptions)
     let jsonData = await response.json();
-    for (const value of Object.values(jsonData.body)) {
-        miembros.push(
-            fetch(`http://localhost:8080/api/users/${value.UserId}`, requestOptions)
-                .then((response) => {
-                    if (!response.ok) throw new Error(`Error fetching project ${value.UserId}`);
-                    return response.json();
-                })
-        );
+
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    for (const integrante of Object.values(integrantes)){
+        let porcentaje = parseInt(integrante.porcentaje)
+        const raw = JSON.stringify({
+        "porcentaje": porcentaje,
+        "TransaccioneId": jsonData.id,
+        "UserId": integrante.id,
+        });
+
+        const requestOptions2 = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow"
+        };
+
+        fetch("http://localhost:8080/api/gastos/", requestOptions2)
+        .then((response) => response.text())
+        .then((result) => console.log(result))
+        .catch((error) => console.error(error));
     }
     
-    try {
-        const resultados = await Promise.all(miembros);
-        console.log(resultados); // donde estén los datos juntos
-        setMiembros(resultados);
-    } catch (error) {
-        console.error('fallos', error);
-        setMiembros([]);
-    }
+
+    
+
+
+    
 
 }
 
@@ -102,4 +121,4 @@ const eliminarMiembro = async (id,username) => {
     
 };
 
-export {getMiembros, agregarMiembro, eliminarMiembro};
+export {crearTransaccion, agregarMiembro, eliminarMiembro};
