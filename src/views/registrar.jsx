@@ -94,6 +94,7 @@ const Registrar =()=>{
                             value={user}
                             onChange={(e) => setUser(e.target.value)}
                             />
+                            {/*
                             <TextField 
                             id="outlined-basic" 
                             label="Nombre" 
@@ -110,6 +111,7 @@ const Registrar =()=>{
                             value={lastName}
                             onChange={(e) => setLastName(e.target.value)}
                             />
+                            */}
                             <TextField 
                             id="outlined-basic" 
                             label="Email" 

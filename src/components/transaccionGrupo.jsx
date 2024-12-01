@@ -22,7 +22,6 @@ const TransaccionGrupo = (props) => {
     const { id } = useParams();
     const [dataMiembro, setDataMiembro] = React.useState([]);
     React.useEffect(() => {
-        //console.log("Pido la lista de productos con mi token de sesion")
         miembros.getMiembros(id,setDataMiembro);
     }, [id,setDataMiembro]);
 
@@ -45,13 +44,14 @@ const TransaccionGrupo = (props) => {
         return sumaPorcentajes === 100;
     }
     const handleAddMovement = () => {
-        if(newMovement.comprobante && newMovement.nameTransaccion !== "" && newMovement.date && newMovement.value > 0 && validarPorcentaje(dataMiembro) || true){
+        if(newMovement.comprobante && newMovement.nameTransaccion !== "" && newMovement.date && newMovement.value > 0 && validarPorcentaje(dataMiembro)){
             console.log(newMovement.comprobante);
             let participantes = [];
             dataMiembro.map((miembro) => {
                 participantes.push({id: miembro.id, porcentaje: miembro.porcentaje})
             });
-            transaccion.crearTransaccion(id,newMovement.nameTransaccion,newMovement.value,newMovement.comprobante,participantes);
+            const newTransaccion = transaccion.crearTransaccion(id,newMovement.nameTransaccion,newMovement.value,newMovement.comprobante,participantes);
+            console.log(newTransaccion);
             /*const nuevoId = rows.length > 0 ? rows[rows.length - 1].id + 1 : 1; // Genera un nuevo id
             const newRow = {
                 id:nuevoId,

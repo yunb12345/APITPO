@@ -40,7 +40,7 @@ export const deleteProyect = async(id) => {
   return response;
 }
 
-export const getTransaccionByProyectId = async(id) => {
+export const getTransaccionByProyectId = async(id,setData) => {
   /*
    const dataTransaccion = [
         {
@@ -69,7 +69,6 @@ export const getTransaccionByProyectId = async(id) => {
   
   const transaccionResponse = await fetch(`http://localhost:8080/api/transacciones/proyects/${id}`, requestOptions); //todas las transacciones del proyecto
   const transacciones = await transaccionResponse.json();
-  //const participantesB = [];
   const data = await Promise.all(
     transacciones.map(async (transaccion) => {
       // Obtener los gastos relacionados con la transacción
@@ -106,5 +105,6 @@ export const getTransaccionByProyectId = async(id) => {
       };
     })
   );
+  setData(data);
   return data;
 }

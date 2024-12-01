@@ -15,6 +15,7 @@ import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import CustomBox from "../components/box";
 import {getProyect,updateProyect,deleteProyect,getTransaccionByProyectId} from "../api/proyect_api";
+import {getMiembros} from "../api/miembros_api.jsx";
 
 const Proyecto = () =>{
     const navigate = useNavigate();
@@ -22,19 +23,21 @@ const Proyecto = () =>{
     const project = location.state;  //Recibimos info del proyecto de la pagina board
     const { id } = useParams(); //id de la url
     const[dataTransaccion,setData] = React.useState([]);
+    const[dataMiembro,setDataMiembro] = React.useState([]);
     const [projectName, setProjectName] = React.useState(project.nombre);  //usamos el valor recibido por el location state
     const [projectDescription, setProjectDescription] = React.useState(project.descripcion);
 
     React.useEffect(() =>{
         const fetchData = async() =>{
             getProyect(id,setProjectName,setProjectDescription);
-            const data = await getTransaccionByProyectId(id);
+            const data = await getTransaccionByProyectId(id,setData);
+            getMiembros(id,setDataMiembro);
             console.log(data);
-            setData(data);
+            //setData(data);
         };
         fetchData();
         
-    },[id,setProjectName,setProjectDescription]);
+    },[id,setProjectName,setProjectDescription,getMiembros,setData]);
     console.log(dataTransaccion);
     console.log(dataTransaccion.participantes);
     /*tabla para transaccion*/
@@ -107,7 +110,7 @@ const Proyecto = () =>{
             sortable: true,
         },
     ];
-
+    /*
     const dataMiembro = [
         {
             id: 1,
@@ -124,7 +127,7 @@ const Proyecto = () =>{
             transacciones:430,
         }
     ];
-
+    */
     //
     /*columnas para el tab*/
     const tabsN = [{
@@ -188,11 +191,7 @@ const Proyecto = () =>{
         setSelectedComprobante(URL.createObjectURL(cell.comprobante));
         setOpenImageModal(true);
     };
-    /*
-    React.useEffect(() => {
-        getProyect(id,setProjectName,setProjectDescription);
-    },[setProjectName,setProjectDescription]);
-    */
+
     return(
         <div className="h-screen">
             <div className="flex flex-col py-10 justify-center gap-4 text-center">

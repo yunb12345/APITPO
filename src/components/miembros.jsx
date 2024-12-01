@@ -10,17 +10,9 @@ import { useParams } from 'react-router-dom';
 const Miembros = (props) => {
     console.log(props);
     const { id } = useParams();
-    const [integrantes, setIntegrantes] = React.useState([]);
-    React.useEffect(() => {
-        miembros.getMiembros(id,setIntegrantes);
-    }, [id,setIntegrantes]);
-
-    console.log(integrantes)
-
 
     const {tablaColumna,tablaContenido} = props;
-    //const [integrantes, setIntegrantes] = React.useState(tablaContenido);
-    //const [integrantes, setIntegrantes] = miembros;
+    const [integrantes, setIntegrantes] = React.useState(tablaContenido);
     const [openIntegrante, setOpenIntegrante] = React.useState(false);
     const [openDeleteIntegrante, setOpenDeleteIntegrante] = React.useState(false);
     const [newIntegrante, setNewIntegrante] = React.useState('');
@@ -34,10 +26,13 @@ const Miembros = (props) => {
 
 
     const handleDeleteIntegrante = async (user) => {
+        
         const miembroEliminado = await miembros.eliminarMiembro(id,user);
+        console.log(miembroEliminado);
         const updated = integrantes.filter((member) => member.username !== user);
         setIntegrantes(updated);
         handleCloseDeleteIntegrante()
+        
     }
     const handleAddIntegrante = async () => {
         //const nuevoId = integrantes.length > 0 ? integrantes[integrantes.length - 1].id + 1 : 1; // Genera un nuevo id
@@ -47,6 +42,7 @@ const Miembros = (props) => {
         setIntegrantes([...integrantes,miembroCreado]);
         setNewIntegrante('');
         handleCloseIntegrante();
+        
     };
 
     return(
