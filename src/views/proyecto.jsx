@@ -22,16 +22,21 @@ const Proyecto = () =>{
     const project = location.state;  //Recibimos info del proyecto de la pagina board
     const { id } = useParams(); //id de la url
     const[dataTransaccion,setData] = React.useState([]);
+    const [projectName, setProjectName] = React.useState(project.nombre);  //usamos el valor recibido por el location state
+    const [projectDescription, setProjectDescription] = React.useState(project.descripcion);
+
     React.useEffect(() =>{
         const fetchData = async() =>{
+            getProyect(id,setProjectName,setProjectDescription);
             const data = await getTransaccionByProyectId(id);
             console.log(data);
             setData(data);
         };
         fetchData();
         
-    },[id]);
+    },[id,setProjectName,setProjectDescription]);
     console.log(dataTransaccion);
+    console.log(dataTransaccion.participantes);
     /*tabla para transaccion*/
     /*
     const dataTransaccion = [
@@ -51,28 +56,7 @@ const Proyecto = () =>{
                     porcentaje:50,
                 },
             ],
-        },
-        {
-            id: 2,
-            nameTransaccion:'Pago motor',
-            date: '"2015-03-25"',
-            value: 500,
-            comprobante:"default",
-            participantes:[
-                {
-                    nombre:"Bam",
-                    porcentaje:60,
-                },
-                {
-                    nombre:"shkhs",
-                    porcentaje:20,
-                },
-                {
-                    nombre:"Mat",
-                    porcentaje:20,
-                },
-            ],
-        },
+        }
     ]
     */
     const columnsTransaccion = [
@@ -142,8 +126,7 @@ const Proyecto = () =>{
     <Miembros tablaColumna={columnsMiembro} tablaContenido={dataMiembro}/>]
 
     const [openEdit, setOpenEdit] = React.useState(false);
-    const [projectName, setProjectName] = React.useState(project.nombre);  //usamos el valor recibido por el location state
-    const [projectDescription, setProjectDescription] = React.useState(project.descripcion);
+
 
     const [openB, setOpenB] = React.useState(false); // Estado para controlar el modal de "Borrar"
 

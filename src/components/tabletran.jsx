@@ -1,5 +1,7 @@
-import React from 'react';
+import * as React from 'react';
 import DataTable from 'react-data-table-component';
+import {getTransaccionByProyectId} from "../api/proyect_api";
+import { useParams } from 'react-router-dom';
 
 const ExpandedComponent = ({ data }) => {
 	const valorTotal = data.value;
@@ -34,7 +36,18 @@ const ExpandedComponent = ({ data }) => {
 //este esta solo para los saber las transacciones de un proyecto
 
 const Tabletran = (props) => {
-	const {data,columns,expandable} = props;
+	const { id } = useParams(); //id de la url
+    const[data,setData] = React.useState([]);
+    React.useEffect(() =>{
+        const fetchData = async() =>{
+            const data = await getTransaccionByProyectId(id);
+            console.log(data);
+            setData(data);
+        };
+        fetchData();
+        
+    },[id,setData]);
+	const {dataB,columns,expandable} = props;
 	return <DataTable columns={columns} data={data} pagination expandableRows={expandable} expandableRowsComponent={ExpandedComponent}/>;
 	//expandable es un booleano, si es true es expandible y muestra los contenidos
 }

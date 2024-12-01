@@ -12,8 +12,6 @@ const Registrar =()=>{
 
     const {loginSuccess} = useContext(AuthContext);
     const [user, setUser] = useState("");
-    const [name, setName] = useState("");
-    const [lastName, setLastName] = useState("");
     const [mail, setMail] = useState("");
     const [pass, setPass] = useState("");
 
@@ -21,7 +19,7 @@ const Registrar =()=>{
 
     const handleRegister = async (e) => {
         e.preventDefault();
-        if(name != "" && pass != "" && validarMail(mail)){
+        if(user != "" && pass != "" && validarMail(mail)){
             const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
             const userExists = existingUsers.some(user => user.email === mail);
             if(userExists){
@@ -29,8 +27,6 @@ const Registrar =()=>{
             } else{
                 const newUser = {
                     username: user,
-                    name:name,
-                    lastName:lastName,
                     email:mail,
                     password:pass,
                 };

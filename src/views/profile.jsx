@@ -4,39 +4,11 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import CustomBox from "../components/box";
 import { AuthContext } from "../components/authContext";
 import {getUser,updateUser,deleteUser} from "../api/profile_api";
 import { useNavigate } from "react-router-dom";
-
-const proyectos = [
-    {
-        nombre:'Proyecto 1',
-        fecha:'Junio 10, 2018',
-        balance:-180
-    },
-    {
-        nombre:'Proyecto 2',
-        fecha:'Junio 7, 2018',
-        balance:880
-    },
-    {
-        nombre:'Proyecto 3',
-        fecha:'Agosto 10, 2018',
-        balance:10000
-    },
-    {
-        nombre:'Proyecto 4',
-        fecha:'Diciembre 25, 2018',
-        balance:-210
-    },
-    {
-        nombre:'Proyecto 5',
-        fecha:'Septiempre 20, 2018',
-        balance:-750
-    },
-]
 
 const Profile = () => {
     
@@ -125,7 +97,7 @@ const Profile = () => {
     
     return(
         <div className='mx-5'>
-            <div className='py-10 m-auto justify-center'>
+            <div className='py-10 m-auto justify-center min-h-screen'>
                 <div className='flex flex-row justify-around pt-10 w-full'>
                     <div>
                         <img alt='usr' src={imguser} className='h-20 w-20 m-5 rounded-2xl'/>
@@ -196,28 +168,6 @@ const Profile = () => {
                         value={tempUserData.user}
                         required
                     />
-                    {/*
-                    <TextField
-                        name="name"
-                        id="outlined-basic"
-                        label="Nombre"
-                        variant="outlined"
-                        style={{ margin: "20px" }}
-                        onChange={handleChange}
-                        value={tempUserData.name}
-                        required
-                    />
-                    <TextField
-                        name="lastName"
-                        id="outlined-basic"
-                        label="Apellido"
-                        variant="outlined"
-                        style={{ margin: "20px" }}
-                        onChange={handleChange}
-                        value={tempUserData.lastName}
-                        required
-                    />
-                    */}
                     <TextField
                         name="mail"
                         id="outlined-basic"
@@ -245,12 +195,16 @@ const Profile = () => {
                     </div>
                 </Box>
             </Modal>
+            {
+                /*
+            
             <div className='py-5'>
                 <div className='flex flex-row justify-between py-10'>
                     <h1 className='text-2xl'>Ultimas 5 transacciones</h1>
                     <Link to="/transactions"><Button>Ver Más</Button></Link>
                 </div>
                 <div>
+                    
                     <div className='flex flex-col gap-4'>
                         {proyectos.map((pro,index) => 
                             (
@@ -266,8 +220,10 @@ const Profile = () => {
                             )
                         )}
                     </div>
+                    
                 </div>
             </div>
+            */}
             <Modal open={openError} onClose={handleCloseError}>
                 <CustomBox moreStyles={{width: 400 }}>
                     <h2>Complete todos los campos con datos válidos</h2>

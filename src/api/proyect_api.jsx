@@ -89,7 +89,7 @@ export const getTransaccionByProyectId = async(id) => {
           const user = await userResponse.json();
 
           return {
-            nombre: user?.username || "Desconocido",
+            nombre: user.username || "Desconocido",
             porcentaje: gasto.porcentaje,
           };
         })
@@ -99,6 +99,7 @@ export const getTransaccionByProyectId = async(id) => {
       return {
         id:transaccion.id,
         nameTransaccion: transaccion.nombreTransaccion,
+        value:transaccion.montoTotal,
         date: transaccion.createdAt,
         comprobante: transaccion.imageUrl,
         participantes: participantesB,

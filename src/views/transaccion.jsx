@@ -17,7 +17,7 @@ const Transaccion = () =>{
         if(user){
             fetchData();
         }
-    },[user]);
+    },[user,setDatat]);
 
     const columnst = [
         {

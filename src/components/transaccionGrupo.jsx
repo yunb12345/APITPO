@@ -22,9 +22,9 @@ const TransaccionGrupo = (props) => {
     const { id } = useParams();
     const [dataMiembro, setDataMiembro] = React.useState([]);
     React.useEffect(() => {
-        console.log("Pido la lista de productos con mi token de sesion")
+        //console.log("Pido la lista de productos con mi token de sesion")
         miembros.getMiembros(id,setDataMiembro);
-    }, [setDataMiembro]);
+    }, [id,setDataMiembro]);
 
     console.log(dataMiembro);
 
