@@ -80,6 +80,10 @@ const Profile = () => {
         if(tempUserData.user !== "" && validarMail(tempUserData.mail) && tempUserData.pass !== ""){
             const userData = {
                 username:tempUserData.user,
+                /*
+                name:tempUserData.name,
+                lastName:tempUserData.lastName,
+                */
                 email:tempUserData.mail,
                 password:tempUserData.pass
             };
@@ -104,7 +108,6 @@ const Profile = () => {
                     </div>
                     <div className='justify-center text-center content-center'>
                         <div className='flex flex-col justify-center'>
-                            <p className='text-lg text-gray-400'>NOMBRE DE USUARIO</p>
                             <p className='text-bold text-3xl'>{perfil.user}</p>
                             <h1 className=''>Balance</h1>
                             <h1 className='text-bold text-2xl text-emerald-500'>${perfil.balance}</h1>
@@ -113,6 +116,10 @@ const Profile = () => {
                     </div>
                 </div>
                 <div className='flex flex-col p-4 text-sm gap-2 w-full lg:w-2/3 m-auto'>
+                    <div>
+                        <p className='text-lg text-gray-400'>NOMBRE Y APELLIDO</p>
+                        <p className='text-lg'>{perfil.name} {perfil.lastName}</p>
+                    </div>
                     <div>
                         <p className='text-lg text-gray-400'>EMAIL</p>
                         <p className='text-lg'>{perfil.mail}</p>

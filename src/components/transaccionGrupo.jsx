@@ -49,10 +49,10 @@ const TransaccionGrupo = (props) => {
             console.log(newMovement.comprobante);
             let participantes = [];
             dataMiembro.map((miembro) => {
-                participantes.push({username: miembro.username, id: miembro.id, porcentaje: miembro.porcentaje})
+                participantes.push({id: miembro.id, porcentaje: miembro.porcentaje})
             });
             transaccion.crearTransaccion(id,newMovement.nameTransaccion,newMovement.value,newMovement.comprobante,participantes);
-            const nuevoId = rows.length > 0 ? rows[rows.length - 1].id + 1 : 1; // Genera un nuevo id
+            /*const nuevoId = rows.length > 0 ? rows[rows.length - 1].id + 1 : 1; // Genera un nuevo id
             const newRow = {
                 id:nuevoId,
                 nameTransaccion:newMovement.nameTransaccion,
@@ -66,7 +66,7 @@ const TransaccionGrupo = (props) => {
                 miembro.transacciones = miembro.transacciones + newMovement.value * (parseInt(miembro.porcentaje)/100);
             });
             setNewMovement({ nameTransaccion: '', date: "", value: "", comprobante: null });
-            handleCloseMovement();
+            handleCloseMovement();*/
         }else{
             setOpenError(true);
         }

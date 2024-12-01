@@ -21,7 +21,7 @@ const ExpandedComponent = ({ data }) => {
 				const valorCalculado = (participante.porcentaje * valorTotal) / 100;
 				return(
 					<tr key={index}>
-						<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{participante.username}</td>
+						<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{participante.nombre}</td>
 						<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{participante.porcentaje}%</td>
 						<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${valorCalculado}</td>
 					</tr>

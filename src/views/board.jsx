@@ -33,14 +33,14 @@ const Board = () => {
     let balanceNegativo = 0;
     let balancePositivo = 0;
   
-    proyectos.forEach(proyecto => {
+    /*proyects.forEach(proyecto => {
         totalBalance += proyecto.balance;
         if (proyecto.balance < 0) {
           balanceNegativo+=proyecto.balance;
         } else if (proyecto.balance > 0) {
           balancePositivo+=proyecto.balance;
         }
-    });
+    });*/
 
     const [newProyecto, setNewProyecto] = React.useState({
         nombre:'',

@@ -96,6 +96,22 @@ const Registrar =()=>{
                             />
                             <TextField 
                             id="outlined-basic" 
+                            label="Nombre" 
+                            variant="outlined" 
+                            size="small"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            />
+                            <TextField 
+                            id="outlined-basic" 
+                            label="Apellido" 
+                            variant="outlined" 
+                            size="small"
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
+                            />
+                            <TextField 
+                            id="outlined-basic" 
                             label="Email" 
                             variant="outlined" 
                             size="small"
