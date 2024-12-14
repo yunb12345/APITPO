@@ -29,9 +29,10 @@ export const getProyectos = async(id,setProyects) => {
     }
 
 }
-export const crearProyecto = async (userId,nombre,descripcion) => {
+export const crearProyecto = async (token,userId,nombre,descripcion) => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("jwt", token);
     
     const raw = JSON.stringify({
       "proyectName": nombre,

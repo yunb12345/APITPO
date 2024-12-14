@@ -11,10 +11,10 @@ export const getProyect = async(id,setProyectName,setProyectDesc) => {
     return jsonData;
 }
 
-export const updateProyect = async(id,proyectName,proyectDesc) => {
+export const updateProyect = async(token,id,proyectName,proyectDesc) => {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-
+  myHeaders.append("jwt", token);
   const raw = JSON.stringify({
     "proyectName": proyectName,
     "proyectDesc": proyectDesc
@@ -30,9 +30,13 @@ export const updateProyect = async(id,proyectName,proyectDesc) => {
   await fetch(`http://localhost:8080/api/proyects/${id}`, requestOptions);
 }
 
-export const deleteProyect = async(id) => {
+export const deleteProyect = async(token,id) => {
+  const myHeaders = new Headers();
+  myHeaders.append("jwt", token);
+
   const requestOptions = {
     method: "DELETE",
+    headers: myHeaders,
     redirect: "follow"
   };
   

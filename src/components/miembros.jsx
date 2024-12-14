@@ -11,6 +11,7 @@ const Miembros = (props) => {
     console.log(props);
     const { id } = useParams();
 
+    const token = sessionStorage.getItem('access-token');
     const {tablaColumna,tablaContenido} = props;
     const [integrantes, setIntegrantes] = React.useState(tablaContenido);
     const [openIntegrante, setOpenIntegrante] = React.useState(false);
@@ -27,8 +28,7 @@ const Miembros = (props) => {
 
     const handleDeleteIntegrante = async (user) => {
         
-        const miembroEliminado = await miembros.eliminarMiembro(id,user);
-        console.log(miembroEliminado);
+        await miembros.eliminarMiembro(token,id,user);
         const updated = integrantes.filter((member) => member.username !== user);
         setIntegrantes(updated);
         handleCloseDeleteIntegrante()
@@ -37,14 +37,17 @@ const Miembros = (props) => {
     const handleAddIntegrante = async () => {
         //const nuevoId = integrantes.length > 0 ? integrantes[integrantes.length - 1].id + 1 : 1; // Genera un nuevo id
         
-        const miembroCreado = await miembros.agregarMiembro(id,newIntegrante);
-        console.log(miembroCreado);
+        const miembroCreado = await miembros.agregarMiembro(token,id,newIntegrante);
         setIntegrantes([...integrantes,miembroCreado]);
         setNewIntegrante('');
         handleCloseIntegrante();
         
     };
-
+    React.useEffect(() => {
+        miembros.getMiembros(id).then(fetchedMembers => {
+            setIntegrantes(fetchedMembers);  // Actualizamos la lista de integrantes desde la API
+        });
+    }, [integrantes,id]);
     return(
         <div>
             <div className=''>

@@ -22,8 +22,12 @@ const TransaccionGrupo = (props) => {
     const { id } = useParams();
     const [dataMiembro, setDataMiembro] = React.useState([]);
     React.useEffect(() => {
+        const fetchData = async () =>{
+            const response = await miembros.getMiembros(id);
+            setDataMiembro(response);
+        };
+        fetchData();
         setRows(tablaContenido);
-        miembros.getMiembros(id,setDataMiembro);
     }, [id,setDataMiembro,tablaContenido]);
 
     const [rows, setRows] = React.useState(tablaContenido);

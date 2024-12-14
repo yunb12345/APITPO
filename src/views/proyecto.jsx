@@ -22,6 +22,8 @@ const Proyecto = () =>{
     const location = useLocation();
     const project = location.state;  //Recibimos info del proyecto de la pagina board
     const { id } = useParams(); //id de la url
+    const token = sessionStorage.getItem('access-token');
+
     const[dataTransaccion,setData] = React.useState([]);
     const[dataMiembro,setDataMiembro] = React.useState([]);
     const [projectName, setProjectName] = React.useState(project.nombre);  //usamos el valor recibido por el location state
@@ -32,7 +34,8 @@ const Proyecto = () =>{
             await getProyect(id,setProjectName,setProjectDescription);
             const data = await getTransaccionByProyectId(id);
             setData(data);
-            await getMiembros(id,setDataMiembro);
+            const responseMiembro = await getMiembros(id,setDataMiembro);
+            setDataMiembro(responseMiembro);
         };
         fetchData();
         
@@ -125,7 +128,7 @@ const Proyecto = () =>{
 
     const handleBorrar = async () => {
         try{
-            const response = await deleteProyect(id);
+            const response = await deleteProyect(token,id);
             if(response.status===200){
                 navigate("/board");
             }
@@ -142,7 +145,7 @@ const Proyecto = () =>{
     const handleCloseEdit = () => setOpenEdit(false);
     
     const handleUpdateProject = () => {
-        updateProyect(id,TempProjectName,TempProjectDescription);
+        updateProyect(token,id,TempProjectName,TempProjectDescription);
         setProjectName(TempProjectName);
         setProjectDescription(TempProjectDescription);
         handleCloseEdit();

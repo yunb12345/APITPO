@@ -85,9 +85,10 @@ const crearTransaccion = async(id,nombre,monto,comprobante,integrantes,token) =>
     await Promise.all(promises);
 }
 
-const agregarMiembro = async (id,username) => {
+const agregarMiembro = async (token,id,username) => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("jwt", token);
     
     const raw = JSON.stringify({
       "username": username
@@ -121,10 +122,11 @@ const agregarMiembro = async (id,username) => {
     
 };
 
-const eliminarMiembro = async (id,username) => {
+const eliminarMiembro = async (token,id,username) => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    
+    myHeaders.append("jwt", token);
+
     const raw = JSON.stringify({
       "username": username
     });

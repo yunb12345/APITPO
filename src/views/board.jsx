@@ -11,6 +11,7 @@ import {AuthContext} from '../components/authContext';
 const Board = () => {
     const [proyectos, setProyectos] = React.useState([]);
     const {user} = React.useContext(AuthContext);
+    const token = sessionStorage.getItem('access-token');
     React.useEffect(() => {
         if(user){
             getProyectos(user.id,setProyectos);
@@ -37,7 +38,7 @@ const Board = () => {
     const handleAddProyecto = async () => {
         try{
             if(newProyecto.nombre !== "" && newProyecto.descripcion !== ""){
-                const createdProyect = await crearProyecto(user.id,newProyecto.nombre,newProyecto.descripcion);
+                const createdProyect = await crearProyecto(token,user.id,newProyecto.nombre,newProyecto.descripcion);
                 setProyectos([...proyectos, createdProyect]);
                 setNewProyecto({ nombre: '', descripcion: '', fecha: '', balance: 0 });
                 handleCloseProyect();

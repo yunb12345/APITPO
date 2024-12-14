@@ -1,4 +1,4 @@
-const getMiembros = async(id,setMiembros) => {
+const getMiembros = async(id) => {
     const miembros = []
     const requestOptions = {
         method: "GET",
@@ -18,19 +18,17 @@ const getMiembros = async(id,setMiembros) => {
     
     try {
         const resultados = await Promise.all(miembros);
-        console.log(resultados); // donde estén los datos juntos
-        setMiembros(resultados);
+        return resultados;
     } catch (error) {
         console.error('fallos', error);
-        setMiembros([]);
     }
 
 }
 
-const agregarMiembro = async (id,username) => {
+const agregarMiembro = async (token,id,username) => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    
+    myHeaders.append("jwt", token);
     const raw = JSON.stringify({
       "username": username
     });
@@ -63,10 +61,11 @@ const agregarMiembro = async (id,username) => {
     
 };
 
-const eliminarMiembro = async (id,username) => {
+const eliminarMiembro = async (token,id,username) => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    
+    myHeaders.append("jwt", token);
+
     const raw = JSON.stringify({
       "username": username
     });
