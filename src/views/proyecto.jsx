@@ -29,39 +29,14 @@ const Proyecto = () =>{
 
     React.useEffect(() =>{
         const fetchData = async() =>{
-            getProyect(id,setProjectName,setProjectDescription);
-            const data = await getTransaccionByProyectId(id,setData);
-            getMiembros(id,setDataMiembro);
-            console.log(data);
-            //setData(data);
+            await getProyect(id,setProjectName,setProjectDescription);
+            const data = await getTransaccionByProyectId(id);
+            setData(data);
+            await getMiembros(id,setDataMiembro);
         };
         fetchData();
         
-    },[id,setProjectName,setProjectDescription,getMiembros,setData]);
-    console.log(dataTransaccion);
-    console.log(dataTransaccion.participantes);
-    /*tabla para transaccion*/
-    /*
-    const dataTransaccion = [
-        {
-            id: 1,
-            nameTransaccion:'Pago rueda',
-            date: '"2015-03-25"',
-            value: 321,
-            comprobante:"default",
-            participantes:[
-                {
-                    nombre:"Bam",
-                    porcentaje:50,
-                },
-                {
-                    nombre:"shkhs",
-                    porcentaje:50,
-                },
-            ],
-        }
-    ]
-    */
+    },[id]);
     const columnsTransaccion = [
         {
             name: 'Transaccion',
@@ -110,24 +85,6 @@ const Proyecto = () =>{
             sortable: true,
         },
     ];
-    /*
-    const dataMiembro = [
-        {
-            id: 1,
-            userName:'Bam',
-            name:'Agustin',
-            lastName:'Yoon',
-            transacciones:200,
-        },
-        {
-            id:2,
-            userName:'shkh',
-            name:'Alex',
-            lastName:'Yoon',
-            transacciones:430,
-        }
-    ];
-    */
     //
     /*columnas para el tab*/
     const tabsN = [{
@@ -139,10 +96,18 @@ const Proyecto = () =>{
         
     ];
 
-    //contenido de los tabs
-    const tabsContent = [<TransaccionGrupo tablaColumna={columnsTransaccion} tablaContenido={dataTransaccion} expandable={true}/>,
-    <Miembros tablaColumna={columnsMiembro} tablaContenido={dataMiembro}/>]
-
+    const tabsContent = [
+        <TransaccionGrupo 
+            tablaColumna={columnsTransaccion} 
+            tablaContenido={dataTransaccion} 
+            expandable={true} 
+        />,
+        <Miembros 
+            tablaColumna={columnsMiembro} 
+            tablaContenido={dataMiembro} 
+        />,
+    ];
+    
     const [openEdit, setOpenEdit] = React.useState(false);
 
 

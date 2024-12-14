@@ -40,7 +40,7 @@ export const deleteProyect = async(id) => {
   return response;
 }
 
-export const getTransaccionByProyectId = async(id,setData) => {
+export const getTransaccionByProyectId = async(id) => {
   /*
    const dataTransaccion = [
         {
@@ -105,6 +105,5 @@ export const getTransaccionByProyectId = async(id,setData) => {
       };
     })
   );
-  setData(data);
   return data;
 }

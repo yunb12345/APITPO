@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
-//import { Link } from "react-router-dom";
+
 import CustomBox from "../components/box";
 import { AuthContext } from "../components/authContext";
 import {getUser,updateUser,deleteUser} from "../api/profile_api";
@@ -14,7 +14,7 @@ const Profile = () => {
     
     const navigate = useNavigate();
     const {logout} = React.useContext(AuthContext);
-
+    const token = sessionStorage.getItem('access-token');
     const { user } = React.useContext(AuthContext); //datos del usuario logueado
     const [perfil, setPerfil] = React.useState({});
     React.useEffect(() => {
@@ -87,7 +87,7 @@ const Profile = () => {
                 email:tempUserData.mail,
                 password:tempUserData.pass
             };
-            const updatedProfile = await updateUser(user.id,userData);
+            const updatedProfile = await updateUser(token,user.id,userData);
             console.log(updatedProfile);
             setPerfil(updatedProfile);
             setOpen(false); 
@@ -109,17 +109,13 @@ const Profile = () => {
                     <div className='justify-center text-center content-center'>
                         <div className='flex flex-col justify-center'>
                             <p className='text-bold text-3xl'>{perfil.user}</p>
-                            <h1 className=''>Balance</h1>
-                            <h1 className='text-bold text-2xl text-emerald-500'>${perfil.balance}</h1>
+                            <h1 className=''>Monto invertido en proyectos</h1>
+                            <h1 className='text-bold text-2xl text-slate-500'>${perfil.balance}</h1>
                         </div>
                         
                     </div>
                 </div>
                 <div className='flex flex-col p-4 text-sm gap-2 w-full lg:w-2/3 m-auto'>
-                    <div>
-                        <p className='text-lg text-gray-400'>NOMBRE Y APELLIDO</p>
-                        <p className='text-lg'>{perfil.name} {perfil.lastName}</p>
-                    </div>
                     <div>
                         <p className='text-lg text-gray-400'>EMAIL</p>
                         <p className='text-lg'>{perfil.mail}</p>

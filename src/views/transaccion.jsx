@@ -6,6 +6,7 @@ import { AuthContext } from "../components/authContext";
 const Transaccion = () =>{
     const { user } = React.useContext(AuthContext); //datos del usuario logueado
     const[datat,setDatat] = React.useState([]);
+    //const token = sessionStorage.getItem('access-token');
     React.useEffect(() =>{
         const fetchData = async() =>{
             const data = await getTransaccionByUserId(user.id);

@@ -18,14 +18,13 @@ const TransaccionGrupo = (props) => {
         value: '',
         comprobante: null,
     });
-
+    const token = sessionStorage.getItem('access-token');
     const { id } = useParams();
     const [dataMiembro, setDataMiembro] = React.useState([]);
     React.useEffect(() => {
+        setRows(tablaContenido);
         miembros.getMiembros(id,setDataMiembro);
-    }, [id,setDataMiembro]);
-
-    console.log(dataMiembro);
+    }, [id,setDataMiembro,tablaContenido]);
 
     const [rows, setRows] = React.useState(tablaContenido);
     
@@ -45,14 +44,12 @@ const TransaccionGrupo = (props) => {
     }
     const handleAddMovement = () => {
         if(newMovement.comprobante && newMovement.nameTransaccion !== "" && newMovement.date && newMovement.value > 0 && validarPorcentaje(dataMiembro)){
-            console.log(newMovement.comprobante);
             let participantes = [];
-            dataMiembro.map((miembro) => {
+            dataMiembro.forEach((miembro) => {
                 participantes.push({id: miembro.id, porcentaje: miembro.porcentaje})
             });
-            const newTransaccion = transaccion.crearTransaccion(id,newMovement.nameTransaccion,newMovement.value,newMovement.comprobante,participantes);
-            console.log(newTransaccion);
-            /*const nuevoId = rows.length > 0 ? rows[rows.length - 1].id + 1 : 1; // Genera un nuevo id
+            transaccion.crearTransaccion(id,newMovement.nameTransaccion,newMovement.value,newMovement.comprobante,participantes,token);
+            const nuevoId = rows.length > 0 ? rows[rows.length - 1].id + 1 : 1; // Genera un nuevo id
             const newRow = {
                 id:nuevoId,
                 nameTransaccion:newMovement.nameTransaccion,
@@ -62,11 +59,11 @@ const TransaccionGrupo = (props) => {
                 participantes: participantes
             };
             setRows([...rows, newRow]);
-            dataMiembro.map((miembro) => {
+            dataMiembro.forEach((miembro) => {
                 miembro.transacciones = miembro.transacciones + newMovement.value * (parseInt(miembro.porcentaje)/100);
             });
             setNewMovement({ nameTransaccion: '', date: "", value: "", comprobante: null });
-            handleCloseMovement();*/
+            handleCloseMovement();
         }else{
             setOpenError(true);
         }
@@ -78,9 +75,6 @@ const TransaccionGrupo = (props) => {
       setSelectedComprobante(URL.createObjectURL(comprobante));
       setOpenImageModal(true);
     };
-
-    //const [dataMiembro,setDataMiembro] = React.useState([integrantes]);
-    console.log(dataMiembro);
 
     const handleChangePorcentaje = (e, i) =>{
         const miembros = [...dataMiembro];

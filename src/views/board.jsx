@@ -1,8 +1,6 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import { IoIosAddCircleOutline } from "react-icons/io";
-import { FaArrowUp} from "react-icons/fa";
-import { FaArrowDown } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import CustomBox from "../components/box";
 import Modal from '@mui/material/Modal';
@@ -15,32 +13,16 @@ const Board = () => {
     const {user} = React.useContext(AuthContext);
     React.useEffect(() => {
         if(user){
-            console.log("Pido la lista de proyectos con mi token de sesion")
             getProyectos(user.id,setProyectos);
         }
 
     }, [user,setProyectos]);
-    /*const proyects = [
-        {
-            id:1,
-            nombre:'Proyecto 1',
-            descripcion:'ejemplo1',
-            fecha:'Junio 10, 2018',
-            balance:-180
-        },
-    ]*/
+
     let totalBalance = 0;
-    let balanceNegativo = 0;
-    let balancePositivo = 0;
-  
-    /*proyects.forEach(proyecto => {
+    
+    proyectos.forEach(proyecto => {
         totalBalance += proyecto.balance;
-        if (proyecto.balance < 0) {
-          balanceNegativo+=proyecto.balance;
-        } else if (proyecto.balance > 0) {
-          balancePositivo+=proyecto.balance;
-        }
-    });*/
+    });
 
     const [newProyecto, setNewProyecto] = React.useState({
         nombre:'',
@@ -69,28 +51,9 @@ const Board = () => {
     return (
         <div className='mx-10 min-h-screen'>
             <div className='flex flex-col justify-between m-auto items-center py-5'>
-                <div className="items-center py-5">
-                    <h2 className='text-6xl font-bold'>${totalBalance}</h2>
-                </div>
-                <div className='flex flex-row border-2 gap-5 p-3 text-center bg-white shadow-sm rounded-lg items-center w-2/3 lg:w-1/3'>
-                    <div className='flex flex-col text-base lg:text-xl font-bold w-1/2'>
-                        <div>
-                            <p className='m-0'>Te deben</p>
-                        </div>
-                        <div className='flex flex-row items-center justify-center gap-2'>
-                            <FaArrowUp className='text-emerald-500'/>
-                            <p className='text-emerald-500'>{balancePositivo}</p>
-                        </div>
-                    </div>
-                    <div className='flex flex-col text-base lg:text-xl font-bold w-1/2'>
-                        <div>
-                            <p className='m-0'>Debes</p>
-                        </div>
-                        <div className='flex flex-row items-center justify-center gap-2'>
-                            <FaArrowDown className='text-rose-600'/>
-                            <p className='text-rose-600'>{balanceNegativo}</p>
-                        </div>
-                    </div>
+                <div className="flex flex-col items-center py-7 content-center gap-5 text-center">
+                    <h2 className='text-4xl lg:text-5xl font-bold'>Costo total de todos los proyectos</h2>
+                    <h2 className='text-4xl text-slate-700 lg:text-5xl font-bold'>${totalBalance}</h2>
                 </div>
             </div>
             <div className='pb-14 relative'>
@@ -109,7 +72,7 @@ const Board = () => {
                                     <p>{pro.fecha}</p>
                                 </div>
                                 <div className=' content-center'>
-                                    <p className={pro.balance > 0 ? 'text-emerald-500 text-xl' : 'text-rose-600 text-xl'}>{pro.balance}</p>
+                                    <p className='text-slate-600 text-xl'>${pro.balance}</p>
                                 </div>
                             </div>
                         </Link>

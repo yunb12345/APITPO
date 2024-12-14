@@ -1,4 +1,4 @@
-const crearTransaccion = async(id,nombre,monto,comprobante,integrantes) => {
+const crearTransaccion = async(id,nombre,monto,comprobante,integrantes,token) => {
     const formdata = new FormData();
     formdata.append("proyectId", id);
     formdata.append("montoTotal", monto);
@@ -16,6 +16,7 @@ const crearTransaccion = async(id,nombre,monto,comprobante,integrantes) => {
 
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("jwt", token);
 
     const promises = integrantes.map(async (integrante) => {
         const porcentaje = parseInt(integrante.porcentaje);
@@ -64,7 +65,7 @@ const crearTransaccion = async(id,nombre,monto,comprobante,integrantes) => {
         
         const response1 = await fetch(`http://localhost:8080/api/users/${integrante.id}`, requestOptions4);
         const userData = await response1.json();
-        const newBalance = userData.balance - balance;
+        const newBalance = userData.balance + balance;
         
         const newUserData = {
           username:userData.username,
@@ -78,6 +79,7 @@ const crearTransaccion = async(id,nombre,monto,comprobante,integrantes) => {
           body: raw3,
           redirect: "follow"
         };
+        
         await fetch(`http://localhost:8080/api/users/${integrante.id}`, requestOptions5);
     });
     await Promise.all(promises);

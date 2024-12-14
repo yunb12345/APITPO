@@ -25,10 +25,11 @@ const getUser = async(id,setPerfil) => {
 
 }
 
-const updateUser = async(id,user) =>{
+const updateUser = async(token,id,user) =>{
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-
+  myHeaders.append("jwt", token);
+  
   const raw = JSON.stringify(user);
 
   const requestOptions = {
