@@ -5,8 +5,12 @@ const crearTransaccion = async(id,nombre,monto,comprobante,integrantes,token) =>
     formdata.append("nombreTransaccion", nombre);
     formdata.append("file", comprobante, URL.createObjectURL(comprobante));
 
+    const myHeaders = new Headers();
+    myHeaders.append("jwt", token);
+
     const requestOptions = {
     method: "POST",
+    headers: myHeaders,
     body: formdata,
     redirect: "follow"
     };
@@ -14,9 +18,7 @@ const crearTransaccion = async(id,nombre,monto,comprobante,integrantes,token) =>
     const response = await fetch("http://localhost:8080/api/transacciones/", requestOptions);
     let jsonData = await response.json();
 
-    const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("jwt", token);
 
     const promises = integrantes.map(async (integrante) => {
         const porcentaje = parseInt(integrante.porcentaje);
@@ -89,7 +91,7 @@ const agregarMiembro = async (token,id,username) => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("jwt", token);
-    
+
     const raw = JSON.stringify({
       "username": username
     });
