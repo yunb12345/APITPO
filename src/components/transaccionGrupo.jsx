@@ -73,13 +73,6 @@ const TransaccionGrupo = (props) => {
         }
     };
     
-    const [selectedComprobante, setSelectedComprobante] = React.useState(null);
-    const [openImageModal, setOpenImageModal] = React.useState(false);
-    const handleOpenImageModal = (comprobante) => {
-      setSelectedComprobante(URL.createObjectURL(comprobante));
-      setOpenImageModal(true);
-    };
-
     const handleChangePorcentaje = (e, i) =>{
         const miembros = [...dataMiembro];
     
@@ -160,13 +153,6 @@ const TransaccionGrupo = (props) => {
                         Añadir
                         </Button>
                     </div>
-                </CustomBox>
-            </Modal>
-
-            {/* Modal para mostrar la imagen del comprobante */}
-            <Modal open={openImageModal} onClose={() => setOpenImageModal(false)}>
-                <CustomBox moreStyles={{width: '80%', height: '80%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                    {selectedComprobante && <img src={selectedComprobante} alt="Comprobante" style={{ maxWidth: '100%', maxHeight: '100%' }} />}
                 </CustomBox>
             </Modal>
             <Modal open={openError} onClose={handleCloseError}>

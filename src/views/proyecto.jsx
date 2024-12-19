@@ -58,7 +58,12 @@ const Proyecto = () =>{
         },
         {
             name: 'Comprobante',
-            cell: (row) => <span onClick={() => handleOpenImageModal(row, { selector: row.comprobante.name })}>{row.comprobante.name}</span>,
+            cell: (row) => <span
+            onClick={() => handleOpenImageModal(row, { selector: row.comprobante })}
+            style={{ cursor: 'pointer' }}
+            >
+                ticket
+            </span>,
             sortable: true,
         },
         
@@ -155,8 +160,7 @@ const Proyecto = () =>{
     const [selectedComprobante, setSelectedComprobante] = React.useState(null);
     const [openImageModal, setOpenImageModal] = React.useState(false);
     const handleOpenImageModal = (cell) => {
-        console.log(cell);
-        setSelectedComprobante(URL.createObjectURL(cell.comprobante));
+        setSelectedComprobante(cell.comprobante);
         setOpenImageModal(true);
     };
 

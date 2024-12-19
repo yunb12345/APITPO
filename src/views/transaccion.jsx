@@ -2,6 +2,8 @@ import * as React from 'react';
 import Tabla from "../components/tabletran";
 import {getTransaccionByUserId} from "../api/transaccion_api";
 import { AuthContext } from "../components/authContext";
+import Modal from '@mui/material/Modal';
+import CustomBox from "../components/box";
 
 const Transaccion = () =>{
     const { user } = React.useContext(AuthContext); //datos del usuario logueado
@@ -40,10 +42,21 @@ const Transaccion = () =>{
         },
         {
             name: 'Comprobante',
-            selector: row => row.comprobante.name,
+            selector: (row) =>   <span
+            onClick={() => handleOpenImageModal(row, { selector: row.comprobante })}
+            style={{ cursor: 'pointer' }}
+            >
+                ticket
+            </span>,
             sortable: true,
         },
     ];
+    const [selectedComprobante, setSelectedComprobante] = React.useState(null);
+    const [openImageModal, setOpenImageModal] = React.useState(false);
+    const handleOpenImageModal = (comprobante) => { 
+      setSelectedComprobante(comprobante.comprobante);
+      setOpenImageModal(true);
+    };
     return(
         <div className='mx-5 lg:mx-20 h-screen'>
             <div className='py-10'>
@@ -52,6 +65,12 @@ const Transaccion = () =>{
             <div>
                 <Tabla data={datat} columns={columnst}>
                 </Tabla>
+                {/* Modal para mostrar la imagen del comprobante */}
+                <Modal open={openImageModal} onClose={() => setOpenImageModal(false)}>
+                    <CustomBox moreStyles={{width: '80%', height: '80%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                        {selectedComprobante && <img src={selectedComprobante} alt="Comprobante" style={{ maxWidth: '100%', maxHeight: '100%' }} />}
+                    </CustomBox>
+                </Modal>
             </div>
         </div>
     );
