@@ -68,6 +68,7 @@ const TransaccionGrupo = (props) => {
             });
             setNewMovement({ nameTransaccion: '', date: "", value: "", comprobante: null });
             handleCloseMovement();
+            window.location.reload();
         }else{
             setOpenError(true);
         }
